@@ -6,20 +6,26 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import dev.mkeeda.spaceship.data.TimeLinePost
-import dev.mkeeda.spaceship.data.fakeTimeLinePostItems
+import dev.mkeeda.spaceship.data.TimeLinePostDetails
+import dev.mkeeda.spaceship.data.fakeTimeListDetails
 
 @Composable
-fun PostDetailsScreen(post: TimeLinePost) {
+fun PostDetailsScreen(postId: Int) {
+    PostDetailsScreen(postDetails = fakeTimeListDetails(postId))
+}
+
+@Composable
+fun PostDetailsScreen(postDetails: TimeLinePostDetails) {
     Scaffold(
         topBar = {
             TopAppBar(title = { Text(text = "PostDetails")})
         },
     ) {
         Column {
-            Text(text = post.senderName)
-            Text(text = post.postTime)
-            Text(text = post.body)
+            Text(text = postDetails.id.toString())
+            Text(text = postDetails.senderName)
+            Text(text = postDetails.postTime)
+            Text(text = postDetails.body)
         }
     }
 }
@@ -27,5 +33,5 @@ fun PostDetailsScreen(post: TimeLinePost) {
 @Preview(showBackground = true)
 @Composable
 fun PostDetailsScreenPreview() {
-    PostDetailsScreen(post = fakeTimeLinePostItems.first())
+    PostDetailsScreen(postDetails = fakeTimeListDetails(postId = 0))
 }

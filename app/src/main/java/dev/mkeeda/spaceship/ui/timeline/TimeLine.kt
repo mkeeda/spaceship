@@ -33,6 +33,14 @@ import dev.mkeeda.spaceship.ui.theme.Gray400
 import dev.mkeeda.spaceship.ui.theme.SpaceshipTheme
 
 @Composable
+fun TimeLineScreen(openPostDetails: (TimeLinePost) -> Unit) {
+    TimeLineScreen(
+        postItems = fakeTimeLinePostItems,
+        openPostDetails = openPostDetails
+    )
+}
+
+@Composable
 fun TimeLineScreen(
     postItems: List<TimeLinePost>,
     openPostDetails: (TimeLinePost) -> Unit
@@ -123,6 +131,7 @@ fun PostRowPreview() {
     SpaceshipTheme {
         TimeLineRow(
             post = TimeLinePost(
+                id = 0,
                 senderName = "新垣結衣abcdefghigklnmop",
                 postTime = "2021/08/16 14:26",
                 body = "昔々あるところに、おじいさんとおばあさんがいました",
