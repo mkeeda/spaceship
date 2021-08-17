@@ -12,7 +12,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             SpaceshipTheme {
-                TimeLineScreen(postItems = fakeTimeLinePostItems)
+                TimeLineScreen(
+                    postItems = fakeTimeLinePostItems,
+                    openPostDetails = {}
+                )
             }
         }
     }

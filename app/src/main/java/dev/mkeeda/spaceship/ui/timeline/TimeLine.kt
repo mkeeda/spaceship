@@ -1,6 +1,7 @@
 package dev.mkeeda.spaceship.ui.timeline
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,13 +33,19 @@ import dev.mkeeda.spaceship.ui.theme.Gray400
 import dev.mkeeda.spaceship.ui.theme.SpaceshipTheme
 
 @Composable
-fun TimeLineScreen(postItems: List<TimeLinePost>) {
+fun TimeLineScreen(
+    postItems: List<TimeLinePost>,
+    openPostDetails: (TimeLinePost) -> Unit
+) {
     Scaffold(
         topBar = {
             TopAppBar(title = { Text(text = "TimeLine")})
         },
     ) {
-        TimeLine(postItems = postItems)
+        TimeLine(
+            postItems = postItems,
+            onSelectPost = openPostDetails
+        )
     }
 }
 
@@ -46,24 +53,37 @@ fun TimeLineScreen(postItems: List<TimeLinePost>) {
 @Composable
 fun TimeLineScreenPreview() {
     SpaceshipTheme {
-        TimeLineScreen(postItems = fakeTimeLinePostItems)
+        TimeLineScreen(
+            postItems = fakeTimeLinePostItems,
+            openPostDetails = {}
+        )
     }
 }
 
 @Composable
-fun TimeLine(postItems: List<TimeLinePost>) {
+fun TimeLine(
+    postItems: List<TimeLinePost>,
+    onSelectPost: (TimeLinePost) -> Unit
+) {
     LazyColumn(modifier = Modifier.fillMaxSize()) {
         items(postItems) { post ->
-            TimeLineRow(post = post)
+            TimeLineRow(
+                post = post,
+                onSelectPost = onSelectPost
+            )
         }
     }
 }
 
 @Composable
-fun TimeLineRow(post: TimeLinePost) {
+fun TimeLineRow(
+    post: TimeLinePost,
+    onSelectPost: (TimeLinePost) -> Unit
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .clickable { onSelectPost(post) }
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -106,7 +126,8 @@ fun PostRowPreview() {
                 senderName = "新垣結衣abcdefghigklnmop",
                 postTime = "2021/08/16 14:26",
                 body = "昔々あるところに、おじいさんとおばあさんがいました",
-            )
+            ),
+            onSelectPost = {}
         )
     }
 }
