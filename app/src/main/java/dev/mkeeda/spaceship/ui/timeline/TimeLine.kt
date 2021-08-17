@@ -73,6 +73,7 @@ fun TimeLineRow(post: TimeLinePost) {
                 .size(48.dp)
                 .clip(CircleShape)
                 .background(Gray400) // FIXME: use theme color
+                .align(Alignment.Top)
         )
         Spacer(modifier = Modifier.width(16.dp))
         Column {
