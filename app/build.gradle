@@ -55,6 +55,7 @@ dependencies {
     implementation Libs.AndroidX.Compose.uiToolingPreview
     implementation Libs.AndroidX.lifecycleRuntimeKtx
     implementation Libs.AndroidX.activityCompose
+    implementation Libs.AndroidX.navigationCompose
 
     testImplementation Libs.Test.junit
 
