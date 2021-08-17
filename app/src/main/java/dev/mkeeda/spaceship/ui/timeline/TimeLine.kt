@@ -14,9 +14,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,11 +32,20 @@ import dev.mkeeda.spaceship.ui.theme.SpaceshipTheme
 
 @Composable
 fun TimeLineScreen(postItems: List<TimeLinePost>) {
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colors.background
+    Scaffold(
+        topBar = {
+            TopAppBar(title = { Text(text = "TimeLine")})
+        },
     ) {
         TimeLine(postItems = postItems)
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun TimeLineScreenPreview() {
+    SpaceshipTheme {
+        TimeLineScreen(postItems = fakeTimeLinePostItems)
     }
 }
 
@@ -46,14 +55,6 @@ fun TimeLine(postItems: List<TimeLinePost>) {
         items(postItems) { post ->
             TimeLineRow(post = post)
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun TimeLinePreview() {
-    SpaceshipTheme {
-        TimeLine(postItems = fakeTimeLinePostItems)
     }
 }
 
