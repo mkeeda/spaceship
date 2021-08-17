@@ -14,6 +14,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,6 +29,16 @@ import dev.mkeeda.spaceship.data.TimeLinePost
 import dev.mkeeda.spaceship.data.fakeTimeLinePostItems
 import dev.mkeeda.spaceship.ui.theme.Gray400
 import dev.mkeeda.spaceship.ui.theme.SpaceshipTheme
+
+@Composable
+fun TimeLineScreen(postItems: List<TimeLinePost>) {
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colors.background
+    ) {
+        TimeLine(postItems = postItems)
+    }
+}
 
 @Composable
 fun TimeLine(postItems: List<TimeLinePost>) {
