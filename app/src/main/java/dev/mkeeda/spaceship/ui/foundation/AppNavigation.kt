@@ -1,4 +1,4 @@
-package dev.mkeeda.spaceship.ui
+package dev.mkeeda.spaceship.ui.foundation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
