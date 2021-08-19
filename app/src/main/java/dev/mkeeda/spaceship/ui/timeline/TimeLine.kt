@@ -16,9 +16,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,26 +32,24 @@ import dev.mkeeda.spaceship.ui.theme.SpaceshipTheme
 
 @Composable
 fun TimeLineScreen(openPostDetails: (TimeLinePost) -> Unit) {
-    TimeLineScreen(
+    TimeLine(
         postItems = fakeTimeLinePostItems,
         openPostDetails = openPostDetails
     )
 }
 
 @Composable
-fun TimeLineScreen(
+fun TimeLine(
     postItems: List<TimeLinePost>,
     openPostDetails: (TimeLinePost) -> Unit
 ) {
-    Scaffold(
-        topBar = {
-            TopAppBar(title = { Text(text = "TimeLine")})
-        },
-    ) {
-        TimeLine(
-            postItems = postItems,
-            onSelectPost = openPostDetails
-        )
+    LazyColumn(modifier = Modifier.fillMaxSize()) {
+        items(postItems) { post ->
+            TimeLineRow(
+                post = post,
+                onSelectPost = openPostDetails
+            )
+        }
     }
 }
 
@@ -61,27 +57,13 @@ fun TimeLineScreen(
 @Composable
 fun TimeLineScreenPreview() {
     SpaceshipTheme {
-        TimeLineScreen(
+        TimeLine(
             postItems = fakeTimeLinePostItems,
             openPostDetails = {}
         )
     }
 }
 
-@Composable
-fun TimeLine(
-    postItems: List<TimeLinePost>,
-    onSelectPost: (TimeLinePost) -> Unit
-) {
-    LazyColumn(modifier = Modifier.fillMaxSize()) {
-        items(postItems) { post ->
-            TimeLineRow(
-                post = post,
-                onSelectPost = onSelectPost
-            )
-        }
-    }
-}
 
 @Composable
 fun TimeLineRow(

@@ -3,8 +3,12 @@ package dev.mkeeda.spaceship
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.material.Scaffold
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import dev.mkeeda.spaceship.ui.AppNavigation
+import dev.mkeeda.spaceship.ui.foundation.AppNavigation
+import dev.mkeeda.spaceship.ui.foundation.Screen
+import dev.mkeeda.spaceship.ui.foundation.SpaceshipAppBar
 import dev.mkeeda.spaceship.ui.theme.SpaceshipTheme
 
 class MainActivity : ComponentActivity() {
@@ -12,7 +16,16 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             SpaceshipTheme {
-                AppNavigation(navHostController = rememberNavController())
+                val navController = rememberNavController()
+                val backStackEntry = navController.currentBackStackEntryAsState()
+                val currentScreen = Screen.fromRoute(route = backStackEntry.value?.destination?.route)
+                Scaffold(
+                    topBar = {
+                        SpaceshipAppBar(currentScreen = currentScreen)
+                    }
+                ) {
+                    AppNavigation(navHostController = navController)
+                }
             }
         }
     }

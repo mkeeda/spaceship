@@ -9,11 +9,21 @@ import androidx.navigation.compose.navArgument
 import dev.mkeeda.spaceship.ui.timeline.PostDetailsScreen
 import dev.mkeeda.spaceship.ui.timeline.TimeLineScreen
 
-sealed class Screen(val route: String) {
-    object TimeLine : Screen("timeline")
-    object PostDetails : Screen("post/{postId}") {
+sealed class Screen(val route: String, val name: String) {
+    object TimeLine : Screen(route = "timeline", name = "TimeLine")
+    object PostDetails : Screen(route = "post/{postId}", name = "PostDetails") {
         fun createRoute(postId: Int): String {
             return "post/$postId"
+        }
+    }
+
+    companion object {
+        fun fromRoute(route: String?): Screen {
+            return when (route?.substringBefore("/")) {
+                TimeLine.route-> TimeLine
+                PostDetails.route.substringBefore("/") -> PostDetails
+                else -> TimeLine
+            }
         }
     }
 }
