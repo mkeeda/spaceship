@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="statusBarScrim">@color/system_ui_scrim_dark</color>
+    <bool name="useLightStatusBar">false</bool>
+
+    <color name="navigationBarScrim">@color/system_ui_scrim_dark</color>
+    <bool name="useLightNavigationBar">false</bool>
+</resources>
