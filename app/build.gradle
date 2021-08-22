@@ -57,6 +57,10 @@ dependencies {
     implementation Libs.AndroidX.activityCompose
     implementation Libs.AndroidX.navigationCompose
 
+    implementation Libs.Accompanist.inset
+    implementation Libs.Accompanist.insetUi
+    implementation Libs.Accompanist.systemUiController
+
     testImplementation Libs.Test.junit
 
     androidTestImplementation Libs.AndroidX.Test.extJunit

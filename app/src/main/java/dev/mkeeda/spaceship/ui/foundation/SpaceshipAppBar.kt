@@ -3,16 +3,22 @@ package dev.mkeeda.spaceship.ui.foundation
 import android.content.res.Configuration
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import com.google.accompanist.insets.LocalWindowInsets
+import com.google.accompanist.insets.rememberInsetsPaddingValues
+import com.google.accompanist.insets.ui.TopAppBar
 import dev.mkeeda.spaceship.ui.theme.SpaceshipTheme
 
 @Composable
 fun SpaceshipAppBar(currentScreen: Screen) {
     TopAppBar(
         title = { Text(text = currentScreen.name) },
-        backgroundColor = MaterialTheme.colors.surface
+        backgroundColor = MaterialTheme.colors.surface,
+        contentPadding = rememberInsetsPaddingValues(
+            LocalWindowInsets.current.statusBars,
+            applyBottom = false,
+        ),
     )
 }
 
