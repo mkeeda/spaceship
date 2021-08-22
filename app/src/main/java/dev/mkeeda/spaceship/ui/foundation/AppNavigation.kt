@@ -7,10 +7,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import dev.mkeeda.spaceship.ui.timeline.PostDetailsScreen
-import dev.mkeeda.spaceship.ui.timeline.TimeLineScreen
+import dev.mkeeda.spaceship.ui.timeline.TimelineScreen
 
 sealed class Screen(val route: String, val name: String) {
-    object TimeLine : Screen(route = "timeline", name = "TimeLine")
+    object Timeline : Screen(route = "timeline", name = "Timeline")
     object PostDetails : Screen(route = "post/{postId}", name = "PostDetails") {
         fun createRoute(postId: Int): String {
             return "post/$postId"
@@ -20,9 +20,9 @@ sealed class Screen(val route: String, val name: String) {
     companion object {
         fun fromRoute(route: String?): Screen {
             return when (route?.substringBefore("/")) {
-                TimeLine.route-> TimeLine
+                Timeline.route-> Timeline
                 PostDetails.route.substringBefore("/") -> PostDetails
-                else -> TimeLine
+                else -> Timeline
             }
         }
     }
@@ -32,10 +32,10 @@ sealed class Screen(val route: String, val name: String) {
 fun AppNavigation(navHostController: NavHostController) {
     NavHost(
         navController = navHostController,
-        startDestination = Screen.TimeLine.route
+        startDestination = Screen.Timeline.route
     ) {
-        composable(route = Screen.TimeLine.route) {
-            TimeLineScreen(openPostDetails = { post ->
+        composable(route = Screen.Timeline.route) {
+            TimelineScreen(openPostDetails = { post ->
                 navHostController.navigate(Screen.PostDetails.createRoute(postId = post.id))
             })
         }
