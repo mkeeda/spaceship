@@ -16,7 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.mkeeda.spaceship.data.TimelinePostDetails
 import dev.mkeeda.spaceship.data.fakeTimeListDetails
-import dev.mkeeda.spaceship.ui.theme.SpaceshipTheme
+import dev.mkeeda.spaceship.ui.util.PreviewBackground
 
 @Composable
 fun PostDetailsScreen(postId: Int) {
@@ -47,10 +47,10 @@ fun PostDetails(postDetails: TimelinePostDetails) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 fun PostDetailsScreenPreview() {
-    SpaceshipTheme {
+    PreviewBackground {
         PostDetails(postDetails = fakeTimeListDetails(postId = 0))
     }
 }
