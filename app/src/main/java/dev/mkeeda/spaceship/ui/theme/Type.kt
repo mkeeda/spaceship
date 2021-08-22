@@ -7,7 +7,7 @@ import androidx.compose.ui.unit.sp
 
 val Typography = Typography(
     subtitle1 = TextStyle(
-        fontWeight = FontWeight.Bold,
+        fontWeight = FontWeight.SemiBold,
         fontSize = 16.sp
     ),
     subtitle2 = TextStyle(
