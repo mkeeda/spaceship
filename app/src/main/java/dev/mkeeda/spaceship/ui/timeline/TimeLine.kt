@@ -24,13 +24,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.mkeeda.spaceship.data.TimelinePost
-import dev.mkeeda.spaceship.data.fakeTimelinePostItems
+import dev.mkeeda.spaceship.data.longFakeTimelinePostItems
 import dev.mkeeda.spaceship.ui.theme.SpaceshipTheme
 
 @Composable
 fun TimelineScreen(openPostDetails: (TimelinePost) -> Unit) {
     Timeline(
-        postItems = fakeTimelinePostItems,
+        postItems = longFakeTimelinePostItems,
         openPostDetails = openPostDetails
     )
 }
@@ -55,7 +55,7 @@ fun Timeline(
 fun TimelineScreenPreview() {
     SpaceshipTheme {
         Timeline(
-            postItems = fakeTimelinePostItems,
+            postItems = longFakeTimelinePostItems,
             openPostDetails = {}
         )
     }

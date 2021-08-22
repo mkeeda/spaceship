@@ -7,7 +7,7 @@ data class TimelinePost(
     val body: String,
 )
 
-val fakeTimelinePostItems = listOf(
+private val fakeTimelinePostItems = listOf(
     TimelinePost(
         id = 1,
         senderName = "森山みくり",
@@ -45,3 +45,5 @@ val fakeTimelinePostItems = listOf(
         body = "誰が休んでも仕事が回る。帰ってこられる環境を普段から作っておくこと。それが職場におけるリスク管理",
     ),
 )
+
+val longFakeTimelinePostItems = fakeTimelinePostItems + fakeTimelinePostItems + fakeTimelinePostItems
