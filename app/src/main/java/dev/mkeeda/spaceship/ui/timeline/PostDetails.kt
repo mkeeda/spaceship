@@ -1,23 +1,48 @@
 package dev.mkeeda.spaceship.ui.timeline
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material.ContentAlpha
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import dev.mkeeda.spaceship.data.TimeLinePostDetails
 import dev.mkeeda.spaceship.data.fakeTimeListDetails
+import dev.mkeeda.spaceship.ui.theme.SpaceshipTheme
 
 @Composable
 fun PostDetailsScreen(postId: Int) {
-    PostDetailsScreen(postDetails = fakeTimeListDetails(postId))
+    PostDetails(postDetails = fakeTimeListDetails(postId))
 }
 
 @Composable
-fun PostDetailsScreen(postDetails: TimeLinePostDetails) {
-    Column {
-        Text(text = postDetails.id.toString())
-        Text(text = postDetails.senderName)
-        Text(text = postDetails.postTime)
+fun PostDetails(postDetails: TimeLinePostDetails) {
+    Column(modifier = Modifier.padding(16.dp)) {
+        Row {
+            SenderIcon()
+            Spacer(modifier = Modifier.width(8.dp))
+
+            Column {
+                Text(
+                    text = postDetails.senderName,
+                    style = MaterialTheme.typography.subtitle1
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = postDetails.postTime,
+                    modifier = Modifier.alpha(ContentAlpha.medium)
+                )
+            }
+        }
+        Spacer(modifier = Modifier.height(16.dp))
         Text(text = postDetails.body)
     }
 }
@@ -25,5 +50,7 @@ fun PostDetailsScreen(postDetails: TimeLinePostDetails) {
 @Preview(showBackground = true)
 @Composable
 fun PostDetailsScreenPreview() {
-    PostDetailsScreen(postDetails = fakeTimeListDetails(postId = 0))
+    SpaceshipTheme {
+        PostDetails(postDetails = fakeTimeListDetails(postId = 0))
+    }
 }

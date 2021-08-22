@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 import dev.mkeeda.spaceship.ui.theme.Gray400
 
 @Composable
-fun SenderIcon(modifier: Modifier) {
+fun SenderIcon(modifier: Modifier = Modifier) {
     // TODO: Use profile image
     Box(
         modifier = modifier
