@@ -1,14 +1,14 @@
 package dev.mkeeda.spaceship.data
 
-data class TimeLinePostDetails(
+data class TimelinePostDetails(
     val id: Int,
     val senderName: String,
     val postTime: String,
     val body: String,
 )
 
-fun fakeTimeListDetails(postId: Int): TimeLinePostDetails {
-    return TimeLinePostDetails(
+fun fakeTimeListDetails(postId: Int): TimelinePostDetails {
+    return TimelinePostDetails(
         id = postId,
         senderName = "逃げ恥予告Bot",
         postTime = "2021/08/22 13:31",

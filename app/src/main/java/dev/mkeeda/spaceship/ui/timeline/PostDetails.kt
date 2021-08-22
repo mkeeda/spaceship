@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import dev.mkeeda.spaceship.data.TimeLinePostDetails
+import dev.mkeeda.spaceship.data.TimelinePostDetails
 import dev.mkeeda.spaceship.data.fakeTimeListDetails
 import dev.mkeeda.spaceship.ui.theme.SpaceshipTheme
 
@@ -24,7 +24,7 @@ fun PostDetailsScreen(postId: Int) {
 }
 
 @Composable
-fun PostDetails(postDetails: TimeLinePostDetails) {
+fun PostDetails(postDetails: TimelinePostDetails) {
     Column(modifier = Modifier.padding(16.dp)) {
         Row {
             SenderIcon()

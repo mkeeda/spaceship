@@ -23,26 +23,26 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import dev.mkeeda.spaceship.data.TimeLinePost
-import dev.mkeeda.spaceship.data.fakeTimeLinePostItems
+import dev.mkeeda.spaceship.data.TimelinePost
+import dev.mkeeda.spaceship.data.fakeTimelinePostItems
 import dev.mkeeda.spaceship.ui.theme.SpaceshipTheme
 
 @Composable
-fun TimeLineScreen(openPostDetails: (TimeLinePost) -> Unit) {
-    TimeLine(
-        postItems = fakeTimeLinePostItems,
+fun TimelineScreen(openPostDetails: (TimelinePost) -> Unit) {
+    Timeline(
+        postItems = fakeTimelinePostItems,
         openPostDetails = openPostDetails
     )
 }
 
 @Composable
-fun TimeLine(
-    postItems: List<TimeLinePost>,
-    openPostDetails: (TimeLinePost) -> Unit
+fun Timeline(
+    postItems: List<TimelinePost>,
+    openPostDetails: (TimelinePost) -> Unit
 ) {
     LazyColumn(modifier = Modifier.fillMaxSize()) {
         items(postItems) { post ->
-            TimeLineRow(
+            TimelineRow(
                 post = post,
                 onSelectPost = openPostDetails
             )
@@ -52,10 +52,10 @@ fun TimeLine(
 
 @Preview(showBackground = true)
 @Composable
-fun TimeLineScreenPreview() {
+fun TimelineScreenPreview() {
     SpaceshipTheme {
-        TimeLine(
-            postItems = fakeTimeLinePostItems,
+        Timeline(
+            postItems = fakeTimelinePostItems,
             openPostDetails = {}
         )
     }
@@ -63,9 +63,9 @@ fun TimeLineScreenPreview() {
 
 
 @Composable
-fun TimeLineRow(
-    post: TimeLinePost,
-    onSelectPost: (TimeLinePost) -> Unit
+fun TimelineRow(
+    post: TimelinePost,
+    onSelectPost: (TimelinePost) -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -106,8 +106,8 @@ fun TimeLineRow(
 @Composable
 fun PostRowPreview() {
     SpaceshipTheme {
-        TimeLineRow(
-            post = TimeLinePost(
+        TimelineRow(
+            post = TimelinePost(
                 id = 0,
                 senderName = "新垣結衣abcdefghigklnmop",
                 postTime = "2021/08/16 14:26",

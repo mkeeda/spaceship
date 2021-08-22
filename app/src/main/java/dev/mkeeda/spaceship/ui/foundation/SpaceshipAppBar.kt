@@ -22,7 +22,7 @@ fun SpaceshipAppBar(currentScreen: Screen) {
 @Composable
 fun LightAppBarPreview() {
     SpaceshipTheme {
-        SpaceshipAppBar(currentScreen = Screen.TimeLine)
+        SpaceshipAppBar(currentScreen = Screen.Timeline)
     }
 }
 
@@ -32,6 +32,6 @@ fun LightAppBarPreview() {
 @Composable
 fun DarkAppBarPreview() {
     SpaceshipTheme {
-        SpaceshipAppBar(currentScreen = Screen.TimeLine)
+        SpaceshipAppBar(currentScreen = Screen.Timeline)
     }
 }
