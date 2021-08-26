@@ -27,7 +27,7 @@ fun fakeThreadPosts(postId: Int): List<ThreadPost> {
             id = 0,
             senderName = "森山みくり",
             postTime = "2021/08/22 13:00",
-            body = "親投稿だよ"
+            body = "親投稿だよ\nこんにちは"
         ),
         FocusedPost(
             id = postId,
