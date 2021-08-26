@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -23,6 +24,8 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ChainStyle
+import androidx.constraintlayout.compose.ConstraintLayout
 import dev.mkeeda.spaceship.data.CommentPost
 import dev.mkeeda.spaceship.data.FocusedPost
 import dev.mkeeda.spaceship.data.ThreadPost
@@ -36,7 +39,7 @@ fun PostDetailsScreen(postId: Int) {
 
 @Composable
 fun PostDetails(threadPosts: List<ThreadPost>) {
-    LazyColumn {
+    LazyColumn(Modifier.fillMaxSize()) {
         items(threadPosts) { threadPost ->
             when (threadPost) {
                 is FocusedPost -> {
@@ -57,17 +60,35 @@ fun FocusedPostRow(focusedPost: FocusedPost) {
             .fillMaxWidth()
             .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
     ) {
-        Row(verticalAlignment = Alignment.Bottom) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                PostLinker(
-                    modifier = Modifier.height(16.dp),
-                    bottomPadding = 2.dp
-                )
-                SenderIcon()
-            }
-            Spacer(modifier = Modifier.width(8.dp))
+        ConstraintLayout {
+            val (senderIcon, postLinker, postInfo, body) = createRefs()
+            createHorizontalChain(senderIcon, postInfo, chainStyle = ChainStyle.Packed(bias = 0.0f))
 
-            Column {
+            PostLinker(
+                modifier = Modifier
+                    .height(16.dp)
+                    .constrainAs(postLinker) {
+                        bottom.linkTo(senderIcon.top)
+                        centerHorizontallyTo(senderIcon)
+                    },
+                bottomPadding = 2.dp
+            )
+            SenderIcon(
+                modifier = Modifier.constrainAs(senderIcon) {
+                    top.linkTo(postLinker.bottom)
+                    start.linkTo(parent.start)
+                    end.linkTo(postInfo.start)
+                }
+            )
+
+            Column(
+                modifier = Modifier.constrainAs(postInfo) {
+                    top.linkTo(postLinker.bottom)
+                    bottom.linkTo(body.top)
+                    start.linkTo(senderIcon.end)
+                    end.linkTo(parent.end)
+                }.padding(start = 8.dp)
+            ) {
                 Text(
                     text = focusedPost.senderName,
                     style = MaterialTheme.typography.subtitle1
@@ -78,14 +99,25 @@ fun FocusedPostRow(focusedPost: FocusedPost) {
                     modifier = Modifier.alpha(ContentAlpha.medium)
                 )
             }
+            Text(
+                modifier = Modifier.constrainAs(body) {
+                    top.linkTo(postInfo.bottom, margin = 8.dp)
+                    bottom.linkTo(parent.bottom)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                },
+                text = focusedPost.body
+            )
         }
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(text = focusedPost.body)
     }
 }
 
 @Composable
-fun CommentPostRow(commentPost: CommentPost) {
+fun CommentPostRow(
+    commentPost: CommentPost,
+    beforeLinkTo: Boolean = false,
+    afterLinkTo: Boolean = false
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
