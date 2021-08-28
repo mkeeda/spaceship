@@ -56,6 +56,7 @@ dependencies {
     implementation Libs.AndroidX.lifecycleRuntimeKtx
     implementation Libs.AndroidX.activityCompose
     implementation Libs.AndroidX.navigationCompose
+    implementation Libs.AndroidX.constraintLayoutCompose
 
     implementation Libs.Accompanist.inset
     implementation Libs.Accompanist.insetUi
