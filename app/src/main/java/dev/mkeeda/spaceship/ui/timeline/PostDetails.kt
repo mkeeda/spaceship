@@ -2,8 +2,6 @@ package dev.mkeeda.spaceship.ui.timeline
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,14 +16,13 @@ import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import dev.mkeeda.spaceship.data.CommentPost
 import dev.mkeeda.spaceship.data.FocusedPost
 import dev.mkeeda.spaceship.data.ThreadPost
@@ -53,6 +50,7 @@ fun PostDetails(threadPosts: List<ThreadPost>) {
                 is CommentPost -> {
                     CommentPostRow(
                         commentPost = threadPost,
+                        linkToBefore = linkToBeforeEnabled,
                         linkToAfter = linkToAfterEnabled
                     )
                 }
@@ -77,17 +75,21 @@ fun FocusedPostRow(
         if (linkToBefore) {
             PostLinker(
                 modifier = Modifier
-                    .height(16.dp)
                     .constrainAs(postLinker) {
+                        height = Dimension.value(16.dp)
+                        top.linkTo(parent.top)
                         bottom.linkTo(senderIcon.top)
                         centerHorizontallyTo(senderIcon)
                     },
-                bottomPadding = 2.dp
             )
         }
         SenderIcon(
             modifier = Modifier.constrainAs(senderIcon) {
-                top.linkTo(if (linkToBefore) postLinker.bottom else parent.top)
+                if (linkToBefore) {
+                    top.linkTo(postLinker.bottom)
+                } else {
+                    top.linkTo(parent.top, margin = 16.dp)
+                }
                 start.linkTo(parent.start)
                 end.linkTo(postHeaderText.start)
             }
@@ -131,24 +133,55 @@ fun CommentPostRow(
     linkToBefore: Boolean = false,
     linkToAfter: Boolean = false
 ) {
-    Row(
+    ConstraintLayout(
         modifier = Modifier
             .fillMaxWidth()
-            .height(IntrinsicSize.Max)
-            .padding(top = 16.dp, start = 16.dp, end = 16.dp)
+            .padding(start = 16.dp, end = 16.dp)
     ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            SenderIcon()
-            if (linkToAfter) {
-                PostLinker(topPadding = 2.dp)
-            }
+        val (beforePostLinker, afterPostLinker, senderIcon, postContent) = createRefs()
+
+        if (linkToBefore) {
+            PostLinker(
+                modifier = Modifier
+                    .constrainAs(beforePostLinker) {
+                        height = Dimension.value(16.dp)
+                        top.linkTo(parent.top)
+                        bottom.linkTo(senderIcon.top)
+                        centerHorizontallyTo(senderIcon)
+                    },
+            )
         }
-        Spacer(modifier = Modifier.width(8.dp))
+        SenderIcon(
+            modifier = Modifier.constrainAs(senderIcon) {
+                if (linkToBefore) {
+                    top.linkTo(beforePostLinker.bottom)
+                } else {
+                    top.linkTo(parent.top, margin = 16.dp)
+                }
+                start.linkTo(parent.start)
+            }
+        )
+        if (linkToAfter) {
+            PostLinker(
+                modifier = Modifier.constrainAs(afterPostLinker) {
+                    height = Dimension.fillToConstraints
+                    top.linkTo(senderIcon.bottom)
+                    bottom.linkTo(parent.bottom)
+                    centerHorizontallyTo(senderIcon)
+                },
+            )
+        }
         PostContent(
             senderName = commentPost.senderName,
             postTime = commentPost.postTime,
             body = commentPost.body,
-            Modifier.padding(bottom = 16.dp)
+            modifier = Modifier.constrainAs(postContent) {
+                width = Dimension.fillToConstraints
+                top.linkTo(senderIcon.top)
+                bottom.linkTo(parent.bottom, margin = 16.dp)
+                start.linkTo(senderIcon.end, margin = 8.dp)
+                end.linkTo(parent.end)
+            },
         )
     }
 }
@@ -156,14 +189,11 @@ fun CommentPostRow(
 @Composable
 fun PostLinker(
     modifier: Modifier = Modifier,
-    topPadding: Dp = 0.dp,
-    bottomPadding: Dp = 0.dp,
 ) {
     Divider(
         modifier = modifier
             .fillMaxHeight()
             .width(2.dp)
-            .padding(top = topPadding, bottom = bottomPadding)
     )
 }
 
