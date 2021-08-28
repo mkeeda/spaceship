@@ -14,6 +14,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.insets.LocalWindowInsets
+import com.google.accompanist.insets.rememberInsetsPaddingValues
 import dev.mkeeda.spaceship.data.TimelinePost
 import dev.mkeeda.spaceship.data.longFakeTimelinePostItems
 import dev.mkeeda.spaceship.ui.util.PreviewBackground
@@ -31,7 +33,10 @@ fun Timeline(
     postItems: List<TimelinePost>,
     openPostDetails: (TimelinePost) -> Unit
 ) {
-    LazyColumn(modifier = Modifier.fillMaxSize()) {
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = rememberInsetsPaddingValues(insets = LocalWindowInsets.current.navigationBars)
+    ) {
         items(postItems) { post ->
             TimelineRow(
                 post = post,

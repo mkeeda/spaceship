@@ -24,6 +24,8 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import com.google.accompanist.insets.LocalWindowInsets
+import com.google.accompanist.insets.rememberInsetsPaddingValues
 import dev.mkeeda.spaceship.data.CommentPost
 import dev.mkeeda.spaceship.data.FocusedPost
 import dev.mkeeda.spaceship.data.ThreadPost
@@ -40,7 +42,8 @@ fun PostDetails(threadPosts: List<ThreadPost>) {
     val focusedPostIndex = threadPosts.indexOfFirst { it is FocusedPost }
     LazyColumn(
         state = rememberLazyListState(initialFirstVisibleItemIndex = focusedPostIndex),
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = rememberInsetsPaddingValues(insets = LocalWindowInsets.current.navigationBars)
     ) {
         itemsIndexed(threadPosts) { index, threadPost ->
             val linkToBeforeEnabled = index >= 1
@@ -75,7 +78,11 @@ fun FocusedPostRow(
             .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
     ) {
         val (senderIcon, postLinker, postHeaderText, body) = createRefs()
-        createHorizontalChain(senderIcon, postHeaderText, chainStyle = ChainStyle.Packed(bias = 0.0f))
+        createHorizontalChain(
+            senderIcon,
+            postHeaderText,
+            chainStyle = ChainStyle.Packed(bias = 0.0f)
+        )
 
         if (linkToBefore) {
             PostLinker(
