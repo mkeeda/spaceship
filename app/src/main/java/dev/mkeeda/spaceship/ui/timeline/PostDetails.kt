@@ -37,6 +37,10 @@ fun PostDetailsScreen(postId: Int) {
     PostDetails(threadPosts = fakeThreadPosts(postId))
 }
 
+/**
+ * @param threadPosts includes one [FocusedPost] and some [CommentPost].
+ * [threadPosts] is sorted by post time
+ */
 @Composable
 fun PostDetails(threadPosts: List<ThreadPost>) {
     val focusedPostIndex = threadPosts.indexOfFirst { it is FocusedPost }
