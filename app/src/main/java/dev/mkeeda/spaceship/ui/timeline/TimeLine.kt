@@ -43,7 +43,7 @@ fun Timeline(
 
 @Preview
 @Composable
-fun TimelineScreenPreview() {
+private fun TimelineScreenPreview() {
     PreviewBackground {
         Timeline(
             postItems = longFakeTimelinePostItems,
@@ -80,7 +80,7 @@ fun TimelineRow(
 
 @Preview
 @Composable
-fun PostRowPreview() {
+private fun PostRowPreview() {
     PreviewBackground {
         TimelineRow(
             post = TimelinePost(

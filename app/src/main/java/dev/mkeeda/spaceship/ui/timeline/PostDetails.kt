@@ -199,7 +199,7 @@ fun PostLinker(
 
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_NO or Configuration.UI_MODE_TYPE_NORMAL)
 @Composable
-fun LightPostDetailsScreenPreview() {
+private fun LightPostDetailsScreenPreview() {
     PreviewBackground {
         PostDetails(threadPosts = fakeThreadPosts(postId = 0))
     }
@@ -207,7 +207,7 @@ fun LightPostDetailsScreenPreview() {
 
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL)
 @Composable
-fun DarkPostDetailsScreenPreview() {
+private fun DarkPostDetailsScreenPreview() {
     PreviewBackground {
         PostDetails(threadPosts = fakeThreadPosts(postId = 0))
     }
