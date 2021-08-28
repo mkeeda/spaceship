@@ -71,8 +71,8 @@ fun FocusedPostRow(
             .fillMaxWidth()
             .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
     ) {
-        val (senderIcon, postLinker, postInfo, body) = createRefs()
-        createHorizontalChain(senderIcon, postInfo, chainStyle = ChainStyle.Packed(bias = 0.0f))
+        val (senderIcon, postLinker, postHeaderText, body) = createRefs()
+        createHorizontalChain(senderIcon, postHeaderText, chainStyle = ChainStyle.Packed(bias = 0.0f))
 
         if (linkToBefore) {
             PostLinker(
@@ -89,13 +89,13 @@ fun FocusedPostRow(
             modifier = Modifier.constrainAs(senderIcon) {
                 top.linkTo(if (linkToBefore) postLinker.bottom else parent.top)
                 start.linkTo(parent.start)
-                end.linkTo(postInfo.start)
+                end.linkTo(postHeaderText.start)
             }
         )
 
         Column(
             modifier = Modifier
-                .constrainAs(postInfo) {
+                .constrainAs(postHeaderText) {
                     top.linkTo(senderIcon.top)
                     bottom.linkTo(body.top)
                     start.linkTo(senderIcon.end)
@@ -115,7 +115,7 @@ fun FocusedPostRow(
         }
         Text(
             modifier = Modifier.constrainAs(body) {
-                top.linkTo(postInfo.bottom, margin = 8.dp)
+                top.linkTo(postHeaderText.bottom, margin = 8.dp)
                 bottom.linkTo(parent.bottom)
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
