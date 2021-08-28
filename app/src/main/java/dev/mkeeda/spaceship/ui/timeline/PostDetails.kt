@@ -66,62 +66,62 @@ fun FocusedPostRow(
     focusedPost: FocusedPost,
     linkToBefore: Boolean = false
 ) {
-    Column(
+    ConstraintLayout(
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
     ) {
-        ConstraintLayout {
-            val (senderIcon, postLinker, postInfo, body) = createRefs()
-            createHorizontalChain(senderIcon, postInfo, chainStyle = ChainStyle.Packed(bias = 0.0f))
+        val (senderIcon, postLinker, postInfo, body) = createRefs()
+        createHorizontalChain(senderIcon, postInfo, chainStyle = ChainStyle.Packed(bias = 0.0f))
 
-            if (linkToBefore) {
-                PostLinker(
-                    modifier = Modifier
-                        .height(16.dp)
-                        .constrainAs(postLinker) {
-                            bottom.linkTo(senderIcon.top)
-                            centerHorizontallyTo(senderIcon)
-                        },
-                    bottomPadding = 2.dp
-                )
-            }
-            SenderIcon(
-                modifier = Modifier.constrainAs(senderIcon) {
-                    top.linkTo(if (linkToBefore) postLinker.bottom else parent.top)
-                    start.linkTo(parent.start)
-                    end.linkTo(postInfo.start)
-                }
+        if (linkToBefore) {
+            PostLinker(
+                modifier = Modifier
+                    .height(16.dp)
+                    .constrainAs(postLinker) {
+                        bottom.linkTo(senderIcon.top)
+                        centerHorizontallyTo(senderIcon)
+                    },
+                bottomPadding = 2.dp
             )
+        }
+        SenderIcon(
+            modifier = Modifier.constrainAs(senderIcon) {
+                top.linkTo(if (linkToBefore) postLinker.bottom else parent.top)
+                start.linkTo(parent.start)
+                end.linkTo(postInfo.start)
+            }
+        )
 
-            Column(
-                modifier = Modifier.constrainAs(postInfo) {
+        Column(
+            modifier = Modifier
+                .constrainAs(postInfo) {
                     top.linkTo(senderIcon.top)
                     bottom.linkTo(body.top)
                     start.linkTo(senderIcon.end)
                     end.linkTo(parent.end)
-                }.padding(start = 8.dp)
-            ) {
-                Text(
-                    text = focusedPost.senderName,
-                    style = MaterialTheme.typography.subtitle1
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = focusedPost.postTime,
-                    modifier = Modifier.alpha(ContentAlpha.medium)
-                )
-            }
+                }
+                .padding(start = 8.dp)
+        ) {
             Text(
-                modifier = Modifier.constrainAs(body) {
-                    top.linkTo(postInfo.bottom, margin = 8.dp)
-                    bottom.linkTo(parent.bottom)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                },
-                text = focusedPost.body
+                text = focusedPost.senderName,
+                style = MaterialTheme.typography.subtitle1
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = focusedPost.postTime,
+                modifier = Modifier.alpha(ContentAlpha.medium)
             )
         }
+        Text(
+            modifier = Modifier.constrainAs(body) {
+                top.linkTo(postInfo.bottom, margin = 8.dp)
+                bottom.linkTo(parent.bottom)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+            },
+            text = focusedPost.body
+        )
     }
 }
 
