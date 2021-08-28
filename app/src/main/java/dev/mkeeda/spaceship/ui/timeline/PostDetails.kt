@@ -12,7 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
@@ -40,13 +40,21 @@ fun PostDetailsScreen(postId: Int) {
 @Composable
 fun PostDetails(threadPosts: List<ThreadPost>) {
     LazyColumn(Modifier.fillMaxSize()) {
-        items(threadPosts) { threadPost ->
+        itemsIndexed(threadPosts) { index, threadPost ->
+            val linkToBeforeEnabled = index >= 1
+            val linkToAfterEnabled = index < threadPosts.size - 1
             when (threadPost) {
                 is FocusedPost -> {
-                    FocusedPostRow(focusedPost = threadPost)
+                    FocusedPostRow(
+                        focusedPost = threadPost,
+                        linkToBefore = linkToBeforeEnabled
+                    )
                 }
                 is CommentPost -> {
-                    CommentPostRow(commentPost = threadPost)
+                    CommentPostRow(
+                        commentPost = threadPost,
+                        linkToAfter = linkToAfterEnabled
+                    )
                 }
             }
         }
@@ -54,7 +62,10 @@ fun PostDetails(threadPosts: List<ThreadPost>) {
 }
 
 @Composable
-fun FocusedPostRow(focusedPost: FocusedPost) {
+fun FocusedPostRow(
+    focusedPost: FocusedPost,
+    linkToBefore: Boolean = false
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -64,18 +75,20 @@ fun FocusedPostRow(focusedPost: FocusedPost) {
             val (senderIcon, postLinker, postInfo, body) = createRefs()
             createHorizontalChain(senderIcon, postInfo, chainStyle = ChainStyle.Packed(bias = 0.0f))
 
-            PostLinker(
-                modifier = Modifier
-                    .height(16.dp)
-                    .constrainAs(postLinker) {
-                        bottom.linkTo(senderIcon.top)
-                        centerHorizontallyTo(senderIcon)
-                    },
-                bottomPadding = 2.dp
-            )
+            if (linkToBefore) {
+                PostLinker(
+                    modifier = Modifier
+                        .height(16.dp)
+                        .constrainAs(postLinker) {
+                            bottom.linkTo(senderIcon.top)
+                            centerHorizontallyTo(senderIcon)
+                        },
+                    bottomPadding = 2.dp
+                )
+            }
             SenderIcon(
                 modifier = Modifier.constrainAs(senderIcon) {
-                    top.linkTo(postLinker.bottom)
+                    top.linkTo(if (linkToBefore) postLinker.bottom else parent.top)
                     start.linkTo(parent.start)
                     end.linkTo(postInfo.start)
                 }
@@ -83,7 +96,7 @@ fun FocusedPostRow(focusedPost: FocusedPost) {
 
             Column(
                 modifier = Modifier.constrainAs(postInfo) {
-                    top.linkTo(postLinker.bottom)
+                    top.linkTo(senderIcon.top)
                     bottom.linkTo(body.top)
                     start.linkTo(senderIcon.end)
                     end.linkTo(parent.end)
@@ -115,8 +128,8 @@ fun FocusedPostRow(focusedPost: FocusedPost) {
 @Composable
 fun CommentPostRow(
     commentPost: CommentPost,
-    beforeLinkTo: Boolean = false,
-    afterLinkTo: Boolean = false
+    linkToBefore: Boolean = false,
+    linkToAfter: Boolean = false
 ) {
     Row(
         modifier = Modifier
@@ -126,7 +139,9 @@ fun CommentPostRow(
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             SenderIcon()
-            PostLinker(topPadding = 2.dp)
+            if (linkToAfter) {
+                PostLinker(topPadding = 2.dp)
+            }
         }
         Spacer(modifier = Modifier.width(8.dp))
         PostContent(

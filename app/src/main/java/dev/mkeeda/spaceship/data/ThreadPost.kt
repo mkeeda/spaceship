@@ -51,5 +51,11 @@ fun fakeThreadPosts(postId: Int): List<ThreadPost> {
             postTime = "2021/08/22 14:00",
             body = "あとの投稿だよ"
         ),
+        CommentPost(
+            id = 0,
+            senderName = "森山みくり",
+            postTime = "2021/08/22 14:00",
+            body = "あとの投稿だよ"
+        ),
     )
 }
