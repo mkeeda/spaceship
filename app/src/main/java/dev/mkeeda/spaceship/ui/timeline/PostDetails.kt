@@ -76,10 +76,24 @@ fun FocusedPostRow(
     focusedPost: FocusedPost,
     linkToBefore: Boolean = false
 ) {
+    Column(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        FocusedPostContent(
+            focusedPost,
+            linkToBefore
+        )
+        Divider(modifier = Modifier.padding(top = 16.dp))
+    }
+}
+
+@Composable
+fun FocusedPostContent(
+    focusedPost: FocusedPost,
+    linkToBefore: Boolean = false
+) {
     ConstraintLayout(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+        modifier = Modifier.padding(start = 16.dp, end = 16.dp)
     ) {
         val (senderIcon, postLinker, postHeaderText, body) = createRefs()
         createHorizontalChain(
