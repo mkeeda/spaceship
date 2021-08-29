@@ -21,3 +21,4 @@ dependencyResolutionManagement {
 rootProject.name = "spaceship"
 include ':app'
 include ':data'
+include ':ui:timeline'
