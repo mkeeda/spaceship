@@ -1,3 +1,5 @@
+import dev.mkeeda.spaceship.buildsrc.Libs
+
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
@@ -27,4 +29,22 @@ android {
 }
 
 dependencies {
+    implementation project(":data")
+
+    implementation Libs.AndroidX.coreKtx
+    implementation Libs.AndroidX.Compose.ui
+    implementation Libs.AndroidX.Compose.material
+    implementation Libs.AndroidX.Compose.uiToolingPreview
+    implementation Libs.AndroidX.constraintLayoutCompose
+
+    implementation Libs.Accompanist.inset
+    implementation Libs.Accompanist.insetUi
+
+    testImplementation Libs.Test.junit
+
+    androidTestImplementation Libs.AndroidX.Test.extJunit
+    androidTestImplementation Libs.AndroidX.Test.espressoCore
+    androidTestImplementation Libs.AndroidX.Compose.uiTestJunit4
+
+    debugImplementation Libs.AndroidX.Compose.uiTooling
 }
