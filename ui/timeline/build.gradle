@@ -35,7 +35,8 @@ android {
 }
 
 dependencies {
-    implementation project(":data")
+    api project(":data")
+    implementation project(":ui:common")
 
     implementation Libs.AndroidX.coreKtx
     implementation Libs.AndroidX.Compose.ui
