@@ -1,5 +1,33 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+import dev.mkeeda.buildsrc.GradlePlugins
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath GradlePlugins.kotlin
+        classpath GradlePlugins.android
+    }
+}
+
+subprojects {
+    configurations.configureEach {
+        // We forcefully exclude AppCompat + MDC from any transitive dependencies.
+        // This is a Compose app, so there's no need for these
+        exclude group: 'androidx.appcompat'
+        exclude group: 'com.google.android.material', module: 'material'
+    }
+
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+        kotlinOptions {
+            // Enable experimental coroutines APIs, including Flow
+            freeCompilerArgs += "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
+            freeCompilerArgs += "-Xopt-in=kotlinx.coroutines.FlowPreview"
+            freeCompilerArgs += "-Xopt-in=kotlin.Experimental"
+
+            // Set JVM target to 1.8
+            jvmTarget = "1.8"
+        }
+    }
 }

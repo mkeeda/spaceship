@@ -1,5 +1,10 @@
 package dev.mkeeda.buildsrc
 
+object GradlePlugins {
+    const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.21"
+    const val android = "com.android.tools.build:gradle:7.1.0-alpha10"
+}
+
 object Libs {
     object AndroidX {
         const val coreKtx = "androidx.core:core-ktx:1.6.0"
@@ -9,7 +14,7 @@ object Libs {
         const val constraintLayoutCompose = "androidx.constraintlayout:constraintlayout-compose:1.0.0-beta02"
 
         object Compose {
-            private const val version = "1.0.1"
+            const val version = "1.0.1"
             const val ui = "androidx.compose.ui:ui:$version"
             const val material = "androidx.compose.material:material:$version"
             const val uiToolingPreview = "androidx.compose.ui:ui-tooling-preview:$version"
