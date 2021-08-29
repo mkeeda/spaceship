@@ -1,4 +1,4 @@
-import dev.mkeeda.buildsrc.Libs
+import dev.mkeeda.spaceship.buildsrc.Libs
 
 plugins {
     id 'com.android.application'

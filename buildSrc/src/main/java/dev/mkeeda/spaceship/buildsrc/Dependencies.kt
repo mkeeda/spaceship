@@ -1,4 +1,4 @@
-package dev.mkeeda.buildsrc
+package dev.mkeeda.spaceship.buildsrc
 
 object GradlePlugins {
     const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.21"

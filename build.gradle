@@ -1,4 +1,4 @@
-import dev.mkeeda.buildsrc.GradlePlugins
+import dev.mkeeda.spaceship.buildsrc.GradlePlugins
 
 buildscript {
     repositories {
