@@ -18,7 +18,7 @@ import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import dev.mkeeda.spaceship.data.TimelinePost
 import dev.mkeeda.spaceship.data.longFakeTimelinePostItems
-import dev.mkeeda.spaceship.ui.util.PreviewBackground
+import dev.mkeeda.spaceship.ui.common.util.PreviewBackground
 
 @Composable
 fun TimelineScreen(openPostDetails: (TimelinePost) -> Unit) {

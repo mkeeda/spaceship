@@ -17,7 +17,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import dev.mkeeda.spaceship.ui.util.PreviewBackground
+import dev.mkeeda.spaceship.ui.common.util.PreviewBackground
 
 @Composable
 fun PostContent(

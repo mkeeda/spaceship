@@ -1,4 +1,4 @@
-package dev.mkeeda.spaceship.ui.theme
+package dev.mkeeda.spaceship.ui.common.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme

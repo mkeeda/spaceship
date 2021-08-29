@@ -30,7 +30,7 @@ import dev.mkeeda.spaceship.data.CommentPost
 import dev.mkeeda.spaceship.data.FocusedPost
 import dev.mkeeda.spaceship.data.ThreadPost
 import dev.mkeeda.spaceship.data.fakeThreadPosts
-import dev.mkeeda.spaceship.ui.util.PreviewBackground
+import dev.mkeeda.spaceship.ui.common.util.PreviewBackground
 
 @Composable
 fun PostDetailsScreen(postId: Int) {

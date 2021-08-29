@@ -8,7 +8,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.google.accompanist.insets.ui.TopAppBar
-import dev.mkeeda.spaceship.ui.theme.SpaceshipTheme
+import dev.mkeeda.spaceship.ui.common.theme.SpaceshipTheme
 
 @Composable
 fun SpaceshipAppBar(currentScreen: Screen) {
