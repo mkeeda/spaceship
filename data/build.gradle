@@ -1,3 +1,9 @@
+import dev.mkeeda.spaceship.buildsrc.Libs
+
 plugins {
     id 'org.jetbrains.kotlin.jvm'
+}
+
+dependencies {
+    implementation Libs.KotlinX.dateTime
 }

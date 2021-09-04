@@ -6,6 +6,10 @@ object GradlePlugins {
 }
 
 object Libs {
+    object KotlinX {
+        const val dateTime = "org.jetbrains.kotlinx:kotlinx-datetime:0.2.1"
+    }
+
     object AndroidX {
         const val coreKtx = "androidx.core:core-ktx:1.6.0"
         const val lifecycleRuntimeKtx = "androidx.lifecycle:lifecycle-runtime-ktx:2.3.1"
