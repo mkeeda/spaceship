@@ -27,10 +27,10 @@ import androidx.constraintlayout.compose.Dimension
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import dev.mkeeda.spaceship.ui.common.util.PreviewBackground
-import dev.mkeeda.spaceship.ui.timeline.state.CommentPost
-import dev.mkeeda.spaceship.ui.timeline.state.FocusedPost
-import dev.mkeeda.spaceship.ui.timeline.state.ThreadPost
-import dev.mkeeda.spaceship.ui.timeline.state.fakeThreadPosts
+import dev.mkeeda.spaceship.ui.timeline.presentation.CommentPost
+import dev.mkeeda.spaceship.ui.timeline.presentation.FocusedPost
+import dev.mkeeda.spaceship.ui.timeline.presentation.ThreadPost
+import dev.mkeeda.spaceship.ui.timeline.presentation.fakeThreadPosts
 
 @Composable
 fun PostDetailsScreen(postId: Int) {

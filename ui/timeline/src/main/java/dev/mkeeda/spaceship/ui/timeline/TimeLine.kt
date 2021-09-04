@@ -10,26 +10,42 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import dev.mkeeda.spaceship.ui.common.util.PreviewBackground
-import dev.mkeeda.spaceship.ui.timeline.state.TimelinePost
-import dev.mkeeda.spaceship.ui.timeline.state.TimelineViewState
+import dev.mkeeda.spaceship.ui.timeline.presentation.TimelinePost
+import dev.mkeeda.spaceship.ui.timeline.presentation.TimelineViewModel
+import dev.mkeeda.spaceship.ui.timeline.presentation.TimelineViewState
 
 @Composable
 fun TimelineScreen(openPostDetails: (TimelinePost) -> Unit) {
-    Timeline(
-        viewState = TimelineViewState.longFake,
+    TimelineScreen(
+        viewModel = viewModel(),
         openPostDetails = openPostDetails
     )
 }
 
 @Composable
-fun Timeline(
+private fun TimelineScreen(
+    viewModel: TimelineViewModel,
+    openPostDetails: (TimelinePost) -> Unit
+) {
+    val timelineViewState by viewModel.state.collectAsState()
+    Timeline(
+        viewState = timelineViewState,
+        openPostDetails = openPostDetails
+    )
+}
+
+@Composable
+private fun Timeline(
     viewState: TimelineViewState,
     openPostDetails: (TimelinePost) -> Unit
 ) {
@@ -59,7 +75,7 @@ private fun TimelineScreenPreview() {
 
 
 @Composable
-fun TimelineRow(
+private fun TimelineRow(
     post: TimelinePost,
     onSelectPost: (TimelinePost) -> Unit
 ) {

@@ -8,6 +8,7 @@ object GradlePlugins {
 object Libs {
     object KotlinX {
         const val dateTime = "org.jetbrains.kotlinx:kotlinx-datetime:0.2.1"
+        const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1"
     }
 
     object AndroidX {
