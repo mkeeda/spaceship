@@ -68,7 +68,7 @@ dependencies {
     implementation Libs.Accompanist.systemUiController
 
     implementation Libs.Hilt.base
-    implementation Libs.Hilt.compiler
+    kapt Libs.Hilt.compiler
 
     testImplementation Libs.Test.junit
 
