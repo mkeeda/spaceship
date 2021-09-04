@@ -11,6 +11,12 @@ object Libs {
         const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1"
     }
 
+    object Ktor {
+        private const val version = "1.6.3"
+        const val clientOkHttp = "io.ktor:ktor-client-okhttp:$version"
+        const val clientSerialization = "io.ktor:ktor-client-serialization:$version"
+    }
+
     object AndroidX {
         const val coreKtx = "androidx.core:core-ktx:1.6.0"
         const val lifecycleRuntimeKtx = "androidx.lifecycle:lifecycle-runtime-ktx:2.3.1"
