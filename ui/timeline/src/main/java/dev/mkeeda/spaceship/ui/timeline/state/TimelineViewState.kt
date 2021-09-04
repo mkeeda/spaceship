@@ -1,5 +1,15 @@
 package dev.mkeeda.spaceship.ui.timeline.state
 
+data class TimelineViewState(
+    val postItems: List<TimelinePost>
+) {
+    companion object {
+        val longFake = TimelineViewState(
+            postItems = fakeTimelinePostItems + fakeTimelinePostItems + fakeTimelinePostItems
+        )
+    }
+}
+
 data class TimelinePost(
     val id: Int,
     val senderName: String,
@@ -45,5 +55,3 @@ private val fakeTimelinePostItems = listOf(
         body = "誰が休んでも仕事が回る。帰ってこられる環境を普段から作っておくこと。それが職場におけるリスク管理",
     ),
 )
-
-val longFakeTimelinePostItems = fakeTimelinePostItems + fakeTimelinePostItems + fakeTimelinePostItems

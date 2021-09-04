@@ -16,6 +16,7 @@ object Libs {
         const val activityCompose = "androidx.activity:activity-compose:1.3.1"
         const val navigationCompose = "androidx.navigation:navigation-compose:2.4.0-alpha06"
         const val constraintLayoutCompose = "androidx.constraintlayout:constraintlayout-compose:1.0.0-beta02"
+        const val viewModelCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha07"
 
         object Compose {
             const val version = "1.0.1"

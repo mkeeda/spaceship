@@ -18,26 +18,26 @@ import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import dev.mkeeda.spaceship.ui.common.util.PreviewBackground
 import dev.mkeeda.spaceship.ui.timeline.state.TimelinePost
-import dev.mkeeda.spaceship.ui.timeline.state.longFakeTimelinePostItems
+import dev.mkeeda.spaceship.ui.timeline.state.TimelineViewState
 
 @Composable
 fun TimelineScreen(openPostDetails: (TimelinePost) -> Unit) {
     Timeline(
-        postItems = longFakeTimelinePostItems,
+        viewState = TimelineViewState.longFake,
         openPostDetails = openPostDetails
     )
 }
 
 @Composable
 fun Timeline(
-    postItems: List<TimelinePost>,
+    viewState: TimelineViewState,
     openPostDetails: (TimelinePost) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         contentPadding = rememberInsetsPaddingValues(insets = LocalWindowInsets.current.navigationBars)
     ) {
-        items(postItems) { post ->
+        items(viewState.postItems) { post ->
             TimelineRow(
                 post = post,
                 onSelectPost = openPostDetails
@@ -51,7 +51,7 @@ fun Timeline(
 private fun TimelineScreenPreview() {
     PreviewBackground {
         Timeline(
-            postItems = longFakeTimelinePostItems,
+            viewState = TimelineViewState.longFake,
             openPostDetails = {}
         )
     }
