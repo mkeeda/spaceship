@@ -16,9 +16,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
-import dev.mkeeda.spaceship.data.TimelinePost
-import dev.mkeeda.spaceship.data.longFakeTimelinePostItems
 import dev.mkeeda.spaceship.ui.common.util.PreviewBackground
+import dev.mkeeda.spaceship.ui.timeline.state.TimelinePost
+import dev.mkeeda.spaceship.ui.timeline.state.longFakeTimelinePostItems
 
 @Composable
 fun TimelineScreen(openPostDetails: (TimelinePost) -> Unit) {

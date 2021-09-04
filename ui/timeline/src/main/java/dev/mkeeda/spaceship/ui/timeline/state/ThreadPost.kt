@@ -1,4 +1,4 @@
-package dev.mkeeda.spaceship.data
+package dev.mkeeda.spaceship.ui.timeline.state
 
 interface ThreadPost {
     val id: Int

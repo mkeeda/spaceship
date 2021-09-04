@@ -1,4 +1,4 @@
-package dev.mkeeda.spaceship.data
+package dev.mkeeda.spaceship.ui.timeline.state
 
 data class TimelinePost(
     val id: Int,
