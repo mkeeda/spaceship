@@ -17,6 +17,8 @@ import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.tooling.preview.Preview
@@ -24,34 +26,45 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import dev.mkeeda.spaceship.ui.common.util.PreviewBackground
 import dev.mkeeda.spaceship.ui.timeline.presentation.CommentPost
 import dev.mkeeda.spaceship.ui.timeline.presentation.FocusedPost
+import dev.mkeeda.spaceship.ui.timeline.presentation.PostDetailsViewModel
+import dev.mkeeda.spaceship.ui.timeline.presentation.PostDetailsViewState
 import dev.mkeeda.spaceship.ui.timeline.presentation.ThreadPost
-import dev.mkeeda.spaceship.ui.timeline.presentation.fakeThreadPosts
 
 @Composable
 fun PostDetailsScreen(postId: Int) {
-    PostDetails(threadPosts = fakeThreadPosts(postId))
+    // TODO use postId
+    PostDetailsScreen(viewModel = viewModel())
+}
+
+@Composable
+private fun PostDetailsScreen(
+    viewModel: PostDetailsViewModel
+) {
+    val postDetailsViewState by viewModel.state.collectAsState()
+    PostDetails(threadPostItems = postDetailsViewState.threadPostItems)
 }
 
 /**
- * @param threadPosts includes one [FocusedPost] and some [CommentPost].
- * [threadPosts] is sorted by post time
+ * @param threadPostItems includes one [FocusedPost] and some [CommentPost].
+ * [threadPostItems] is sorted by post time
  */
 @Composable
-fun PostDetails(threadPosts: List<ThreadPost>) {
-    val focusedPostIndex = threadPosts.indexOfFirst { it is FocusedPost }
+fun PostDetails(threadPostItems: List<ThreadPost>) {
+    val focusedPostIndex = threadPostItems.indexOfFirst { it is FocusedPost }
     LazyColumn(
         state = rememberLazyListState(initialFirstVisibleItemIndex = focusedPostIndex),
         modifier = Modifier.fillMaxSize(),
         contentPadding = rememberInsetsPaddingValues(insets = LocalWindowInsets.current.navigationBars)
     ) {
-        itemsIndexed(threadPosts) { index, threadPost ->
+        itemsIndexed(threadPostItems) { index, threadPost ->
             val linkToBeforeEnabled = index >= 1
-            val linkToAfterEnabled = index < threadPosts.size - 1
+            val linkToAfterEnabled = index < threadPostItems.size - 1
             when (threadPost) {
                 is FocusedPost -> {
                     FocusedPostRow(
@@ -231,7 +244,7 @@ fun PostLinker(
 @Composable
 private fun LightPostDetailsScreenPreview() {
     PreviewBackground {
-        PostDetails(threadPosts = fakeThreadPosts(postId = 0))
+        PostDetails(threadPostItems = PostDetailsViewState.fake.threadPostItems)
     }
 }
 
@@ -239,6 +252,6 @@ private fun LightPostDetailsScreenPreview() {
 @Composable
 private fun DarkPostDetailsScreenPreview() {
     PreviewBackground {
-        PostDetails(threadPosts = fakeThreadPosts(postId = 0))
+        PostDetails(threadPostItems = PostDetailsViewState.fake.threadPostItems)
     }
 }
