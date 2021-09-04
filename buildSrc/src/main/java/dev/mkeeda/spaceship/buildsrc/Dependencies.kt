@@ -3,6 +3,7 @@ package dev.mkeeda.spaceship.buildsrc
 object GradlePlugins {
     const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.21"
     const val android = "com.android.tools.build:gradle:7.1.0-alpha10"
+    const val hilt = "com.google.dagger:hilt-android-gradle-plugin:${Libs.Hilt.version}"
 }
 
 object Libs {
@@ -45,6 +46,12 @@ object Libs {
         const val inset = "com.google.accompanist:accompanist-insets:$version"
         const val insetUi = "com.google.accompanist:accompanist-insets-ui:$version"
         const val systemUiController = "com.google.accompanist:accompanist-systemuicontroller:$version"
+    }
+
+    object Hilt {
+        const val version = "2.38.1"
+        const val base = "com.google.dagger:hilt-android:$version"
+        const val compiler = "com.google.dagger:hilt-android-compiler:$version"
     }
 
     object Test {

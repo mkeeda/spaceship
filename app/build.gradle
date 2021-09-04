@@ -3,6 +3,8 @@ import dev.mkeeda.spaceship.buildsrc.Libs
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -47,6 +49,9 @@ android {
 dependencies {
     implementation project(":ui:common")
     implementation project(":ui:timeline")
+    implementation project(":domain")
+    implementation project(":data")
+    implementation project(":infra")
 
     implementation Libs.AndroidX.coreKtx
     implementation Libs.AndroidX.Compose.ui
@@ -60,6 +65,9 @@ dependencies {
     implementation Libs.Accompanist.inset
     implementation Libs.Accompanist.insetUi
     implementation Libs.Accompanist.systemUiController
+
+    implementation Libs.Hilt.base
+    implementation Libs.Hilt.compiler
 
     testImplementation Libs.Test.junit
 

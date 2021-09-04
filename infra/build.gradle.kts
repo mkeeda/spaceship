@@ -3,6 +3,8 @@ import dev.mkeeda.spaceship.buildsrc.Libs
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    kotlin("kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -34,4 +36,7 @@ android {
 dependencies {
     implementation(Libs.Ktor.clientOkHttp)
     implementation(Libs.Ktor.clientSerialization)
+
+    implementation(Libs.Hilt.base)
+    kapt(Libs.Hilt.compiler)
 }
