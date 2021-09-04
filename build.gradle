@@ -11,6 +11,14 @@ buildscript {
     }
 }
 
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+
 subprojects {
     configurations.configureEach {
         // We forcefully exclude AppCompat + MDC from any transitive dependencies.
