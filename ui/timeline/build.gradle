@@ -1,7 +1,7 @@
 import dev.mkeeda.spaceship.buildsrc.Libs
 
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
 }
 
@@ -9,16 +9,11 @@ android {
     compileSdk 30
 
     defaultConfig {
-        applicationId "dev.mkeeda.spaceship"
         minSdk 26
         targetSdk 30
-        versionCode 1
-        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary true
-        }
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -37,16 +32,11 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion Libs.AndroidX.Compose.version
     }
-    packagingOptions {
-        resources {
-            excludes += '/META-INF/{AL2.0,LGPL2.1}'
-        }
-    }
 }
 
 dependencies {
+    api project(":data")
     implementation project(":ui:common")
-    implementation project(":ui:timeline")
 
     implementation Libs.AndroidX.coreKtx
     implementation Libs.AndroidX.Compose.ui
@@ -56,6 +46,7 @@ dependencies {
     implementation Libs.AndroidX.activityCompose
     implementation Libs.AndroidX.navigationCompose
     implementation Libs.AndroidX.constraintLayoutCompose
+    implementation Libs.AndroidX.viewModelCompose
 
     implementation Libs.Accompanist.inset
     implementation Libs.Accompanist.insetUi

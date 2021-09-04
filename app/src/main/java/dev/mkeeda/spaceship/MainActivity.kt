@@ -11,7 +11,7 @@ import com.google.accompanist.insets.ProvideWindowInsets
 import dev.mkeeda.spaceship.ui.foundation.AppNavigation
 import dev.mkeeda.spaceship.ui.foundation.Screen
 import dev.mkeeda.spaceship.ui.foundation.SpaceshipAppBar
-import dev.mkeeda.spaceship.ui.theme.SpaceshipTheme
+import dev.mkeeda.spaceship.ui.common.theme.SpaceshipTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
