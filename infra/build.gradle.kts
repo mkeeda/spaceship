@@ -1,3 +1,4 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import dev.mkeeda.spaceship.buildsrc.Libs
 
 plugins {
@@ -20,6 +21,16 @@ android {
     }
 
     buildTypes {
+        debug {
+            gradleLocalProperties(rootDir).let {
+                val kintoneDomain = it.getProperty("kintoneDomain")
+                val kintoneUsername = it.getProperty("kintoneUsername")
+                val kintonePassword = it.getProperty("kintonePassword")
+                buildConfigField("String", "kintoneDomain", kintoneDomain)
+                buildConfigField("String", "kintoneUsername", kintoneUsername)
+                buildConfigField("String", "kintonePassword", kintonePassword)
+            }
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(

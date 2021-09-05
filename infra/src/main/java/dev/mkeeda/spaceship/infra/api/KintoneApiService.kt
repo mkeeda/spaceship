@@ -1,6 +1,7 @@
 package dev.mkeeda.spaceship.infra.api
 
 import android.util.Base64
+import dev.mkeeda.spaceship.infra.BuildConfig
 import io.ktor.client.HttpClient
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.header
@@ -12,9 +13,9 @@ import javax.inject.Inject
 class KintoneApiService @Inject constructor(
     val httpClient: HttpClient
 ) {
-    val baseUrl = ""
-    private val username = ""
-    private val password = ""
+    val baseUrl = BuildConfig.kintoneDomain
+    private val username = BuildConfig.kintoneUsername
+    private val password = BuildConfig.kintonePassword
 
     val authentication: String = Base64.encodeToString(
         "$username:$password".toByteArray(),
