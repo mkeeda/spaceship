@@ -7,6 +7,7 @@ buildscript {
     }
     dependencies {
         classpath GradlePlugins.kotlin
+        classpath GradlePlugins.serialization
         classpath GradlePlugins.android
         classpath GradlePlugins.hilt
     }

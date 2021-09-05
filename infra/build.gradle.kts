@@ -3,6 +3,7 @@ import dev.mkeeda.spaceship.buildsrc.Libs
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    kotlin("plugin.serialization")
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
 }
@@ -36,6 +37,8 @@ android {
 dependencies {
     implementation(Libs.Ktor.clientOkHttp)
     implementation(Libs.Ktor.clientSerialization)
+    implementation(Libs.Ktor.Logging.base)
+    implementation(Libs.Ktor.Logging.slf4JImpl)
 
     implementation(Libs.Hilt.base)
     kapt(Libs.Hilt.compiler)

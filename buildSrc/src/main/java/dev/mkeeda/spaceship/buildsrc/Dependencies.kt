@@ -2,6 +2,7 @@ package dev.mkeeda.spaceship.buildsrc
 
 object GradlePlugins {
     const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.21"
+    const val serialization = "org.jetbrains.kotlin:kotlin-serialization:1.5.21"
     const val android = "com.android.tools.build:gradle:7.1.0-alpha10"
     const val hilt = "com.google.dagger:hilt-android-gradle-plugin:${Libs.Hilt.version}"
 }
@@ -16,6 +17,11 @@ object Libs {
         private const val version = "1.6.3"
         const val clientOkHttp = "io.ktor:ktor-client-okhttp:$version"
         const val clientSerialization = "io.ktor:ktor-client-serialization:$version"
+
+        object Logging {
+            const val base = "io.ktor:ktor-client-logging:$version"
+            const val slf4JImpl = "ch.qos.logback:logback-classic:1.2.5"
+        }
     }
 
     object AndroidX {
