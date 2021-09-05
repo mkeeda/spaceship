@@ -3,7 +3,6 @@ package dev.mkeeda.spaceship.infra.api
 import android.util.Base64
 import dev.mkeeda.spaceship.infra.BuildConfig
 import io.ktor.client.HttpClient
-import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.http.ContentType
@@ -24,14 +23,18 @@ class KintoneApiService @Inject constructor(
 
     suspend inline fun <reified T> post(
         endpoint: KintoneApiEndpoint,
-        block: HttpRequestBuilder.() -> Unit = {}
+        param: KintoneApiEndpoint.RequestParameter? = null
     ): T = httpClient.post(baseUrl + endpoint.path) {
         header("X-Cybozu-Authorization", authentication)
         contentType(ContentType.Application.Json)
-        block()
+        param?.let {
+            body = it
+        }
     }
 }
 
 interface KintoneApiEndpoint {
     val path: String
+
+    interface RequestParameter
 }
