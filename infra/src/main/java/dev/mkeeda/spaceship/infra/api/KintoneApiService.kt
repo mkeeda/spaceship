@@ -8,6 +8,7 @@ import io.ktor.client.request.post
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import javax.inject.Inject
+import kotlinx.serialization.Serializable
 
 class KintoneApiService @Inject constructor(
     val httpClient: HttpClient
@@ -24,12 +25,15 @@ class KintoneApiService @Inject constructor(
     suspend inline fun <reified T> post(
         endpoint: KintoneApiEndpoint,
         param: KintoneApiEndpoint.RequestParameter? = null
-    ): T = httpClient.post(baseUrl + endpoint.path) {
-        header("X-Cybozu-Authorization", authentication)
-        contentType(ContentType.Application.Json)
-        param?.let {
-            body = it
+    ): T {
+        val response: SuccessResponse<T> = httpClient.post(baseUrl + endpoint.path) {
+            header("X-Cybozu-Authorization", authentication)
+            contentType(ContentType.Application.Json)
+            param?.let {
+                body = it
+            }
         }
+        return response.result
     }
 }
 
@@ -38,3 +42,9 @@ interface KintoneApiEndpoint {
 
     interface RequestParameter
 }
+
+@Serializable
+data class SuccessResponse<out T>(
+    val success: Boolean = true,
+    val result: T
+)
