@@ -1,7 +1,17 @@
 package dev.mkeeda.spaceship.data.kintone
 
 import kotlinx.datetime.Instant
+import kotlinx.serialization.Serializable
 
+@Serializable
+data class KintoneNotificationList(
+    val hasMore: Boolean,
+    val ntf: List<KintoneNotification>,
+    val senders: Map<Long, KintoneUser>,
+    val hasIgnoreMention: Boolean?
+)
+
+@Serializable
 data class KintoneNotification(
     val id: Long,
     val moduleType: ModuleType,
@@ -26,6 +36,7 @@ enum class ModuleType {
     APP, SPACE, PEOPLE, MESSAGE
 }
 
+@Serializable
 data class Content(
     val title: Data,
     val subTitle: Data,
@@ -34,6 +45,7 @@ data class Content(
     val contents: List<String>
 )
 
+@Serializable
 data class Data(
     val dataType: DataType,
     val text: String,

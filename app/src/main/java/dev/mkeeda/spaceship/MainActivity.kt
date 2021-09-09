@@ -8,11 +8,13 @@ import androidx.core.view.WindowCompat
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.insets.ProvideWindowInsets
+import dagger.hilt.android.AndroidEntryPoint
+import dev.mkeeda.spaceship.ui.common.theme.SpaceshipTheme
 import dev.mkeeda.spaceship.ui.foundation.AppNavigation
 import dev.mkeeda.spaceship.ui.foundation.Screen
 import dev.mkeeda.spaceship.ui.foundation.SpaceshipAppBar
-import dev.mkeeda.spaceship.ui.common.theme.SpaceshipTheme
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

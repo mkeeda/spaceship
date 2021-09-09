@@ -2,13 +2,27 @@ package dev.mkeeda.spaceship.buildsrc
 
 object GradlePlugins {
     const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.21"
-    const val android = "com.android.tools.build:gradle:7.1.0-alpha10"
+    const val serialization = "org.jetbrains.kotlin:kotlin-serialization:1.5.21"
+    const val android = "com.android.tools.build:gradle:7.1.0-alpha11"
+    const val hilt = "com.google.dagger:hilt-android-gradle-plugin:${Libs.Hilt.version}"
 }
 
 object Libs {
     object KotlinX {
         const val dateTime = "org.jetbrains.kotlinx:kotlinx-datetime:0.2.1"
         const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1"
+        const val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-core:1.2.2"
+    }
+
+    object Ktor {
+        private const val version = "1.6.3"
+        const val clientOkHttp = "io.ktor:ktor-client-okhttp:$version"
+        const val clientSerialization = "io.ktor:ktor-client-serialization:$version"
+
+        object Logging {
+            const val base = "io.ktor:ktor-client-logging:$version"
+            const val slf4JImpl = "ch.qos.logback:logback-classic:1.2.5"
+        }
     }
 
     object AndroidX {
@@ -39,6 +53,12 @@ object Libs {
         const val inset = "com.google.accompanist:accompanist-insets:$version"
         const val insetUi = "com.google.accompanist:accompanist-insets-ui:$version"
         const val systemUiController = "com.google.accompanist:accompanist-systemuicontroller:$version"
+    }
+
+    object Hilt {
+        const val version = "2.38.1"
+        const val base = "com.google.dagger:hilt-android:$version"
+        const val compiler = "com.google.dagger:hilt-android-compiler:$version"
     }
 
     object Test {
