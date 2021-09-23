@@ -4,7 +4,7 @@ object GradlePlugins {
     const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.21"
     const val serialization = "org.jetbrains.kotlin:kotlin-serialization:1.5.21"
     const val android = "com.android.tools.build:gradle:7.1.0-alpha12"
-    const val hilt = "com.google.dagger:hilt-android-gradle-plugin:${Libs.Hilt.version}"
+    const val hilt = "com.google.dagger:hilt-android-gradle-plugin:${Libs.Dagger.version}"
 }
 
 object Libs {
@@ -55,10 +55,14 @@ object Libs {
         const val systemUiController = "com.google.accompanist:accompanist-systemuicontroller:$version"
     }
 
-    object Hilt {
+    object Dagger {
         const val version = "2.38.1"
-        const val base = "com.google.dagger:hilt-android:$version"
-        const val compiler = "com.google.dagger:hilt-android-compiler:$version"
+        const val base = "com.google.dagger:dagger:$version"
+
+        object Hilt {
+            const val base = "com.google.dagger:hilt-android:$version"
+            const val compiler = "com.google.dagger:hilt-android-compiler:$version"
+        }
     }
 
     object Test {
