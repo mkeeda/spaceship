@@ -16,7 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import dev.mkeeda.spaceship.data.PostId
@@ -28,7 +28,7 @@ import dev.mkeeda.spaceship.ui.timeline.presentation.TimelineViewState
 @Composable
 fun TimelineScreen(openPostDetails: (TimelinePost) -> Unit) {
     TimelineScreen(
-        viewModel = viewModel(),
+        viewModel = hiltViewModel(),
         openPostDetails = openPostDetails
     )
 }
@@ -68,7 +68,7 @@ private fun Timeline(
 private fun TimelineScreenPreview() {
     PreviewBackground {
         Timeline(
-            viewState = TimelineViewState.longFake,
+            viewState = TimelineViewState.LongFake,
             openPostDetails = {}
         )
     }

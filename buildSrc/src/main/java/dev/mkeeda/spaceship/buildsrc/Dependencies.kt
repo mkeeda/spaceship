@@ -33,6 +33,11 @@ object Libs {
         const val constraintLayoutCompose = "androidx.constraintlayout:constraintlayout-compose:1.0.0-beta02"
         const val viewModelCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha07"
 
+        object Hilt {
+            const val navigationCompose = "androidx.hilt:hilt-navigation-compose:1.0.0-alpha03"
+        }
+
+
         object Compose {
             const val version = "1.0.1"
             const val ui = "androidx.compose.ui:ui:$version"

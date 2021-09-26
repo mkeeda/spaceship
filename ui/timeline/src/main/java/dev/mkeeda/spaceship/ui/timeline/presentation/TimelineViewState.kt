@@ -7,7 +7,11 @@ data class TimelineViewState(
     val postItems: List<TimelinePost>
 ) {
     companion object {
-        val longFake = TimelineViewState(
+        val Initial = TimelineViewState(
+            postItems = listOf()
+        )
+
+        val LongFake = TimelineViewState(
             postItems = fakeTimelinePostItems + fakeTimelinePostItems + fakeTimelinePostItems
         )
     }
