@@ -6,7 +6,7 @@ object NtfList : KintoneApiEndpoint {
     override val path: String = "/k/api/ntf/list.json"
 
     @Serializable
-    data class RequestParameter(
+    data class RequestParam(
         val checkIgnoreMention: Boolean = false,
         val checkNew: Boolean? = false,
         val mentioned: Boolean? = null,
@@ -15,6 +15,6 @@ object NtfList : KintoneApiEndpoint {
         val offset: Int = 0,
         val read: Boolean? = null,
         val filterId: Long? = null
-    ) : KintoneApiEndpoint.RequestParameter
+    ) : KintoneApiEndpoint.RequestParam
 }
 

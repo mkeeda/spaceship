@@ -24,7 +24,7 @@ class KintoneApiService @Inject constructor(
 
     suspend inline fun <reified T> post(
         endpoint: KintoneApiEndpoint,
-        param: KintoneApiEndpoint.RequestParameter? = null
+        param: KintoneApiEndpoint.RequestParam? = null
     ): T {
         val response: SuccessResponse<T> = httpClient.post(baseUrl + endpoint.path) {
             header("X-Cybozu-Authorization", authentication)
@@ -40,7 +40,7 @@ class KintoneApiService @Inject constructor(
 interface KintoneApiEndpoint {
     val path: String
 
-    interface RequestParameter
+    interface RequestParam
 }
 
 @Serializable

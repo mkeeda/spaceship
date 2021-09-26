@@ -14,7 +14,7 @@ class TimelineRepositoryImpl @Inject constructor(
     override suspend fun getTimelinePostList(): List<TimelinePost> {
         val response = kintoneApiService.post<KintoneNotificationList>(
             endpoint = NtfList,
-            param = NtfList.RequestParameter(
+            param = NtfList.RequestParam(
                 mentioned = false,
                 read = true,
             )
