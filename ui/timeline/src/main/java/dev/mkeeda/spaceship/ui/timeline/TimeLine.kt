@@ -16,18 +16,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
+import dev.mkeeda.spaceship.data.PostId
+import dev.mkeeda.spaceship.data.TimelinePost
 import dev.mkeeda.spaceship.ui.common.util.PreviewBackground
-import dev.mkeeda.spaceship.ui.timeline.presentation.TimelinePost
 import dev.mkeeda.spaceship.ui.timeline.presentation.TimelineViewModel
 import dev.mkeeda.spaceship.ui.timeline.presentation.TimelineViewState
 
 @Composable
 fun TimelineScreen(openPostDetails: (TimelinePost) -> Unit) {
     TimelineScreen(
-        viewModel = viewModel(),
+        viewModel = hiltViewModel(),
         openPostDetails = openPostDetails
     )
 }
@@ -67,7 +68,7 @@ private fun Timeline(
 private fun TimelineScreenPreview() {
     PreviewBackground {
         Timeline(
-            viewState = TimelineViewState.longFake,
+            viewState = TimelineViewState.LongFake,
             openPostDetails = {}
         )
     }
@@ -105,7 +106,7 @@ private fun PostRowPreview() {
     PreviewBackground {
         TimelineRow(
             post = TimelinePost(
-                id = 0,
+                id = PostId(0),
                 senderName = "新垣結衣abcdefghigklnmop",
                 postTime = "2021/08/16 14:26",
                 body = "昔々あるところに、おじいさんとおばあさんがいました",

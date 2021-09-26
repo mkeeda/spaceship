@@ -67,8 +67,8 @@ dependencies {
     implementation Libs.Accompanist.insetUi
     implementation Libs.Accompanist.systemUiController
 
-    implementation Libs.Hilt.base
-    kapt Libs.Hilt.compiler
+    implementation Libs.Dagger.Hilt.base
+    kapt Libs.Dagger.Hilt.compiler
 
     testImplementation Libs.Test.junit
 

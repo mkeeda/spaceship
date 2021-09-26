@@ -46,11 +46,13 @@ android {
 }
 
 dependencies {
-    implementation(Libs.Ktor.clientOkHttp)
+    implementation(project(":domain"))
+
+    api(Libs.Ktor.clientOkHttp)
     implementation(Libs.Ktor.clientSerialization)
     implementation(Libs.Ktor.Logging.base)
     implementation(Libs.Ktor.Logging.slf4JImpl)
 
-    implementation(Libs.Hilt.base)
-    kapt(Libs.Hilt.compiler)
+    implementation(Libs.Dagger.Hilt.base)
+    kapt(Libs.Dagger.Hilt.compiler)
 }
