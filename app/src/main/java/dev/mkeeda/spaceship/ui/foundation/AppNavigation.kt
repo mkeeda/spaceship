@@ -6,9 +6,9 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
+import dev.mkeeda.spaceship.data.PostId
 import dev.mkeeda.spaceship.ui.timeline.PostDetailsScreen
 import dev.mkeeda.spaceship.ui.timeline.TimelineScreen
-import dev.mkeeda.spaceship.ui.timeline.presentation.PostId
 
 sealed class Screen(val route: String, val name: String) {
     object Timeline : Screen(route = "timeline", name = "Timeline")
