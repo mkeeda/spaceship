@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flatMapLatest
 
 abstract class UseCase<P, O> {
-    private val paramEvent = MutableSharedFlow<P>()
+    private val paramEvent = MutableSharedFlow<P>(replay = 1)
 
     val output: Flow<DomainLoadState<O>> = paramEvent
         .flatMapLatest {
