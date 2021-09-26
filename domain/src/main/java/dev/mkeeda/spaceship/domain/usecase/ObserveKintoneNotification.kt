@@ -8,11 +8,12 @@ import kotlinx.coroutines.flow.flow
 
 class ObserveKintoneNotification @Inject constructor(
     private val repository: KintoneNotificationRepository
-) : NoParamUseCase<KintoneNotificationList> {
-    override fun execute(): Flow<DomainLoadState<KintoneNotificationList>> {
+) : NoParamUseCase<KintoneNotificationList>() {
+
+    override fun useCaseFlow(): Flow<KintoneNotificationList> {
         return flow {
             val notificationList = repository.getKintoneNotificationList()
             emit(notificationList)
-        }.toLoadState()
+        }
     }
 }
