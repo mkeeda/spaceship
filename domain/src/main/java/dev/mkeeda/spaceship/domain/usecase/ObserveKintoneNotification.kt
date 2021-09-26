@@ -9,11 +9,10 @@ import kotlinx.coroutines.flow.flow
 class ObserveKintoneNotification @Inject constructor(
     private val repository: KintoneNotificationRepository
 ) {
-    fun execute(): Flow<KintoneNotificationList> {
+    fun execute(): Flow<DomainLoadState<KintoneNotificationList>> {
         return flow {
             val notificationList = repository.getKintoneNotificationList()
             emit(notificationList)
-        }
+        }.toLoadState()
     }
 }
-
