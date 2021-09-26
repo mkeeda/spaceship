@@ -20,6 +20,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import dev.mkeeda.spaceship.ui.common.util.PreviewBackground
+import dev.mkeeda.spaceship.ui.timeline.presentation.PostId
 import dev.mkeeda.spaceship.ui.timeline.presentation.TimelinePost
 import dev.mkeeda.spaceship.ui.timeline.presentation.TimelineViewModel
 import dev.mkeeda.spaceship.ui.timeline.presentation.TimelineViewState
@@ -105,7 +106,7 @@ private fun PostRowPreview() {
     PreviewBackground {
         TimelineRow(
             post = TimelinePost(
-                id = 0,
+                id = PostId(0),
                 senderName = "新垣結衣abcdefghigklnmop",
                 postTime = "2021/08/16 14:26",
                 body = "昔々あるところに、おじいさんとおばあさんがいました",

@@ -8,12 +8,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import dev.mkeeda.spaceship.ui.timeline.PostDetailsScreen
 import dev.mkeeda.spaceship.ui.timeline.TimelineScreen
+import dev.mkeeda.spaceship.ui.timeline.presentation.PostId
 
 sealed class Screen(val route: String, val name: String) {
     object Timeline : Screen(route = "timeline", name = "Timeline")
     object PostDetails : Screen(route = "post/{postId}", name = "PostDetails") {
-        fun createRoute(postId: Int): String {
-            return "post/$postId"
+        fun createRoute(postId: PostId): String {
+            return "post/${postId.value}"
         }
     }
 
