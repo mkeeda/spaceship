@@ -7,8 +7,8 @@ object NtfList : KintoneApiEndpoint {
 
     @Serializable
     data class RequestParameter(
-        val checkIgnoreMention: Boolean = true,
-        val checkNew: Boolean?,
+        val checkIgnoreMention: Boolean = false,
+        val checkNew: Boolean? = false,
         val mentioned: Boolean? = null,
         val flagged: Boolean? = null,
         val size: Int = 50,

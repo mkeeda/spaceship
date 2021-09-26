@@ -6,6 +6,6 @@ plugins {
 }
 
 dependencies {
-    implementation Libs.KotlinX.dateTime
+    api Libs.KotlinX.dateTime
     implementation Libs.KotlinX.serialization
 }

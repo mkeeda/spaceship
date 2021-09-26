@@ -48,7 +48,7 @@ android {
 dependencies {
     implementation(project(":domain"))
 
-    implementation(Libs.Ktor.clientOkHttp)
+    api(Libs.Ktor.clientOkHttp)
     implementation(Libs.Ktor.clientSerialization)
     implementation(Libs.Ktor.Logging.base)
     implementation(Libs.Ktor.Logging.slf4JImpl)
