@@ -1,5 +1,6 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import dev.mkeeda.spaceship.buildsrc.Libs
+import org.jetbrains.kotlin.konan.properties.hasProperty
 
 plugins {
     id("com.android.library")
@@ -23,9 +24,9 @@ android {
     buildTypes {
         debug {
             gradleLocalProperties(rootDir).let {
-                val kintoneDomain = it.getProperty("kintoneDomain")
-                val kintoneUsername = it.getProperty("kintoneUsername")
-                val kintonePassword = it.getProperty("kintonePassword")
+                val kintoneDomain = if (it.hasProperty("kintoneDomain")) it.getProperty("kintoneDomain") else "\"\""
+                val kintoneUsername = if (it.hasProperty("kintoneUsername")) it.getProperty("kintoneUsername") else "\"\""
+                val kintonePassword = if (it.hasProperty("kintonePassword")) it.getProperty("kintonePassword") else "\"\""
                 buildConfigField("String", "kintoneDomain", kintoneDomain)
                 buildConfigField("String", "kintoneUsername", kintoneUsername)
                 buildConfigField("String", "kintonePassword", kintonePassword)
