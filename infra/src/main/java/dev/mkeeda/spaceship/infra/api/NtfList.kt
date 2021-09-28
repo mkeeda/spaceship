@@ -17,4 +17,3 @@ object NtfList : KintoneApiEndpoint {
         val filterId: Long? = null
     ) : KintoneApiEndpoint.RequestParam
 }
-

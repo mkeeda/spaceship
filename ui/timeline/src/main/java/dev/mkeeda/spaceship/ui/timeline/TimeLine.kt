@@ -74,7 +74,6 @@ private fun TimelineScreenPreview() {
     }
 }
 
-
 @Composable
 private fun TimelineRow(
     post: TimelinePost,

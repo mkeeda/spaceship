@@ -22,10 +22,12 @@ class ApiModule {
     fun provideHttpClient(): HttpClient {
         return HttpClient(OkHttp) {
             install(JsonFeature) {
-                serializer = KotlinxSerializer(json = Json {
-                    prettyPrint = true
-                    ignoreUnknownKeys = true
-                })
+                serializer = KotlinxSerializer(
+                    json = Json {
+                        prettyPrint = true
+                        ignoreUnknownKeys = true
+                    }
+                )
             }
             install(Logging) {
                 logger = Logger.DEFAULT
