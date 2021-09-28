@@ -7,8 +7,8 @@ import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
-import javax.inject.Inject
 import kotlinx.serialization.Serializable
+import javax.inject.Inject
 
 class KintoneApiService @Inject constructor(
     val httpClient: HttpClient

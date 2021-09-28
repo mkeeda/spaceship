@@ -21,7 +21,7 @@ sealed class Screen(val route: String, val name: String) {
     companion object {
         fun fromRoute(route: String?): Screen {
             return when (route?.substringBefore("/")) {
-                Timeline.route-> Timeline
+                Timeline.route -> Timeline
                 PostDetails.route.substringBefore("/") -> PostDetails
                 else -> Timeline
             }

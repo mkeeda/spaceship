@@ -10,6 +10,7 @@ buildscript {
         classpath GradlePlugins.serialization
         classpath GradlePlugins.android
         classpath GradlePlugins.hilt
+        classpath GradlePlugins.spotless
     }
 }
 
@@ -38,6 +39,27 @@ subprojects {
 
             // Set JVM target to 1.8
             jvmTarget = "1.8"
+        }
+    }
+
+    apply plugin: "com.diffplug.spotless"
+    spotless {
+        format 'misc', {
+            target '*.gradle', '*.md', '.gitignore'
+
+            trimTrailingWhitespace()
+            indentWithSpaces()
+            endWithNewline()
+        }
+        kotlin {
+            target '**/*.kt'
+            targetExclude("$buildDir/**/*.kt")
+            targetExclude('bin/**/*.kt')
+            ktlint()
+        }
+        kotlinGradle {
+            target '*.gradle.kts'
+            ktlint()
         }
     }
 }
