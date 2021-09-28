@@ -1,3 +1,4 @@
+import com.android.build.api.dsl.LibraryBuildType
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import dev.mkeeda.spaceship.buildsrc.Libs
 import org.jetbrains.kotlin.konan.properties.hasProperty
@@ -23,14 +24,7 @@ android {
 
     buildTypes {
         debug {
-            gradleLocalProperties(rootDir).let {
-                val kintoneDomain = if (it.hasProperty("kintoneDomain")) it.getProperty("kintoneDomain") else "\"\""
-                val kintoneUsername = if (it.hasProperty("kintoneUsername")) it.getProperty("kintoneUsername") else "\"\""
-                val kintonePassword = if (it.hasProperty("kintonePassword")) it.getProperty("kintonePassword") else "\"\""
-                buildConfigField("String", "kintoneDomain", kintoneDomain)
-                buildConfigField("String", "kintoneUsername", kintoneUsername)
-                buildConfigField("String", "kintonePassword", kintonePassword)
-            }
+            setKintoneCredentials()
         }
         release {
             isMinifyEnabled = false
@@ -38,11 +32,26 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            setKintoneCredentials()
         }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+    }
+}
+
+fun LibraryBuildType.setKintoneCredentials() {
+    gradleLocalProperties(rootDir).let {
+        val kintoneDomain =
+            if (it.hasProperty("kintoneDomain")) it.getProperty("kintoneDomain") else "\"\""
+        val kintoneUsername =
+            if (it.hasProperty("kintoneUsername")) it.getProperty("kintoneUsername") else "\"\""
+        val kintonePassword =
+            if (it.hasProperty("kintonePassword")) it.getProperty("kintonePassword") else "\"\""
+        buildConfigField("String", "kintoneDomain", kintoneDomain)
+        buildConfigField("String", "kintoneUsername", kintoneUsername)
+        buildConfigField("String", "kintonePassword", kintonePassword)
     }
 }
 
