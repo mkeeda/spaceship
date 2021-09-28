@@ -53,6 +53,8 @@ subprojects {
         }
         kotlin {
             target '**/*.kt'
+            targetExclude("$buildDir/**/*.kt")
+            targetExclude('bin/**/*.kt')
             ktlint()
         }
         kotlinGradle {
