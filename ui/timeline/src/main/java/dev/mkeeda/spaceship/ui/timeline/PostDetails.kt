@@ -26,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import dev.mkeeda.spaceship.ui.common.util.PreviewBackground
@@ -35,11 +34,11 @@ import dev.mkeeda.spaceship.ui.timeline.presentation.FocusedPost
 import dev.mkeeda.spaceship.ui.timeline.presentation.PostDetailsViewModel
 import dev.mkeeda.spaceship.ui.timeline.presentation.PostDetailsViewState
 import dev.mkeeda.spaceship.ui.timeline.presentation.ThreadPost
+import dev.mkeeda.spaceship.ui.timeline.presentation.postDetailsViewModel
 
 @Composable
-fun PostDetailsScreen(postId: Int) {
-    // TODO use postId
-    PostDetailsScreen(viewModel = viewModel())
+fun PostDetailsScreen(postId: Long) {
+    PostDetailsScreen(viewModel = postDetailsViewModel(postId))
 }
 
 @Composable

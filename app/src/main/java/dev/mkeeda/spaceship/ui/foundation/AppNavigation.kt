@@ -53,7 +53,10 @@ fun AppNavigation(navHostController: NavHostController) {
             route = Screen.PostDetails.route,
             arguments = listOf(navArgument(ScreenArgsKey.PostDetails.PostId) { type = NavType.LongType})
         ) {
-            PostDetailsScreen()
+            val postId = requireNotNull(it.arguments?.getLong(ScreenArgsKey.PostDetails.PostId)) {
+                "postId must not be null."
+            }
+            PostDetailsScreen(postId = postId)
         }
     }
 }
