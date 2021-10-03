@@ -32,7 +32,7 @@ sealed class Screen(val route: String, val name: String) {
     }
 }
 
-object ScreenArgsKey {
+private object ScreenArgsKey {
     object PostDetails {
         const val PostId = "postId"
     }

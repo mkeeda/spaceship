@@ -54,7 +54,7 @@ private fun PostDetailsScreen(
  * [threadPostItems] is sorted by post time
  */
 @Composable
-fun PostDetails(threadPostItems: List<ThreadPost>) {
+private fun PostDetails(threadPostItems: List<ThreadPost>) {
     val focusedPostIndex = threadPostItems.indexOfFirst { it is FocusedPost }
     LazyColumn(
         state = rememberLazyListState(initialFirstVisibleItemIndex = focusedPostIndex),
@@ -84,7 +84,7 @@ fun PostDetails(threadPostItems: List<ThreadPost>) {
 }
 
 @Composable
-fun FocusedPostRow(
+private fun FocusedPostRow(
     focusedPost: FocusedPost,
     linkToBefore: Boolean = false
 ) {
@@ -100,7 +100,7 @@ fun FocusedPostRow(
 }
 
 @Composable
-fun FocusedPostContent(
+private fun FocusedPostContent(
     focusedPost: FocusedPost,
     linkToBefore: Boolean = false
 ) {
@@ -170,7 +170,7 @@ fun FocusedPostContent(
 }
 
 @Composable
-fun CommentPostRow(
+private fun CommentPostRow(
     commentPost: CommentPost,
     linkToBefore: Boolean = false,
     linkToAfter: Boolean = false
@@ -229,7 +229,7 @@ fun CommentPostRow(
 }
 
 @Composable
-fun PostLinker(
+private fun PostLinker(
     modifier: Modifier = Modifier,
 ) {
     Divider(
