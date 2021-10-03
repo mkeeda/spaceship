@@ -5,7 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navArgument
+import androidx.navigation.navArgument
 import dev.mkeeda.spaceship.data.PostId
 import dev.mkeeda.spaceship.ui.timeline.PostDetailsScreen
 import dev.mkeeda.spaceship.ui.timeline.TimelineScreen
