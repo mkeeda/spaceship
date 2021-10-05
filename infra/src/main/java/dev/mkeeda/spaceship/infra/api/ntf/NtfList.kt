@@ -1,5 +1,6 @@
-package dev.mkeeda.spaceship.infra.api
+package dev.mkeeda.spaceship.infra.api.ntf
 
+import dev.mkeeda.spaceship.infra.api.KintoneApiEndpoint
 import kotlinx.serialization.Serializable
 
 object NtfList : KintoneApiEndpoint {

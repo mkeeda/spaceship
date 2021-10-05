@@ -1,4 +1,6 @@
-package dev.mkeeda.spaceship.infra.api
+package dev.mkeeda.spaceship.infra.api.thread
+
+import dev.mkeeda.spaceship.infra.api.KintoneApiEndpoint
 
 object ThreadPostList : KintoneApiEndpoint {
     override val path: String = "/k/api/space/thread/post/list.json"

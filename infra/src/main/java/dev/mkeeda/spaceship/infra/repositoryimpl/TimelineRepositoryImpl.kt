@@ -5,7 +5,7 @@ import dev.mkeeda.spaceship.data.TimelinePost
 import dev.mkeeda.spaceship.data.kintone.KintoneNotificationList
 import dev.mkeeda.spaceship.domain.repository.TimelineRepository
 import dev.mkeeda.spaceship.infra.api.KintoneApiService
-import dev.mkeeda.spaceship.infra.api.NtfList
+import dev.mkeeda.spaceship.infra.api.ntf.NtfList
 import javax.inject.Inject
 
 class TimelineRepositoryImpl @Inject constructor(
