@@ -4,11 +4,6 @@ import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class KintoneThreadList(
-    val items: List<KintoneThread>
-)
-
-@Serializable
 data class KintoneThread(
     val id: Long,
     val threadId: Long,

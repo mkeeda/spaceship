@@ -1,6 +1,8 @@
 package dev.mkeeda.spaceship.infra.api.thread
 
+import dev.mkeeda.spaceship.data.kintone.KintoneThread
 import dev.mkeeda.spaceship.infra.api.KintoneApiEndpoint
+import kotlinx.serialization.Serializable
 
 object ThreadPostList : KintoneApiEndpoint {
     override val path: String = "/k/api/space/thread/post/list.json"
@@ -8,6 +10,12 @@ object ThreadPostList : KintoneApiEndpoint {
     data class RequestParams(
         val threadId: Long,
         val postIds: List<Long>,
-        val size: Int = 1,
+        val size: Int,
     ) : KintoneApiEndpoint.RequestParam
 }
+
+@Serializable
+internal data class ThreadPostListResponse(
+    val items: List<KintoneThread>
+)
+
