@@ -1,7 +1,10 @@
 package dev.mkeeda.spaceship.infra.repositoryimpl
 
 import dev.mkeeda.spaceship.data.PostId
+import dev.mkeeda.spaceship.data.PostingLocation
 import dev.mkeeda.spaceship.data.TimelinePost
+import dev.mkeeda.spaceship.data.kintone.KintoneNotification
+import dev.mkeeda.spaceship.data.kintone.ModuleType
 import dev.mkeeda.spaceship.domain.repository.TimelineRepository
 import dev.mkeeda.spaceship.infra.api.KintoneApiService
 import dev.mkeeda.spaceship.infra.api.ntf.NtfGet
@@ -39,7 +42,8 @@ private fun NtfList.Response.toTimeline(): List<TimelinePost> {
             id = PostId(value = kintoneNotification.id),
             senderName = senders[kintoneNotification.sender]?.name ?: "",
             postTime = kintoneNotification.sentTime.toString(),
-            body = kintoneNotification.content.message.text
+            body = kintoneNotification.content.message.text,
+            location = kintoneNotification.postingLocation
         )
     }
 }
@@ -49,6 +53,24 @@ private fun NtfGet.Response.toTimeline(): TimelinePost {
         id = PostId(value = item.id),
         senderName = sender?.name ?: "",
         postTime = item.sentTime.toString(),
-        body = item.content.message.text
+        body = item.content.message.text,
+        location = item.postingLocation
     )
 }
+
+private val KintoneNotification.postingLocation: PostingLocation
+    get() = when (moduleType) {
+        ModuleType.APP -> PostingLocation.App(
+            appId = moduleId,
+            recordId = moduleSubId
+        )
+        ModuleType.SPACE -> PostingLocation.Space(
+            threadId = moduleSubId,
+            commentId = commentId
+        )
+        ModuleType.PEOPLE -> PostingLocation.People(
+            threadId = moduleId,
+            commentId = commentId
+        )
+        ModuleType.MESSAGE -> PostingLocation.Message
+    }

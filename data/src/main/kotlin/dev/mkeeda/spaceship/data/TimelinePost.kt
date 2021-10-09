@@ -5,43 +5,58 @@ data class TimelinePost(
     val senderName: String,
     val postTime: String,
     val body: String,
+    val location: PostingLocation
+)
+
+sealed class PostingLocation {
+    data class App(val appId: Long, val recordId: Long) : PostingLocation()
+    data class Space(val threadId: Long, val commentId: Long) : PostingLocation()
+    data class People(val threadId: Long, val commentId: Long) : PostingLocation()
+    object Message : PostingLocation()
+}
+
+private fun fakeTimeline(
+    id: PostId = PostId(1),
+    senderName: String = "",
+    postTime: String = "2021/08/16 14:26",
+    body: String = "",
+): TimelinePost = TimelinePost(
+    id,
+    senderName,
+    postTime,
+    body,
+    PostingLocation.Space(0, 0)
 )
 
 val fakeTimelinePostItems = listOf(
-    TimelinePost(
+    fakeTimeline(
         id = PostId(1),
         senderName = "森山みくり",
-        postTime = "2021/08/16 14:26",
         body = "子どもを産むのに、順番待ちが必要って何？",
     ),
-    TimelinePost(
+    fakeTimeline(
         id = PostId(2),
         senderName = "津崎平匡",
-        postTime = "2021/08/16 14:26",
         body = "気づいたんです。料理は科学",
     ),
-    TimelinePost(
+    fakeTimeline(
         id = PostId(3),
         senderName = "森山みくり",
-        postTime = "2021/08/16 14:26",
         body = "どうして女の人だけが、自分の名字を捨てなきゃいけないのか",
     ),
-    TimelinePost(
+    fakeTimeline(
         id = PostId(4),
         senderName = "森山みくり",
-        postTime = "2021/08/16 14:26",
         body = "百合ちゃんの助けになれない。家のこともできない。仕事も行ってない。いいことひとつもない。うううう",
     ),
-    TimelinePost(
+    fakeTimeline(
         id = PostId(5),
         senderName = "土屋百合",
-        postTime = "2021/08/16 14:26",
         body = "体の不調がきついのは、みんな同じ。比べるものじゃないでしょ",
     ),
-    TimelinePost(
+    fakeTimeline(
         id = PostId(6),
         senderName = "沼田頼綱",
-        postTime = "2021/08/16 14:26",
         body = "誰が休んでも仕事が回る。帰ってこられる環境を普段から作っておくこと。それが職場におけるリスク管理",
     ),
 )
