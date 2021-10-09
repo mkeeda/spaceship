@@ -7,8 +7,8 @@ import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
-import kotlinx.serialization.Serializable
 import javax.inject.Inject
+import kotlinx.serialization.Serializable
 
 class KintoneApiService @Inject constructor(
     val httpClient: HttpClient
@@ -22,7 +22,7 @@ class KintoneApiService @Inject constructor(
         Base64.URL_SAFE or Base64.NO_WRAP
     )
 
-    suspend inline fun <reified T> post(
+    suspend inline fun <reified T : KintoneApiEndpoint.Response> post(
         endpoint: KintoneApiEndpoint,
         param: KintoneApiEndpoint.RequestParam? = null
     ): T {
@@ -41,6 +41,8 @@ interface KintoneApiEndpoint {
     val path: String
 
     interface RequestParam
+
+    interface Response
 }
 
 @Serializable

@@ -2,11 +2,9 @@ package dev.mkeeda.spaceship.infra.repositoryimpl
 
 import dev.mkeeda.spaceship.data.PostId
 import dev.mkeeda.spaceship.data.TimelinePost
-import dev.mkeeda.spaceship.data.kintone.KintoneNotificationList
 import dev.mkeeda.spaceship.domain.repository.TimelineRepository
 import dev.mkeeda.spaceship.infra.api.KintoneApiService
 import dev.mkeeda.spaceship.infra.api.ntf.NtfGet
-import dev.mkeeda.spaceship.infra.api.ntf.NtfGetResponse
 import dev.mkeeda.spaceship.infra.api.ntf.NtfList
 import javax.inject.Inject
 
@@ -14,7 +12,7 @@ class TimelineRepositoryImpl @Inject constructor(
     private val kintoneApiService: KintoneApiService
 ) : TimelineRepository {
     override suspend fun getTimelinePostList(): List<TimelinePost> {
-        val response = kintoneApiService.post<KintoneNotificationList>(
+        val response = kintoneApiService.post<NtfList.Response>(
             endpoint = NtfList,
             param = NtfList.RequestParam(
                 mentioned = false,
@@ -25,7 +23,7 @@ class TimelineRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getTimelinePost(postId: PostId): TimelinePost {
-        val response = kintoneApiService.post<NtfGetResponse>(
+        val response = kintoneApiService.post<NtfGet.Response>(
             endpoint = NtfGet,
             param = NtfGet.RequestParam(
                 id = postId.value
@@ -35,7 +33,7 @@ class TimelineRepositoryImpl @Inject constructor(
     }
 }
 
-private fun KintoneNotificationList.toTimeline(): List<TimelinePost> {
+private fun NtfList.Response.toTimeline(): List<TimelinePost> {
     return ntf.map { kintoneNotification ->
         TimelinePost(
             id = PostId(value = kintoneNotification.id),
@@ -46,7 +44,7 @@ private fun KintoneNotificationList.toTimeline(): List<TimelinePost> {
     }
 }
 
-private fun NtfGetResponse.toTimeline(): TimelinePost {
+private fun NtfGet.Response.toTimeline(): TimelinePost {
     return TimelinePost(
         id = PostId(value = item.id),
         senderName = sender?.name ?: "",

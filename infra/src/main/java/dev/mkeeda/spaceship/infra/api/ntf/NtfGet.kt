@@ -12,10 +12,10 @@ object NtfGet : KintoneApiEndpoint {
     data class RequestParam(
         val id: Long
     ) : KintoneApiEndpoint.RequestParam
-}
 
-@Serializable
-internal data class NtfGetResponse(
-    val item: KintoneNotification,
-    val sender: KintoneUser?
-)
+    @Serializable
+    data class Response(
+        val item: KintoneNotification,
+        val sender: KintoneUser?
+    ) : KintoneApiEndpoint.Response
+}

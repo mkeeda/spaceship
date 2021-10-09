@@ -12,10 +12,9 @@ object ThreadPostList : KintoneApiEndpoint {
         val postIds: List<Long>,
         val size: Int,
     ) : KintoneApiEndpoint.RequestParam
+
+    @Serializable
+    data class Response(
+        val items: List<KintoneThread>
+    ) : KintoneApiEndpoint.Response
 }
-
-@Serializable
-internal data class ThreadPostListResponse(
-    val items: List<KintoneThread>
-)
-

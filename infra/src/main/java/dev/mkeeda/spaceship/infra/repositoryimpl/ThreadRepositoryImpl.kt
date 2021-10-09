@@ -5,7 +5,6 @@ import dev.mkeeda.spaceship.data.kintone.KintoneThread
 import dev.mkeeda.spaceship.domain.repository.ThreadRepository
 import dev.mkeeda.spaceship.infra.api.KintoneApiService
 import dev.mkeeda.spaceship.infra.api.thread.ThreadPostList
-import dev.mkeeda.spaceship.infra.api.thread.ThreadPostListResponse
 import javax.inject.Inject
 
 class ThreadRepositoryImpl @Inject constructor(
@@ -16,7 +15,7 @@ class ThreadRepositoryImpl @Inject constructor(
          * When it requests with size = 1,
          * the response is one thread post that includes children comment posts.
          */
-        val response = kintoneApiService.post<ThreadPostListResponse>(
+        val response = kintoneApiService.post<ThreadPostList.Response>(
             endpoint = ThreadPostList,
             param = ThreadPostList.RequestParams(
                 threadId = threadId,
