@@ -153,7 +153,7 @@ private fun FocusedPostContent(
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = focusedPost.postTime,
+                text = focusedPost.postTime.toString(),
                 modifier = Modifier.alpha(ContentAlpha.medium)
             )
         }

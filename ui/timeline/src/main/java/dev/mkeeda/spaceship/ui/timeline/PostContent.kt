@@ -18,11 +18,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.mkeeda.spaceship.ui.common.util.PreviewBackground
+import kotlinx.datetime.Instant
+import kotlinx.datetime.toInstant
 
 @Composable
 fun PostContent(
     senderName: String,
-    postTime: String,
+    postTime: Instant,
     body: String,
     modifier: Modifier = Modifier
 ) {
@@ -40,7 +42,7 @@ fun PostContent(
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
-                text = postTime,
+                text = postTime.toString(),
                 maxLines = 1,
                 textAlign = TextAlign.End,
                 modifier = Modifier.alpha(ContentAlpha.medium)
@@ -57,7 +59,7 @@ private fun Preview() {
     PreviewBackground {
         PostContent(
             senderName = "123456789123456789123456789123456789123456789123456789123456789",
-            postTime = "2021/08/28",
+            postTime = "2021-08-22T14:21:00.000Z".toInstant(),
             body = "bodybodybodybodybodybodybodybodybodybodybodybodybodybodybody"
         )
     }

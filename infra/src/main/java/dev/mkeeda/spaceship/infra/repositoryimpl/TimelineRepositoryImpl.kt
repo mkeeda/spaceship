@@ -41,7 +41,7 @@ private fun NtfList.Response.toTimeline(): List<TimelinePost> {
         TimelinePost(
             id = PostId(value = kintoneNotification.id),
             senderName = senders[kintoneNotification.sender]?.name ?: "",
-            postTime = kintoneNotification.sentTime.toString(),
+            postTime = kintoneNotification.sentTime,
             body = kintoneNotification.content.message.text,
             location = kintoneNotification.postingLocation
         )
@@ -52,7 +52,7 @@ private fun NtfGet.Response.toTimeline(): TimelinePost {
     return TimelinePost(
         id = PostId(value = item.id),
         senderName = sender?.name ?: "",
-        postTime = item.sentTime.toString(),
+        postTime = item.sentTime,
         body = item.content.message.text,
         location = item.postingLocation
     )

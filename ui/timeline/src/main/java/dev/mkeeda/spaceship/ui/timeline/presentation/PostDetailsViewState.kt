@@ -1,5 +1,8 @@
 package dev.mkeeda.spaceship.ui.timeline.presentation
 
+import kotlinx.datetime.Instant
+import kotlinx.datetime.toInstant
+
 data class PostDetailsViewState(
     val threadPostItems: List<ThreadPost>
 ) {
@@ -13,21 +16,21 @@ data class PostDetailsViewState(
 interface ThreadPost {
     val id: Int
     val senderName: String
-    val postTime: String
+    val postTime: Instant
     val body: String
 }
 
 data class FocusedPost(
     override val id: Int,
     override val senderName: String,
-    override val postTime: String,
+    override val postTime: Instant,
     override val body: String,
 ) : ThreadPost
 
 data class CommentPost(
     override val id: Int,
     override val senderName: String,
-    override val postTime: String,
+    override val postTime: Instant,
     override val body: String,
 ) : ThreadPost
 
@@ -35,13 +38,13 @@ private val fakeThreadPostItems = listOf(
     CommentPost(
         id = 0,
         senderName = "森山みくり",
-        postTime = "2021/08/22 13:00",
+        postTime = "2021-08-22T13:11:00.000Z".toInstant(),
         body = "親投稿だよ\nこんにちは"
     ),
     FocusedPost(
         id = 1,
         senderName = "逃げ恥予告Bot",
-        postTime = "2021/08/22 13:31",
+        postTime = "2021-08-22T13:14:00.000Z".toInstant(),
         body = """
             家庭という仕事場の「共同経営者」である森山みくり(新垣結衣)と津崎平匡(星野 源)。共働きとなり、２人に最適な家事の分担も出来て、平和で幸せな日々を過ごしていた。
 
@@ -57,13 +60,13 @@ private val fakeThreadPostItems = listOf(
     CommentPost(
         id = 0,
         senderName = "森山みくり",
-        postTime = "2021/08/22 14:00",
+        postTime = "2021-08-22T14:11:00.000Z".toInstant(),
         body = "あとの投稿だよ"
     ),
     CommentPost(
         id = 0,
         senderName = "森山みくり",
-        postTime = "2021/08/22 14:00",
+        postTime = "2021-08-22T14:21:00.000Z".toInstant(),
         body = "あとの投稿だよ"
     ),
 )

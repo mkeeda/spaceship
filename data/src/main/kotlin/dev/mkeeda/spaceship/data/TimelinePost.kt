@@ -1,9 +1,12 @@
 package dev.mkeeda.spaceship.data
 
+import kotlinx.datetime.Instant
+import kotlinx.datetime.toInstant
+
 data class TimelinePost(
     val id: PostId,
     val senderName: String,
-    val postTime: String,
+    val postTime: Instant,
     val body: String,
     val location: PostingLocation
 )
@@ -15,10 +18,10 @@ sealed class PostingLocation {
     object Message : PostingLocation()
 }
 
-private fun fakeTimeline(
+fun fakeTimeline(
     id: PostId = PostId(1),
     senderName: String = "",
-    postTime: String = "2021/08/16 14:26",
+    postTime: Instant = "2021-08-16T14:21:00.000Z".toInstant(),
     body: String = "",
 ): TimelinePost = TimelinePost(
     id,
