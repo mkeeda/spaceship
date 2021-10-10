@@ -4,7 +4,7 @@ import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class KintoneThread(
+data class KintoneThreadPost(
     val id: Long,
     val threadId: Long,
     val commentCount: Int,
@@ -24,7 +24,7 @@ data class Comment(
     val commentCount: Int,
     val commentedAt: Instant,
     val comments: List<Comment>,
-    val body: String?,
+    val body: String,
     val comment: String?,
     val creator: KintoneUser,
     val createdAt: Instant,

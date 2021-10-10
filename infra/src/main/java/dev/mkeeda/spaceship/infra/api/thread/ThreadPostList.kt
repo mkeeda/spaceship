@@ -1,6 +1,6 @@
 package dev.mkeeda.spaceship.infra.api.thread
 
-import dev.mkeeda.spaceship.data.kintone.KintoneThread
+import dev.mkeeda.spaceship.data.kintone.KintoneThreadPost
 import dev.mkeeda.spaceship.infra.api.KintoneApiEndpoint
 import kotlinx.serialization.Serializable
 
@@ -15,6 +15,6 @@ object ThreadPostList : KintoneApiEndpoint {
 
     @Serializable
     data class Response(
-        val items: List<KintoneThread>
+        val items: List<KintoneThreadPost>
     ) : KintoneApiEndpoint.Response
 }
