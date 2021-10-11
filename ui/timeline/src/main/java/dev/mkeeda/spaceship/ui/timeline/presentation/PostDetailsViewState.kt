@@ -1,5 +1,6 @@
 package dev.mkeeda.spaceship.ui.timeline.presentation
 
+import dev.mkeeda.spaceship.data.Conversation
 import kotlinx.datetime.Instant
 import kotlinx.datetime.toInstant
 
@@ -13,11 +14,13 @@ data class PostDetailsViewState(
     }
 }
 
-interface ThreadPost {
+interface ThreadPost : Comparable<ThreadPost> {
     val id: Int
     val senderName: String
     val postTime: Instant
     val body: String
+
+    override fun compareTo(other: ThreadPost): Int = postTime.compareTo(other.postTime)
 }
 
 data class FocusedPost(
@@ -33,6 +36,24 @@ data class CommentPost(
     override val postTime: Instant,
     override val body: String,
 ) : ThreadPost
+
+fun Conversation.toThreadPostItems(): List<ThreadPost> {
+    val focusedPost = FocusedPost(
+        id = 0,
+        senderName = topic.senderName,
+        postTime = topic.postTime,
+        body = topic.body
+    )
+    val commentPosts = comments?.map {
+        CommentPost(
+            id = 0,
+            senderName = it.senderName,
+            postTime = it.postTime,
+            body = it.body
+        )
+    } ?: emptyList()
+    return (listOf(focusedPost) + commentPosts).sorted()
+}
 
 private val fakeThreadPostItems = listOf(
     CommentPost(
