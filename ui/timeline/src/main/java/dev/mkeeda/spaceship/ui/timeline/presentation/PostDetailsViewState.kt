@@ -8,6 +8,10 @@ data class PostDetailsViewState(
     val threadPostItems: List<ThreadPost>
 ) {
     companion object {
+        val Initial = PostDetailsViewState(
+            threadPostItems = emptyList()
+        )
+
         val fake = PostDetailsViewState(
             threadPostItems = fakeThreadPostItems
         )

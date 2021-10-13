@@ -55,9 +55,9 @@ private fun PostDetailsScreen(
  */
 @Composable
 private fun PostDetails(threadPostItems: List<ThreadPost>) {
-    val focusedPostIndex = threadPostItems.indexOfFirst { it is FocusedPost }
+    val focusedPostIndex = threadPostItems.indexOfFirst { it is FocusedPost }.takeIf { it >= 0 }
     LazyColumn(
-        state = rememberLazyListState(initialFirstVisibleItemIndex = focusedPostIndex),
+        state = rememberLazyListState(initialFirstVisibleItemIndex = focusedPostIndex ?: 0),
         modifier = Modifier.fillMaxSize(),
         contentPadding = rememberInsetsPaddingValues(insets = LocalWindowInsets.current.navigationBars)
     ) {
