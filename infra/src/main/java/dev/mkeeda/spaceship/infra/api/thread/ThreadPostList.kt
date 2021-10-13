@@ -7,6 +7,7 @@ import kotlinx.serialization.Serializable
 object ThreadPostList : KintoneApiEndpoint {
     override val path: String = "/k/api/space/thread/post/list.json"
 
+    @Serializable
     data class RequestParams(
         val threadId: Long,
         val postIds: List<Long>,
