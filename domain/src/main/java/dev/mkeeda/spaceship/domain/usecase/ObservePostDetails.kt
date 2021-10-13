@@ -44,7 +44,7 @@ class ObservePostDetails @Inject constructor(
                 TimelinePost(
                     id = PostId(value = comment.id),
                     senderName = comment.creator.name,
-                    postTime = comment.commentedAt,
+                    postTime = comment.createdAt,
                     body = comment.body,
                     location = PostingLocation.Space(
                         threadId = spaceLocation.threadId,

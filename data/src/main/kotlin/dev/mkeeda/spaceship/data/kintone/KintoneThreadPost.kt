@@ -21,15 +21,9 @@ data class KintoneThreadPost(
 data class Comment(
     val id: Long,
     val postId: Long,
-    val commentCount: Int,
-    val commentedAt: Instant,
-    val comments: List<Comment>,
     val body: String,
-    val comment: String?,
     val creator: KintoneUser,
     val createdAt: Instant,
     val likeCount: Int,
     val liked: Boolean,
-    val isAppComment: Boolean,
-    val isPost: Boolean
 )
