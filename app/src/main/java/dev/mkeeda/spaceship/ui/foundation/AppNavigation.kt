@@ -51,7 +51,7 @@ fun AppNavigation(navHostController: NavHostController) {
         }
         composable(
             route = Screen.PostDetails.route,
-            arguments = listOf(navArgument(ScreenArgsKey.PostDetails.PostId) { type = NavType.LongType})
+            arguments = listOf(navArgument(ScreenArgsKey.PostDetails.PostId) { type = NavType.LongType })
         ) {
             val postId = requireNotNull(it.arguments?.getLong(ScreenArgsKey.PostDetails.PostId)) {
                 "postId must not be null."
