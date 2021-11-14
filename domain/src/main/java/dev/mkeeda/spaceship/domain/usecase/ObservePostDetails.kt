@@ -17,41 +17,45 @@ class ObservePostDetails @Inject constructor(
     override fun useCaseFlow(param: PostId): Flow<Conversation> {
         return flow {
             val topic = timelineRepository.getTimelinePost(postId = param)
-            val conversation = when (val location = topic.location) {
+            val postItems = when (val location = topic.location) {
                 is PostingLocation.App -> TODO("not implemented")
                 PostingLocation.Message -> TODO("not implemented")
                 is PostingLocation.People -> TODO("not implemented")
-                is PostingLocation.Space -> spaceConversation(location)
+                is PostingLocation.Space -> spacePostItems(location)
             }
-            emit(conversation)
+            emit(
+                Conversation(
+                    topicId = param,
+                    comments = postItems.sorted()
+                )
+            )
         }
     }
 
-    private suspend fun spaceConversation(spaceLocation: PostingLocation.Space): Conversation {
+    private suspend fun spacePostItems(spaceLocation: PostingLocation.Space): List<TimelinePost> {
         val threadPost = threadRepository.getThreadPost(
             threadId = spaceLocation.threadId,
             postId = spaceLocation.commentId
         )
-        return Conversation(
-            topic = TimelinePost(
+        return listOf(
+            TimelinePost(
                 id = PostId(value = threadPost.id),
                 senderName = threadPost.creator.name,
-                postTime = threadPost.commentedAt,
+                postTime = threadPost.createdAt,
                 body = threadPost.body,
                 location = spaceLocation
-            ),
-            comments = threadPost.comments.map { comment ->
-                TimelinePost(
-                    id = PostId(value = comment.id),
-                    senderName = comment.creator.name,
-                    postTime = comment.createdAt,
-                    body = comment.body,
-                    location = PostingLocation.Space(
-                        threadId = spaceLocation.threadId,
-                        commentId = comment.id
-                    )
+            )
+        ) + threadPost.comments.map { comment ->
+            TimelinePost(
+                id = PostId(value = comment.id),
+                senderName = comment.creator.name,
+                postTime = comment.createdAt,
+                body = comment.body,
+                location = PostingLocation.Space(
+                    threadId = spaceLocation.threadId,
+                    commentId = comment.id
                 )
-            }
-        )
+            )
+        }
     }
 }

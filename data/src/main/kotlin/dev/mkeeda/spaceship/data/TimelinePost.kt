@@ -9,7 +9,9 @@ data class TimelinePost(
     val postTime: Instant,
     val body: String,
     val location: PostingLocation
-)
+) : Comparable<TimelinePost> {
+    override fun compareTo(other: TimelinePost): Int = postTime.compareTo(other.postTime)
+}
 
 sealed class PostingLocation {
     data class App(val appId: Long, val recordId: Long) : PostingLocation()

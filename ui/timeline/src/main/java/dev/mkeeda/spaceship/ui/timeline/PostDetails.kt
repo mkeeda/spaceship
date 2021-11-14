@@ -28,12 +28,11 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
+import dev.mkeeda.spaceship.data.Conversation
+import dev.mkeeda.spaceship.data.TimelinePost
 import dev.mkeeda.spaceship.ui.common.util.PreviewBackground
-import dev.mkeeda.spaceship.ui.timeline.presentation.CommentPost
-import dev.mkeeda.spaceship.ui.timeline.presentation.FocusedPost
 import dev.mkeeda.spaceship.ui.timeline.presentation.PostDetailsViewModel
 import dev.mkeeda.spaceship.ui.timeline.presentation.PostDetailsViewState
-import dev.mkeeda.spaceship.ui.timeline.presentation.ThreadPost
 import dev.mkeeda.spaceship.ui.timeline.presentation.postDetailsViewModel
 
 @Composable
@@ -46,38 +45,32 @@ private fun PostDetailsScreen(
     viewModel: PostDetailsViewModel
 ) {
     val postDetailsViewState by viewModel.state.collectAsState()
-    PostDetails(threadPostItems = postDetailsViewState.threadPostItems)
+    postDetailsViewState.conversation?.let {
+        PostDetails(conversation = it)
+    }
 }
 
-/**
- * @param threadPostItems includes one [FocusedPost] and some [CommentPost].
- * [threadPostItems] is sorted by post time
- */
 @Composable
-private fun PostDetails(threadPostItems: List<ThreadPost>) {
-    val focusedPostIndex = threadPostItems.indexOfFirst { it is FocusedPost }.takeIf { it >= 0 }
+private fun PostDetails(conversation: Conversation) {
     LazyColumn(
-        state = rememberLazyListState(initialFirstVisibleItemIndex = focusedPostIndex ?: 0),
+        state = rememberLazyListState(initialFirstVisibleItemIndex = conversation.topicCommentIndex),
         modifier = Modifier.fillMaxSize(),
         contentPadding = rememberInsetsPaddingValues(insets = LocalWindowInsets.current.navigationBars)
     ) {
-        itemsIndexed(threadPostItems) { index, threadPost ->
+        itemsIndexed(conversation.comments) { index, threadPost ->
             val linkToBeforeEnabled = index >= 1
-            val linkToAfterEnabled = index < threadPostItems.size - 1
-            when (threadPost) {
-                is FocusedPost -> {
-                    FocusedPostRow(
-                        focusedPost = threadPost,
-                        linkToBefore = linkToBeforeEnabled
-                    )
-                }
-                is CommentPost -> {
-                    CommentPostRow(
-                        commentPost = threadPost,
-                        linkToBefore = linkToBeforeEnabled,
-                        linkToAfter = linkToAfterEnabled
-                    )
-                }
+            val linkToAfterEnabled = index < conversation.comments.size - 1
+            if (index == conversation.topicCommentIndex) {
+                FocusedPostRow(
+                    focusedPost = threadPost,
+                    linkToBefore = linkToBeforeEnabled
+                )
+            } else {
+                CommentPostRow(
+                    commentPost = threadPost,
+                    linkToBefore = linkToBeforeEnabled,
+                    linkToAfter = linkToAfterEnabled
+                )
             }
         }
     }
@@ -85,7 +78,7 @@ private fun PostDetails(threadPostItems: List<ThreadPost>) {
 
 @Composable
 private fun FocusedPostRow(
-    focusedPost: FocusedPost,
+    focusedPost: TimelinePost,
     linkToBefore: Boolean = false
 ) {
     Column(
@@ -101,7 +94,7 @@ private fun FocusedPostRow(
 
 @Composable
 private fun FocusedPostContent(
-    focusedPost: FocusedPost,
+    focusedPost: TimelinePost,
     linkToBefore: Boolean = false
 ) {
     ConstraintLayout(
@@ -171,7 +164,7 @@ private fun FocusedPostContent(
 
 @Composable
 private fun CommentPostRow(
-    commentPost: CommentPost,
+    commentPost: TimelinePost,
     linkToBefore: Boolean = false,
     linkToAfter: Boolean = false
 ) {
@@ -240,17 +233,10 @@ private fun PostLinker(
 }
 
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_NO or Configuration.UI_MODE_TYPE_NORMAL)
-@Composable
-private fun LightPostDetailsScreenPreview() {
-    PreviewBackground {
-        PostDetails(threadPostItems = PostDetailsViewState.fake.threadPostItems)
-    }
-}
-
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL)
 @Composable
-private fun DarkPostDetailsScreenPreview() {
+private fun PostDetailsScreenPreview() {
     PreviewBackground {
-        PostDetails(threadPostItems = PostDetailsViewState.fake.threadPostItems)
+        PostDetails(conversation = PostDetailsViewState.fake.conversation!!)
     }
 }

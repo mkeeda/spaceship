@@ -34,7 +34,7 @@ class PostDetailsViewModel @AssistedInject constructor(
         .filterIsInstance<Success<Conversation>>()
         .map { success ->
             PostDetailsViewState(
-                threadPostItems = success.data.toThreadPostItems()
+                conversation = success.data
             )
         }.stateIn(
             initialValue = PostDetailsViewState.Initial,
