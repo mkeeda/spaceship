@@ -15,6 +15,10 @@ data class TimelinePostDetail(
     override fun equals(other: Any?): Boolean {
         return other is TimelinePostDetail && location == other.location
     }
+
+    override fun hashCode(): Int {
+        return location.hashCode()
+    }
 }
 
 sealed class PostingLocation {
