@@ -5,17 +5,19 @@ import androidx.lifecycle.viewModelScope
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
-import dev.mkeeda.spaceship.data.Conversation
 import dev.mkeeda.spaceship.data.PostId
-import dev.mkeeda.spaceship.domain.usecase.ObservePostDetails
+import dev.mkeeda.spaceship.data.PostingLocation
+import dev.mkeeda.spaceship.domain.usecase.Loading
+import dev.mkeeda.spaceship.domain.usecase.ShowSelectedPostDetail
+import dev.mkeeda.spaceship.domain.usecase.ShowSpacePostContext
 import dev.mkeeda.spaceship.domain.usecase.Success
 import dev.mkeeda.spaceship.ui.common.dataflow.Presentation
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.filterIsInstance
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -26,24 +28,45 @@ import kotlinx.coroutines.launch
  */
 class PostDetailsViewModel @AssistedInject constructor(
     @Assisted private val postId: Long,
-    observePostDetails: ObservePostDetails
-) : ViewModel(), Presentation<PostDetailsViewState, Nothing, Nothing> {
+    showSelectedPostDetail: ShowSelectedPostDetail,
+    private val showSpacePostContext: ShowSpacePostContext,
+) : ViewModel(), Presentation<PostDetailsViewState, PostDetailsEvent, Nothing> {
 
-    override val state: StateFlow<PostDetailsViewState> = observePostDetails.output
-        .onEach { println(it) }
-        .filterIsInstance<Success<Conversation>>()
-        .map { success ->
-            PostDetailsViewState(
-                conversation = success.data
-            )
-        }.stateIn(
-            initialValue = PostDetailsViewState.Initial,
-            scope = viewModelScope,
-            started = SharingStarted.Lazily
-        )
+    override val state: StateFlow<PostDetailsViewState> = combine(
+        showSelectedPostDetail.output,
+        showSpacePostContext.output
+    ) { selectedPostDetail, spacePostContext ->
+        when {
+            selectedPostDetail is Success && spacePostContext is Loading -> {
+                PostDetailsViewState(
+                    comments = listOf(selectedPostDetail.data),
+                    focusedCommentsIndex = 0
+                )
+            }
+            selectedPostDetail is Success && spacePostContext is Success -> {
+                val spaceConversation = listOf(selectedPostDetail.data) + spacePostContext.data
+                val sortedConversation = spaceConversation.sorted()
+                PostDetailsViewState(
+                    comments = sortedConversation,
+                    focusedCommentsIndex = sortedConversation.indexOf(selectedPostDetail.data)
+                )
+            }
+            else -> {
+                PostDetailsViewState.Initial
+            }
+        }
+    }.stateIn(
+        initialValue = PostDetailsViewState.Initial,
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000)
+    )
 
-    override fun event(event: Nothing) {
-        TODO("Not yet implemented")
+    private val postDetailsEvent = MutableSharedFlow<PostDetailsEvent>()
+
+    override fun event(event: PostDetailsEvent) {
+        viewModelScope.launch {
+            postDetailsEvent.emit(event)
+        }
     }
 
     override val effect: Flow<Nothing>
@@ -51,7 +74,22 @@ class PostDetailsViewModel @AssistedInject constructor(
 
     init {
         viewModelScope.launch {
-            observePostDetails.execute(param = PostId(postId))
+            postDetailsEvent.collect { event ->
+                when (event) {
+                    is PostDetailsEvent.ShowContext -> showContext(event)
+                }
+            }
+        }
+
+        showSelectedPostDetail.execute(param = PostId(postId))
+    }
+
+    private fun showContext(event: PostDetailsEvent.ShowContext) {
+        when (event.location) {
+            is PostingLocation.App -> TODO()
+            PostingLocation.Message -> TODO()
+            is PostingLocation.People -> TODO()
+            is PostingLocation.Space -> showSpacePostContext.execute(param = event.location)
         }
     }
 

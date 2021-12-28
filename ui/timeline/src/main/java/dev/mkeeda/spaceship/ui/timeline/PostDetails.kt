@@ -17,6 +17,7 @@ import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -28,9 +29,10 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
-import dev.mkeeda.spaceship.data.Conversation
-import dev.mkeeda.spaceship.data.TimelinePost
+import dev.mkeeda.spaceship.data.PostingLocation
+import dev.mkeeda.spaceship.data.TimelinePostDetail
 import dev.mkeeda.spaceship.ui.common.util.PreviewBackground
+import dev.mkeeda.spaceship.ui.timeline.presentation.PostDetailsEvent
 import dev.mkeeda.spaceship.ui.timeline.presentation.PostDetailsViewModel
 import dev.mkeeda.spaceship.ui.timeline.presentation.PostDetailsViewState
 import dev.mkeeda.spaceship.ui.timeline.presentation.postDetailsViewModel
@@ -45,25 +47,32 @@ private fun PostDetailsScreen(
     viewModel: PostDetailsViewModel
 ) {
     val postDetailsViewState by viewModel.state.collectAsState()
-    postDetailsViewState.conversation?.let {
-        PostDetails(conversation = it)
-    }
+    PostDetails(
+        state = postDetailsViewState,
+        showContext = { location ->
+            viewModel.event(PostDetailsEvent.ShowContext(location))
+        }
+    )
 }
 
 @Composable
-private fun PostDetails(conversation: Conversation) {
+private fun PostDetails(
+    state: PostDetailsViewState,
+    showContext: (PostingLocation) -> Unit
+) {
     LazyColumn(
-        state = rememberLazyListState(initialFirstVisibleItemIndex = conversation.topicCommentIndex),
+        state = rememberLazyListState(initialFirstVisibleItemIndex = state.focusedCommentsIndex),
         modifier = Modifier.fillMaxSize(),
         contentPadding = rememberInsetsPaddingValues(insets = LocalWindowInsets.current.navigationBars)
     ) {
-        itemsIndexed(conversation.comments) { index, threadPost ->
+        itemsIndexed(state.comments) { index, threadPost ->
             val linkToBeforeEnabled = index >= 1
-            val linkToAfterEnabled = index < conversation.comments.size - 1
-            if (index == conversation.topicCommentIndex) {
+            val linkToAfterEnabled = index < state.comments.size - 1
+            if (index == state.focusedCommentsIndex) {
                 FocusedPostRow(
                     focusedPost = threadPost,
-                    linkToBefore = linkToBeforeEnabled
+                    linkToBefore = linkToBeforeEnabled,
+                    showContext = showContext
                 )
             } else {
                 CommentPostRow(
@@ -78,9 +87,14 @@ private fun PostDetails(conversation: Conversation) {
 
 @Composable
 private fun FocusedPostRow(
-    focusedPost: TimelinePost,
-    linkToBefore: Boolean = false
+    focusedPost: TimelinePostDetail,
+    linkToBefore: Boolean = false,
+    showContext: (PostingLocation) -> Unit
 ) {
+    LaunchedEffect(focusedPost.location) {
+        showContext(focusedPost.location)
+    }
+
     Column(
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -94,7 +108,7 @@ private fun FocusedPostRow(
 
 @Composable
 private fun FocusedPostContent(
-    focusedPost: TimelinePost,
+    focusedPost: TimelinePostDetail,
     linkToBefore: Boolean = false
 ) {
     ConstraintLayout(
@@ -164,7 +178,7 @@ private fun FocusedPostContent(
 
 @Composable
 private fun CommentPostRow(
-    commentPost: TimelinePost,
+    commentPost: TimelinePostDetail,
     linkToBefore: Boolean = false,
     linkToAfter: Boolean = false
 ) {
@@ -237,6 +251,6 @@ private fun PostLinker(
 @Composable
 private fun PostDetailsScreenPreview() {
     PreviewBackground {
-        PostDetails(conversation = PostDetailsViewState.fake.conversation!!)
+        PostDetails(state = PostDetailsViewState.Fake, showContext = {})
     }
 }

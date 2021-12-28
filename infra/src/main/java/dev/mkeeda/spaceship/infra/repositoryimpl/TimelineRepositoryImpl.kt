@@ -3,6 +3,7 @@ package dev.mkeeda.spaceship.infra.repositoryimpl
 import dev.mkeeda.spaceship.data.PostId
 import dev.mkeeda.spaceship.data.PostingLocation
 import dev.mkeeda.spaceship.data.TimelinePost
+import dev.mkeeda.spaceship.data.TimelinePostDetail
 import dev.mkeeda.spaceship.data.kintone.KintoneNotification
 import dev.mkeeda.spaceship.data.kintone.ModuleType
 import dev.mkeeda.spaceship.domain.repository.TimelineRepository
@@ -25,14 +26,14 @@ class TimelineRepositoryImpl @Inject constructor(
         return response.toTimeline()
     }
 
-    override suspend fun getTimelinePost(postId: PostId): TimelinePost {
+    override suspend fun getTimelinePost(postId: PostId): TimelinePostDetail {
         val response = kintoneApiService.post<NtfGet.Response>(
             endpoint = NtfGet,
             param = NtfGet.RequestParam(
                 id = postId.value
             )
         )
-        return response.toTimeline()
+        return response.toTimelinePostDetail()
     }
 }
 
@@ -43,14 +44,12 @@ private fun NtfList.Response.toTimeline(): List<TimelinePost> {
             senderName = senders[kintoneNotification.sender]?.name ?: "",
             postTime = kintoneNotification.sentTime,
             body = kintoneNotification.content.message.text,
-            location = kintoneNotification.postingLocation
         )
     }
 }
 
-private fun NtfGet.Response.toTimeline(): TimelinePost {
-    return TimelinePost(
-        id = PostId(value = item.id),
+private fun NtfGet.Response.toTimelinePostDetail(): TimelinePostDetail {
+    return TimelinePostDetail(
         senderName = sender?.name ?: "",
         postTime = item.sentTime,
         body = item.content.message.text,
