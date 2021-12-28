@@ -4,14 +4,6 @@ import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class KintoneNotificationList(
-    val hasMore: Boolean,
-    val ntf: List<KintoneNotification>,
-    val senders: Map<Long, KintoneUser>,
-    val hasIgnoreMention: Boolean?
-)
-
-@Serializable
 data class KintoneNotification(
     val id: Long,
     val moduleType: ModuleType,

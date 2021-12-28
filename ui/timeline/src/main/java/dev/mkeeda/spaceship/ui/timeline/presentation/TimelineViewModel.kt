@@ -13,12 +13,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class TimelineViewModel @Inject constructor(
-    private val observeTimeline: ObserveTimeline
+    observeTimeline: ObserveTimeline
 ) : ViewModel(), Presentation<TimelineViewState, Nothing, Nothing> {
 
     override val state: StateFlow<TimelineViewState> = observeTimeline.output
@@ -41,8 +40,6 @@ class TimelineViewModel @Inject constructor(
         get() = TODO("Not yet implemented")
 
     init {
-        viewModelScope.launch {
-            observeTimeline.execute()
-        }
+        observeTimeline.execute()
     }
 }

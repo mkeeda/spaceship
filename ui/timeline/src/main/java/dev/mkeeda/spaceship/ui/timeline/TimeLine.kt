@@ -19,11 +19,12 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
-import dev.mkeeda.spaceship.data.PostId
 import dev.mkeeda.spaceship.data.TimelinePost
 import dev.mkeeda.spaceship.ui.common.util.PreviewBackground
 import dev.mkeeda.spaceship.ui.timeline.presentation.TimelineViewModel
 import dev.mkeeda.spaceship.ui.timeline.presentation.TimelineViewState
+import dev.mkeeda.spaceship.ui.timeline.presentation.fakeTimeline
+import kotlinx.datetime.toInstant
 
 @Composable
 fun TimelineScreen(openPostDetails: (TimelinePost) -> Unit) {
@@ -104,10 +105,9 @@ private fun TimelineRow(
 private fun PostRowPreview() {
     PreviewBackground {
         TimelineRow(
-            post = TimelinePost(
-                id = PostId(0),
+            post = fakeTimeline(
                 senderName = "新垣結衣abcdefghigklnmop",
-                postTime = "2021/08/16 14:26",
+                postTime = "2021-08-22T14:21:00.000Z".toInstant(),
                 body = "昔々あるところに、おじいさんとおばあさんがいました",
             ),
             onSelectPost = {}

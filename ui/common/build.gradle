@@ -40,6 +40,7 @@ dependencies {
     implementation Libs.AndroidX.Compose.ui
     implementation Libs.AndroidX.Compose.material
     implementation Libs.AndroidX.Compose.uiToolingPreview
+    implementation Libs.AndroidX.viewModelCompose
 
     implementation Libs.Accompanist.systemUiController
 }

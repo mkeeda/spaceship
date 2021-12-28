@@ -12,7 +12,10 @@ import dev.mkeeda.spaceship.ui.timeline.TimelineScreen
 
 sealed class Screen(val route: String, val name: String) {
     object Timeline : Screen(route = "timeline", name = "Timeline")
-    object PostDetails : Screen(route = "post/{postId}", name = "PostDetails") {
+    object PostDetails : Screen(
+        route = "post/{${ScreenArgsKey.PostDetails.PostId}}",
+        name = "PostDetails"
+    ) {
         fun createRoute(postId: PostId): String {
             return "post/${postId.value}"
         }
@@ -29,6 +32,12 @@ sealed class Screen(val route: String, val name: String) {
     }
 }
 
+private object ScreenArgsKey {
+    object PostDetails {
+        const val PostId = "postId"
+    }
+}
+
 @Composable
 fun AppNavigation(navHostController: NavHostController) {
     NavHost(
@@ -42,12 +51,12 @@ fun AppNavigation(navHostController: NavHostController) {
         }
         composable(
             route = Screen.PostDetails.route,
-            arguments = listOf(navArgument("postId") { type = NavType.IntType })
+            arguments = listOf(navArgument(ScreenArgsKey.PostDetails.PostId) { type = NavType.LongType })
         ) {
-            val postId = requireNotNull(it.arguments?.getInt("postId")) {
+            val postId = requireNotNull(it.arguments?.getLong(ScreenArgsKey.PostDetails.PostId)) {
                 "postId must not be null."
             }
-            PostDetailsScreen(postId)
+            PostDetailsScreen(postId = postId)
         }
     }
 }

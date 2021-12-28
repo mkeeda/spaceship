@@ -1,11 +1,15 @@
 package dev.mkeeda.spaceship.domain.usecase
 
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flatMapLatest
 
 abstract class UseCase<P, O> {
-    private val paramEvent = MutableSharedFlow<P>(replay = 1)
+    private val paramEvent = MutableSharedFlow<P>(
+        replay = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
 
     val output: Flow<DomainLoadState<O>> = paramEvent
         .flatMapLatest {
@@ -14,8 +18,8 @@ abstract class UseCase<P, O> {
 
     protected abstract fun useCaseFlow(param: P): Flow<O>
 
-    suspend fun execute(param: P) {
-        paramEvent.emit(param)
+    fun execute(param: P) {
+        paramEvent.tryEmit(param)
     }
 }
 
@@ -24,5 +28,5 @@ abstract class NoParamUseCase<O> : UseCase<Unit, O>() {
 
     protected abstract fun useCaseFlow(): Flow<O>
 
-    suspend fun execute() = execute(param = Unit)
+    fun execute() = execute(param = Unit)
 }
