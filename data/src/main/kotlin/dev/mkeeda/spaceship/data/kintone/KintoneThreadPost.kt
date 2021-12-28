@@ -3,6 +3,10 @@ package dev.mkeeda.spaceship.data.kintone
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
+/**
+ * kintone thread ids
+ * /thread/{KintoneThreadPost.threadId}/{KintoneThreadPost.id | Comment.postedId}/{Comment.id}
+ */
 @Serializable
 data class KintoneThreadPost(
     val id: Long,

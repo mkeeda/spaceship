@@ -44,11 +44,12 @@ class PostDetailsViewModel @AssistedInject constructor(
                 )
             }
             selectedPostDetail is Success && spacePostContext is Success -> {
-                val spaceConversation = listOf(selectedPostDetail.data) + spacePostContext.data
-                val sortedConversation = spaceConversation.sorted()
+                val allComments = spacePostContext.data
                 PostDetailsViewState(
-                    comments = sortedConversation,
-                    focusedCommentsIndex = sortedConversation.indexOf(selectedPostDetail.data)
+                    comments = allComments,
+                    focusedCommentsIndex = allComments
+                        .indexOf(selectedPostDetail.data)
+                        .takeIf { it >= 0 } ?: 0
                 )
             }
             else -> {

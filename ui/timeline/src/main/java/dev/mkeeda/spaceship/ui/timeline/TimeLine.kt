@@ -20,10 +20,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import dev.mkeeda.spaceship.data.TimelinePost
-import dev.mkeeda.spaceship.data.fakeTimeline
 import dev.mkeeda.spaceship.ui.common.util.PreviewBackground
 import dev.mkeeda.spaceship.ui.timeline.presentation.TimelineViewModel
 import dev.mkeeda.spaceship.ui.timeline.presentation.TimelineViewState
+import dev.mkeeda.spaceship.ui.timeline.presentation.fakeTimeline
 import kotlinx.datetime.toInstant
 
 @Composable

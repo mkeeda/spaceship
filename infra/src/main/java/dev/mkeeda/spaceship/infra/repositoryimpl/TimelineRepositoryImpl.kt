@@ -65,7 +65,8 @@ private val KintoneNotification.postingLocation: PostingLocation
         )
         ModuleType.SPACE -> PostingLocation.Space(
             threadId = moduleSubId,
-            commentId = commentId
+            commentId = commentId,
+            commentReplyId = commentReplyId
         )
         ModuleType.PEOPLE -> PostingLocation.People(
             threadId = moduleId,

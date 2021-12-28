@@ -16,18 +16,30 @@ class ShowSpacePostContext @Inject constructor(
                 threadId = param.threadId,
                 postId = param.commentId
             )
+            val postOrigin = TimelinePostDetail(
+                senderName = threadPost.creator.name,
+                postTime = threadPost.createdAt,
+                body = threadPost.body,
+                location = PostingLocation.Space(
+                    threadId = threadPost.threadId,
+                    commentId = threadPost.id,
+                    commentReplyId = null
+                )
+            )
             val postContext = threadPost.comments.map { comment ->
                 TimelinePostDetail(
                     senderName = comment.creator.name,
                     postTime = comment.createdAt,
                     body = comment.body,
                     location = PostingLocation.Space(
-                        threadId = param.threadId,
-                        commentId = comment.id
+                        threadId = threadPost.threadId,
+                        commentId = comment.postId,
+                        commentReplyId = comment.id
                     )
                 )
             }
-            emit(postContext)
+            val spacePosts = listOf(postOrigin) + postContext
+            emit(spacePosts.sorted())
         }
     }
 }

@@ -27,7 +27,7 @@ internal fun fakeTimelinePostDetail(
     senderName,
     postTime,
     body,
-    PostingLocation.Space(0, 0)
+    PostingLocation.Space(0, 0, 0)
 )
 
 private val fakeComments = listOf(
