@@ -65,7 +65,10 @@ private fun PostDetails(
         modifier = Modifier.fillMaxSize(),
         contentPadding = rememberInsetsPaddingValues(insets = LocalWindowInsets.current.navigationBars)
     ) {
-        itemsIndexed(state.comments) { index, threadPost ->
+        itemsIndexed(
+            items = state.comments,
+            key = { _, threadPost -> threadPost.hashCode() }
+        ) { index, threadPost ->
             val linkToBeforeEnabled = index >= 1
             val linkToAfterEnabled = index < state.comments.size - 1
             if (index == state.focusedCommentsIndex) {
