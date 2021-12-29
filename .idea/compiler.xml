@@ -4,7 +4,11 @@
     <bytecodeTargetLevel target="1.8">
       <module name="spaceship.app" target="11" />
       <module name="spaceship.buildSrc" target="11" />
+      <module name="spaceship.buildSrc.main" target="11" />
+      <module name="spaceship.buildSrc.test" target="11" />
       <module name="spaceship.data" target="11" />
+      <module name="spaceship.data.main" target="11" />
+      <module name="spaceship.data.test" target="11" />
       <module name="spaceship.infra" target="11" />
       <module name="spaceship.ui.common" target="11" />
       <module name="spaceship.ui.timeline" target="11" />
