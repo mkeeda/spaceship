@@ -1,8 +1,8 @@
 package dev.mkeeda.spaceship.buildsrc
 
 object GradlePlugins {
-    const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.30"
-    const val serialization = "org.jetbrains.kotlin:kotlin-serialization:1.5.30"
+    const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
+    const val serialization = "org.jetbrains.kotlin:kotlin-serialization:1.6.10"
     const val android = "com.android.tools.build:gradle:7.2.0-alpha06"
     const val hilt = "com.google.dagger:hilt-android-gradle-plugin:${Libs.Dagger.version}"
     const val spotless = "com.diffplug.spotless:spotless-plugin-gradle:5.15.2"
@@ -11,12 +11,12 @@ object GradlePlugins {
 object Libs {
     object KotlinX {
         const val dateTime = "org.jetbrains.kotlinx:kotlinx-datetime:0.3.0"
-        const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2"
-        const val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-core:1.3.0"
+        const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0"
+        const val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-core:1.3.2"
     }
 
     object Ktor {
-        private const val version = "1.6.3"
+        private const val version = "1.6.7"
         const val clientOkHttp = "io.ktor:ktor-client-okhttp:$version"
         const val clientSerialization = "io.ktor:ktor-client-serialization:$version"
 
