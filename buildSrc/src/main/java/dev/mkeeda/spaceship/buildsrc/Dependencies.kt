@@ -3,7 +3,7 @@ package dev.mkeeda.spaceship.buildsrc
 object GradlePlugins {
     const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.30"
     const val serialization = "org.jetbrains.kotlin:kotlin-serialization:1.5.30"
-    const val android = "com.android.tools.build:gradle:7.1.0-alpha12"
+    const val android = "com.android.tools.build:gradle:7.2.0-alpha06"
     const val hilt = "com.google.dagger:hilt-android-gradle-plugin:${Libs.Dagger.version}"
     const val spotless = "com.diffplug.spotless:spotless-plugin-gradle:5.15.2"
 }
