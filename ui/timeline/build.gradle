@@ -32,7 +32,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion Libs.AndroidX.Compose.version
+        kotlinCompilerExtensionVersion Libs.AndroidX.Compose.compilerVersion
     }
 }
 
@@ -41,6 +41,7 @@ dependencies {
     implementation project(":ui:common")
 
     implementation Libs.AndroidX.coreKtx
+    implementation Libs.AndroidX.Compose.compiler
     implementation Libs.AndroidX.Compose.ui
     implementation Libs.AndroidX.Compose.material
     implementation Libs.AndroidX.Compose.uiToolingPreview

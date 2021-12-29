@@ -1,8 +1,8 @@
 package dev.mkeeda.spaceship.buildsrc
 
 object GradlePlugins {
-    const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.30"
-    const val serialization = "org.jetbrains.kotlin:kotlin-serialization:1.5.30"
+    const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
+    const val serialization = "org.jetbrains.kotlin:kotlin-serialization:1.6.10"
     const val android = "com.android.tools.build:gradle:7.2.0-alpha06"
     const val hilt = "com.google.dagger:hilt-android-gradle-plugin:${Libs.Dagger.version}"
     const val spotless = "com.diffplug.spotless:spotless-plugin-gradle:5.15.2"
@@ -11,12 +11,12 @@ object GradlePlugins {
 object Libs {
     object KotlinX {
         const val dateTime = "org.jetbrains.kotlinx:kotlinx-datetime:0.3.0"
-        const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2"
-        const val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-core:1.3.0"
+        const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0"
+        const val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-core:1.3.2"
     }
 
     object Ktor {
-        private const val version = "1.6.3"
+        private const val version = "1.6.7"
         const val clientOkHttp = "io.ktor:ktor-client-okhttp:$version"
         const val clientSerialization = "io.ktor:ktor-client-serialization:$version"
 
@@ -27,25 +27,26 @@ object Libs {
     }
 
     object AndroidX {
-        const val coreKtx = "androidx.core:core-ktx:1.6.0"
-        const val lifecycleRuntimeKtx = "androidx.lifecycle:lifecycle-runtime-ktx:2.3.1"
-        const val activityCompose = "androidx.activity:activity-compose:1.3.1"
-        const val navigationCompose = "androidx.navigation:navigation-compose:2.4.0-alpha10"
-        const val constraintLayoutCompose = "androidx.constraintlayout:constraintlayout-compose:1.0.0-beta02"
+        const val coreKtx = "androidx.core:core-ktx:1.7.0"
+        const val lifecycleRuntimeKtx = "androidx.lifecycle:lifecycle-runtime-ktx:2.4.0"
+        const val activityCompose = "androidx.activity:activity-compose:1.4.0"
+        const val navigationCompose = "androidx.navigation:navigation-compose:2.4.0-rc01"
+        const val constraintLayoutCompose = "androidx.constraintlayout:constraintlayout-compose:1.0.0-rc02"
         const val viewModelCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha07"
 
         object Hilt {
-            const val navigationCompose = "androidx.hilt:hilt-navigation-compose:1.0.0-alpha03"
+            const val navigationCompose = "androidx.hilt:hilt-navigation-compose:1.0.0-rc01"
         }
 
 
         object Compose {
-            private const val version = "1.0.3"
-            const val ui = "androidx.compose.ui:ui:$version"
-            const val material = "androidx.compose.material:material:$version"
-            const val uiToolingPreview = "androidx.compose.ui:ui-tooling-preview:$version"
-            const val uiTooling = "androidx.compose.ui:ui-tooling:$version"
-            const val uiTestJunit4 = "androidx.compose.ui:ui-test-junit4:$version"
+            const val compilerVersion = "1.1.0-rc02"
+            const val compiler = "androidx.compose.compiler:compiler:$compilerVersion"
+            const val ui = "androidx.compose.ui:ui:1.1.0-rc01"
+            const val material = "androidx.compose.material:material:1.1.0-rc01"
+            const val uiToolingPreview = "androidx.compose.ui:ui-tooling-preview:1.1.0-rc01"
+            const val uiTooling = "androidx.compose.ui:ui-tooling:1.1.0-rc01"
+            const val uiTestJunit4 = "androidx.compose.ui:ui-test-junit4:1.1.0-rc01"
         }
 
         object Test {
