@@ -51,6 +51,8 @@ dependencies {
     implementation Libs.AndroidX.constraintLayoutCompose
     implementation Libs.AndroidX.viewModelCompose
     implementation Libs.AndroidX.Hilt.navigationCompose
+    implementation Libs.AndroidX.Paging.runtime
+    implementation Libs.AndroidX.Paging.compose
 
     implementation Libs.Accompanist.inset
     implementation Libs.Accompanist.insetUi

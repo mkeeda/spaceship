@@ -20,7 +20,7 @@ internal class TimelinePagingSource @Inject constructor(
                 endpoint = NtfList,
                 param = NtfList.RequestParam(
                     checkIgnoreMention = true,
-                    read = true,
+                    read = false,
                     size = REQUEST_SIZE,
                     offset = REQUEST_SIZE * position,
                 )

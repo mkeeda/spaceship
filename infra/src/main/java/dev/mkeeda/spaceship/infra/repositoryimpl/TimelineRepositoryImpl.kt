@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.Flow
 class TimelineRepositoryImpl @Inject constructor(
     private val kintoneApiService: KintoneApiService
 ) : TimelineRepository {
-    override suspend fun getTimelinePostList(): Flow<PagingData<TimelinePost>> {
+    override fun getTimelinePostList(): Flow<PagingData<TimelinePost>> {
         return Pager(
             config = PagingConfig(
                 pageSize = REQUEST_SIZE,
@@ -24,6 +24,6 @@ class TimelineRepositoryImpl @Inject constructor(
     }
 
     companion object {
-        internal const val REQUEST_SIZE: Int = 30
+        internal const val REQUEST_SIZE: Int = 10
     }
 }

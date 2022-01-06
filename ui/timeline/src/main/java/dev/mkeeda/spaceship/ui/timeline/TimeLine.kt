@@ -8,15 +8,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.items
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import dev.mkeeda.spaceship.data.TimelinePost
@@ -39,25 +39,26 @@ private fun TimelineScreen(
     viewModel: TimelineViewModel,
     openPostDetails: (TimelinePost) -> Unit
 ) {
-    val timelineViewState by viewModel.state.collectAsState()
+    val pagingTimelinePosts = viewModel.pagingTimeline.collectAsLazyPagingItems()
     Timeline(
-        viewState = timelineViewState,
+        pagingTimelinePosts = pagingTimelinePosts,
         openPostDetails = openPostDetails
     )
 }
 
 @Composable
 private fun Timeline(
-    viewState: TimelineViewState,
+    viewState: TimelineViewState? = null,
+    pagingTimelinePosts: LazyPagingItems<TimelinePost>,
     openPostDetails: (TimelinePost) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         contentPadding = rememberInsetsPaddingValues(insets = LocalWindowInsets.current.navigationBars)
     ) {
-        items(viewState.postItems) { post ->
+        items(pagingTimelinePosts) { post ->
             TimelineRow(
-                post = post,
+                post = post!!, // not be null, because placeholder is disabled
                 onSelectPost = openPostDetails
             )
         }
@@ -68,10 +69,10 @@ private fun Timeline(
 @Composable
 private fun TimelineScreenPreview() {
     PreviewBackground {
-        Timeline(
-            viewState = TimelineViewState.LongFake,
-            openPostDetails = {}
-        )
+        // Timeline(
+        //     viewState = TimelineViewState.LongFake,
+        //     openPostDetails = {}
+        // )
     }
 }
 
