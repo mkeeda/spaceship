@@ -7,8 +7,8 @@ import dev.mkeeda.spaceship.data.TimelinePost
 import dev.mkeeda.spaceship.domain.repository.TimelineRepository
 import dev.mkeeda.spaceship.infra.api.KintoneApiService
 import dev.mkeeda.spaceship.infra.datasource.TimelinePagingSource
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
 class TimelineRepositoryImpl @Inject constructor(
     private val kintoneApiService: KintoneApiService

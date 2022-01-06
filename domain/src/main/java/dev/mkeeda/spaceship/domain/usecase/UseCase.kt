@@ -33,7 +33,7 @@ abstract class NoParamUseCase<O> : UseCase<Unit, O>() {
     fun execute() = execute(param = Unit)
 }
 
-abstract class PagingUseCase<P, O: Any> {
+abstract class PagingUseCase<P, O : Any> {
     private val paramEvent = MutableSharedFlow<PagingParam<P>>(
         replay = 1,
         onBufferOverflow = BufferOverflow.DROP_OLDEST
@@ -56,7 +56,7 @@ abstract class PagingUseCase<P, O: Any> {
     )
 }
 
-abstract class NoParamPagingUseCase<O: Any> : PagingUseCase<Unit, O>() {
+abstract class NoParamPagingUseCase<O : Any> : PagingUseCase<Unit, O>() {
     final override fun useCaseFlow(config: PagingConfig, param: Unit): Flow<PagingData<O>> = useCaseFlow(config)
 
     protected abstract fun useCaseFlow(config: PagingConfig): Flow<PagingData<O>>

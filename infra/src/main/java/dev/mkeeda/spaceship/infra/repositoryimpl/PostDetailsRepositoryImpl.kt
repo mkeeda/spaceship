@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class PostDetailsRepositoryImpl @Inject constructor(
     private val kintoneApiService: KintoneApiService
-): PostDetailsRepository {
+) : PostDetailsRepository {
     override suspend fun getPostDetail(postId: PostId): TimelinePostDetail {
         val response = kintoneApiService.post<NtfGet.Response>(
             endpoint = NtfGet,

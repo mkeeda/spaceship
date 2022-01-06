@@ -9,9 +9,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.mkeeda.spaceship.data.TimelinePost
 import dev.mkeeda.spaceship.domain.usecase.ObserveTimeline
 import dev.mkeeda.spaceship.ui.common.dataflow.Presentation
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
+import javax.inject.Inject
 
 @HiltViewModel
 class TimelineViewModel @Inject constructor(
