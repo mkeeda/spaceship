@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
@@ -24,6 +25,8 @@ import dev.mkeeda.spaceship.ui.common.util.PreviewBackground
 import dev.mkeeda.spaceship.ui.timeline.presentation.TimelineViewModel
 import dev.mkeeda.spaceship.ui.timeline.presentation.TimelineViewState
 import dev.mkeeda.spaceship.ui.timeline.presentation.fakeTimeline
+import dev.mkeeda.spaceship.ui.timeline.presentation.fakeTimelinePostItems
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.datetime.toInstant
 
 @Composable
@@ -69,10 +72,10 @@ private fun Timeline(
 @Composable
 private fun TimelineScreenPreview() {
     PreviewBackground {
-        // Timeline(
-        //     viewState = TimelineViewState.LongFake,
-        //     openPostDetails = {}
-        // )
+        Timeline(
+            pagingTimelinePosts = flowOf(PagingData.from(fakeTimelinePostItems)).collectAsLazyPagingItems(),
+            openPostDetails = {}
+        )
     }
 }
 

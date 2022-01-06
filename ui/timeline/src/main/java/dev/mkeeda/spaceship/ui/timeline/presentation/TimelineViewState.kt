@@ -31,7 +31,7 @@ internal fun fakeTimeline(
     body,
 )
 
-private val fakeTimelinePostItems = listOf(
+internal val fakeTimelinePostItems = listOf(
     fakeTimeline(
         id = PostId(1),
         senderName = "森山みくり",
