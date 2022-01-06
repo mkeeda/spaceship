@@ -1,7 +1,9 @@
 package dev.mkeeda.spaceship.ui.timeline.presentation
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.mkeeda.spaceship.data.TimelinePost
 import dev.mkeeda.spaceship.domain.usecase.ObserveTimeline
@@ -18,7 +20,9 @@ class TimelineViewModel @Inject constructor(
     override val state: StateFlow<TimelineViewState>
         get() = TODO("Not yet implemented")
 
-    val pagingTimeline: Flow<PagingData<TimelinePost>> = observeTimeline.useCaseFlow()
+    val pagingTimeline: Flow<PagingData<TimelinePost>> = observeTimeline
+        .useCaseFlow()
+        .cachedIn(viewModelScope)
 
     override fun event(event: Nothing) {
         TODO("Not yet implemented")
