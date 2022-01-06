@@ -15,4 +15,6 @@ dependencies {
     implementation(Libs.KotlinX.coroutines)
 
     implementation(Libs.Dagger.base)
+
+    implementation(Libs.AndroidX.Paging.common)
 }

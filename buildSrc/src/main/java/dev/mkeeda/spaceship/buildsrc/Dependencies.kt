@@ -38,7 +38,6 @@ object Libs {
             const val navigationCompose = "androidx.hilt:hilt-navigation-compose:1.0.0-rc01"
         }
 
-
         object Compose {
             const val compilerVersion = "1.1.0-rc02"
             const val compiler = "androidx.compose.compiler:compiler:$compilerVersion"
@@ -47,6 +46,12 @@ object Libs {
             const val uiToolingPreview = "androidx.compose.ui:ui-tooling-preview:1.1.0-rc01"
             const val uiTooling = "androidx.compose.ui:ui-tooling:1.1.0-rc01"
             const val uiTestJunit4 = "androidx.compose.ui:ui-test-junit4:1.1.0-rc01"
+        }
+
+        object Paging {
+            private const val version = "3.1.0"
+            const val common = "androidx.paging:paging-common:$version"
+            const val runtime = "androidx.paging:paging-runtime-ktx:$version"
         }
 
         object Test {

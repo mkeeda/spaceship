@@ -1,34 +1,29 @@
 package dev.mkeeda.spaceship.infra.repositoryimpl
 
-import dev.mkeeda.spaceship.data.PostId
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import dev.mkeeda.spaceship.data.TimelinePost
 import dev.mkeeda.spaceship.domain.repository.TimelineRepository
 import dev.mkeeda.spaceship.infra.api.KintoneApiService
-import dev.mkeeda.spaceship.infra.api.ntf.NtfList
+import dev.mkeeda.spaceship.infra.datasource.TimelinePagingSource
 import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
 
 class TimelineRepositoryImpl @Inject constructor(
     private val kintoneApiService: KintoneApiService
 ) : TimelineRepository {
-    override suspend fun getTimelinePostList(): List<TimelinePost> {
-        val response = kintoneApiService.post<NtfList.Response>(
-            endpoint = NtfList,
-            param = NtfList.RequestParam(
-                mentioned = false,
-                read = true,
-            )
-        )
-        return response.toTimeline()
+    override suspend fun getTimelinePostList(): Flow<PagingData<TimelinePost>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = REQUEST_SIZE,
+                enablePlaceholders = false,
+            ),
+            pagingSourceFactory = { TimelinePagingSource(kintoneApiService) }
+        ).flow
     }
-}
 
-private fun NtfList.Response.toTimeline(): List<TimelinePost> {
-    return ntf.map { kintoneNotification ->
-        TimelinePost(
-            id = PostId(value = kintoneNotification.id),
-            senderName = senders[kintoneNotification.sender]?.name ?: "",
-            postTime = kintoneNotification.sentTime,
-            body = kintoneNotification.content.message.text,
-        )
+    companion object {
+        internal const val REQUEST_SIZE: Int = 30
     }
 }
