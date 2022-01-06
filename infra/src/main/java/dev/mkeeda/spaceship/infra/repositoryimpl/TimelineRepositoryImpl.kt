@@ -13,17 +13,15 @@ import kotlinx.coroutines.flow.Flow
 class TimelineRepositoryImpl @Inject constructor(
     private val kintoneApiService: KintoneApiService
 ) : TimelineRepository {
-    override fun getTimelinePostList(): Flow<PagingData<TimelinePost>> {
+    override fun getPagingTimelineFlow(config: PagingConfig): Flow<PagingData<TimelinePost>> {
         return Pager(
-            config = PagingConfig(
-                pageSize = REQUEST_SIZE,
-                enablePlaceholders = false,
-            ),
-            pagingSourceFactory = { TimelinePagingSource(kintoneApiService) }
+            config = config,
+            pagingSourceFactory = {
+                TimelinePagingSource(
+                    networkRequestSize = config.pageSize,
+                    kintoneApiService = kintoneApiService
+                )
+            }
         ).flow
-    }
-
-    companion object {
-        internal const val REQUEST_SIZE: Int = 10
     }
 }

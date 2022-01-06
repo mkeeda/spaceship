@@ -6,11 +6,11 @@ import dev.mkeeda.spaceship.data.PostId
 import dev.mkeeda.spaceship.data.TimelinePost
 import dev.mkeeda.spaceship.infra.api.KintoneApiService
 import dev.mkeeda.spaceship.infra.api.ntf.NtfList
-import dev.mkeeda.spaceship.infra.repositoryimpl.TimelineRepositoryImpl.Companion.REQUEST_SIZE
 import io.ktor.client.features.ResponseException
 import javax.inject.Inject
 
 internal class TimelinePagingSource @Inject constructor(
+    private val networkRequestSize: Int,
     private val kintoneApiService: KintoneApiService
 ) : PagingSource<Int, TimelinePost>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, TimelinePost> {
@@ -21,15 +21,15 @@ internal class TimelinePagingSource @Inject constructor(
                 param = NtfList.RequestParam(
                     checkIgnoreMention = true,
                     read = false,
-                    size = REQUEST_SIZE,
-                    offset = REQUEST_SIZE * position,
+                    size = networkRequestSize,
+                    offset = networkRequestSize * position,
                 )
             )
             val timelinePosts = response.toTimeline()
             val nextKey = if (timelinePosts.isEmpty()) {
                 null
             } else {
-                position + (params.loadSize / REQUEST_SIZE)
+                position + (params.loadSize / networkRequestSize)
             }
             LoadResult.Page(
                 data = timelinePosts,
