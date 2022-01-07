@@ -6,6 +6,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dev.mkeeda.spaceship.infra.BuildConfig
+import dev.mkeeda.spaceship.infra.api.ntf.NtfGetService
+import dev.mkeeda.spaceship.infra.api.ntf.NtfGetServiceImpl
 import dev.mkeeda.spaceship.infra.api.ntf.NtfListService
 import dev.mkeeda.spaceship.infra.api.ntf.NtfListServiceImpl
 import io.ktor.client.HttpClient
@@ -45,4 +47,7 @@ class ApiModule {
 internal abstract class ServiceModule {
     @Binds
     abstract fun bindNtfListService(impl: NtfListServiceImpl): NtfListService
+
+    @Binds
+    abstract fun bindNtfGetService(impl: NtfGetServiceImpl): NtfGetService
 }

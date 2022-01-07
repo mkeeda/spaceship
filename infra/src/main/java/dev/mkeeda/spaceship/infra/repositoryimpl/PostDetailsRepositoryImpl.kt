@@ -6,16 +6,15 @@ import dev.mkeeda.spaceship.data.TimelinePostDetail
 import dev.mkeeda.spaceship.data.kintone.KintoneNotification
 import dev.mkeeda.spaceship.data.kintone.ModuleType
 import dev.mkeeda.spaceship.domain.repository.PostDetailsRepository
-import dev.mkeeda.spaceship.infra.api.KintoneApiService
 import dev.mkeeda.spaceship.infra.api.ntf.NtfGet
+import dev.mkeeda.spaceship.infra.api.ntf.NtfGetService
 import javax.inject.Inject
 
 class PostDetailsRepositoryImpl @Inject constructor(
-    private val kintoneApiService: KintoneApiService
+    private val ntfGetService: NtfGetService
 ) : PostDetailsRepository {
     override suspend fun getPostDetail(postId: PostId): TimelinePostDetail {
-        val response = kintoneApiService.post<NtfGet.Response>(
-            endpoint = NtfGet,
+        val response = ntfGetService.getNtfGet(
             param = NtfGet.RequestParam(
                 id = postId.value
             )
