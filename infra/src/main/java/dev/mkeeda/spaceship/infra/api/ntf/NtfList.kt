@@ -3,7 +3,9 @@ package dev.mkeeda.spaceship.infra.api.ntf
 import dev.mkeeda.spaceship.data.kintone.KintoneNotification
 import dev.mkeeda.spaceship.data.kintone.KintoneUser
 import dev.mkeeda.spaceship.infra.api.KintoneApiEndpoint
+import dev.mkeeda.spaceship.infra.api.KintoneApiService
 import kotlinx.serialization.Serializable
+import javax.inject.Inject
 
 object NtfList : KintoneApiEndpoint {
     override val path: String = "/k/api/ntf/list.json"
@@ -27,4 +29,16 @@ object NtfList : KintoneApiEndpoint {
         val senders: Map<Long, KintoneUser>,
         val hasIgnoreMention: Boolean?
     ) : KintoneApiEndpoint.Response
+}
+
+interface NtfListService {
+    suspend fun getNtfList(param: NtfList.RequestParam): NtfList.Response
+}
+
+internal class NtfListServiceImpl @Inject constructor(
+    private val kintoneApiService: KintoneApiService
+) : NtfListService {
+    override suspend fun getNtfList(param: NtfList.RequestParam): NtfList.Response {
+        return kintoneApiService.post(endpoint = NtfList, param = param)
+    }
 }

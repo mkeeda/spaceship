@@ -1,10 +1,13 @@
 package dev.mkeeda.spaceship.infra.di
 
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dev.mkeeda.spaceship.infra.BuildConfig
+import dev.mkeeda.spaceship.infra.api.ntf.NtfListService
+import dev.mkeeda.spaceship.infra.api.ntf.NtfListServiceImpl
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.features.json.JsonFeature
@@ -35,4 +38,11 @@ class ApiModule {
             }
         }
     }
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+internal abstract class ServiceModule {
+    @Binds
+    abstract fun bindNtfListService(impl: NtfListServiceImpl): NtfListService
 }

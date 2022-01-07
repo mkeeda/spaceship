@@ -4,20 +4,18 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import dev.mkeeda.spaceship.data.PostId
 import dev.mkeeda.spaceship.data.TimelinePost
-import dev.mkeeda.spaceship.infra.api.KintoneApiService
 import dev.mkeeda.spaceship.infra.api.ntf.NtfList
+import dev.mkeeda.spaceship.infra.api.ntf.NtfListService
 import io.ktor.client.features.ResponseException
-import javax.inject.Inject
 
-internal class TimelinePagingSource @Inject constructor(
+internal class TimelinePagingSource(
     private val networkRequestSize: Int,
-    private val kintoneApiService: KintoneApiService
+    private val ntfListService: NtfListService
 ) : PagingSource<Int, TimelinePost>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, TimelinePost> {
         val position = params.key ?: START_PAGING_INDEX
         return try {
-            val response = kintoneApiService.post<NtfList.Response>(
-                endpoint = NtfList,
+            val response = ntfListService.getNtfList(
                 param = NtfList.RequestParam(
                     checkIgnoreMention = true,
                     read = false,
