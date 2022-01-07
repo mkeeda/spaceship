@@ -10,6 +10,8 @@ import dev.mkeeda.spaceship.infra.api.ntf.NtfGetService
 import dev.mkeeda.spaceship.infra.api.ntf.NtfGetServiceImpl
 import dev.mkeeda.spaceship.infra.api.ntf.NtfListService
 import dev.mkeeda.spaceship.infra.api.ntf.NtfListServiceImpl
+import dev.mkeeda.spaceship.infra.api.thread.ThreadPostListService
+import dev.mkeeda.spaceship.infra.api.thread.ThreadPostListServiceImpl
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.features.json.JsonFeature
@@ -50,4 +52,7 @@ internal abstract class ServiceModule {
 
     @Binds
     abstract fun bindNtfGetService(impl: NtfGetServiceImpl): NtfGetService
+
+    @Binds
+    abstract fun bindThreadPostListService(impl: ThreadPostListServiceImpl): ThreadPostListService
 }
