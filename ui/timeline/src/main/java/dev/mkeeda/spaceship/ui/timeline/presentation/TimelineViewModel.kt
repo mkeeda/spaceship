@@ -2,17 +2,15 @@ package dev.mkeeda.spaceship.ui.timeline.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.mkeeda.spaceship.data.TimelinePost
 import dev.mkeeda.spaceship.domain.usecase.ObserveTimeline
-import dev.mkeeda.spaceship.domain.usecase.Success
 import dev.mkeeda.spaceship.ui.common.dataflow.Presentation
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.filterIsInstance
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,17 +18,11 @@ class TimelineViewModel @Inject constructor(
     observeTimeline: ObserveTimeline
 ) : ViewModel(), Presentation<TimelineViewState, Nothing, Nothing> {
 
-    override val state: StateFlow<TimelineViewState> = observeTimeline.output
-        .filterIsInstance<Success<List<TimelinePost>>>()
-        .map { success ->
-            TimelineViewState(
-                postItems = success.data
-            )
-        }.stateIn(
-            initialValue = TimelineViewState.Initial,
-            scope = viewModelScope,
-            started = SharingStarted.Lazily
-        )
+    override val state: StateFlow<TimelineViewState>
+        get() = TODO("Not yet implemented")
+
+    val pagingTimeline: Flow<PagingData<TimelinePost>> =
+        observeTimeline.output.cachedIn(viewModelScope)
 
     override fun event(event: Nothing) {
         TODO("Not yet implemented")
@@ -40,6 +32,11 @@ class TimelineViewModel @Inject constructor(
         get() = TODO("Not yet implemented")
 
     init {
-        observeTimeline.execute()
+        observeTimeline.execute(
+            config = PagingConfig(
+                pageSize = 10,
+                enablePlaceholders = false,
+            )
+        )
     }
 }

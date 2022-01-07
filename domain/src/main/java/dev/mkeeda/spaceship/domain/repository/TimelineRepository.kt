@@ -1,10 +1,10 @@
 package dev.mkeeda.spaceship.domain.repository
 
-import dev.mkeeda.spaceship.data.PostId
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import dev.mkeeda.spaceship.data.TimelinePost
-import dev.mkeeda.spaceship.data.TimelinePostDetail
+import kotlinx.coroutines.flow.Flow
 
 interface TimelineRepository {
-    suspend fun getTimelinePostList(): List<TimelinePost>
-    suspend fun getTimelinePost(postId: PostId): TimelinePostDetail
+    fun getPagingTimelineFlow(config: PagingConfig): Flow<PagingData<TimelinePost>>
 }
