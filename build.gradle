@@ -55,7 +55,13 @@ subprojects {
             target '**/*.kt'
             targetExclude("$buildDir/**/*.kt")
             targetExclude('bin/**/*.kt')
-            ktlint()
+            /**
+             * ktlint's default import ordering rule is not expected for Android Studio.
+             * To fix this issue needs to refer .editorconfig file,but spotless dose not support to refer .editorconfig.
+             * So disabled ktlint import ordering rule.
+             * https://github.com/diffplug/spotless/issues/142
+             */
+            ktlint().userData([disabled_rules:'import-ordering'])
         }
         kotlinGradle {
             target '*.gradle.kts'

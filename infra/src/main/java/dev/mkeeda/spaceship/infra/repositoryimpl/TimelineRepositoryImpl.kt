@@ -5,13 +5,13 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import dev.mkeeda.spaceship.data.TimelinePost
 import dev.mkeeda.spaceship.domain.repository.TimelineRepository
-import dev.mkeeda.spaceship.infra.api.KintoneApiService
+import dev.mkeeda.spaceship.infra.api.ntf.NtfListService
 import dev.mkeeda.spaceship.infra.datasource.TimelinePagingSource
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
 
 class TimelineRepositoryImpl @Inject constructor(
-    private val kintoneApiService: KintoneApiService
+    private val ntfListService: NtfListService
 ) : TimelineRepository {
     override fun getPagingTimelineFlow(config: PagingConfig): Flow<PagingData<TimelinePost>> {
         return Pager(
@@ -19,7 +19,7 @@ class TimelineRepositoryImpl @Inject constructor(
             pagingSourceFactory = {
                 TimelinePagingSource(
                     networkRequestSize = config.pageSize,
-                    kintoneApiService = kintoneApiService
+                    ntfListService = ntfListService
                 )
             }
         ).flow
