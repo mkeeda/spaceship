@@ -31,7 +31,7 @@ internal fun fakeTimelinePostDetail(
     PostingLocation.Space(
         threadId = Random.nextLong(),
         commentId = Random.nextLong(),
-        commentReplyId =Random.nextLong()
+        commentReplyId = Random.nextLong()
     )
 )
 
