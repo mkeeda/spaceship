@@ -19,7 +19,7 @@ class ShowSpacePostContext @Inject constructor(
             val postOrigin = TimelinePostDetail(
                 senderName = threadPost.creator.name,
                 postTime = threadPost.createdAt,
-                body = threadPost.body,
+                htmlBody = threadPost.body,
                 location = PostingLocation.Space(
                     threadId = threadPost.threadId,
                     commentId = threadPost.id,
@@ -30,7 +30,7 @@ class ShowSpacePostContext @Inject constructor(
                 TimelinePostDetail(
                     senderName = comment.creator.name,
                     postTime = comment.createdAt,
-                    body = comment.body,
+                    htmlBody = comment.body,
                     location = PostingLocation.Space(
                         threadId = threadPost.threadId,
                         commentId = comment.postId,

@@ -25,7 +25,7 @@ import kotlinx.datetime.toInstant
 fun PostContent(
     senderName: String,
     postTime: Instant,
-    body: String,
+    htmlBody: String,
     modifier: Modifier = Modifier
 ) {
     Column(modifier) {
@@ -49,7 +49,7 @@ fun PostContent(
             )
         }
         Spacer(modifier = Modifier.height(8.dp))
-        Text(text = body)
+        HtmlText(html = htmlBody)
     }
 }
 
@@ -60,7 +60,7 @@ private fun Preview() {
         PostContent(
             senderName = "123456789123456789123456789123456789123456789123456789123456789",
             postTime = "2021-08-22T14:21:00.000Z".toInstant(),
-            body = "bodybodybodybodybodybodybodybodybodybodybodybodybodybodybody"
+            htmlBody = "bodybodybodybodybodybodybodybodybodybodybodybodybodybodybody"
         )
     }
 }

@@ -116,6 +116,7 @@ private fun FocusedPostContent(
 ) {
     ConstraintLayout(
         modifier = Modifier.padding(start = 16.dp, end = 16.dp)
+            .fillMaxWidth()
     ) {
         val (senderIcon, postLinker, postHeaderText, body) = createRefs()
         createHorizontalChain(
@@ -167,14 +168,13 @@ private fun FocusedPostContent(
                 modifier = Modifier.alpha(ContentAlpha.medium)
             )
         }
-        Text(
+        HtmlText(
+            html = focusedPost.htmlBody,
             modifier = Modifier.constrainAs(body) {
                 top.linkTo(postHeaderText.bottom, margin = 8.dp)
                 bottom.linkTo(parent.bottom)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
+                linkTo(start = parent.start, end = parent.end, bias = 0f)
             },
-            text = focusedPost.body
         )
     }
 }
@@ -226,7 +226,7 @@ private fun CommentPostRow(
         PostContent(
             senderName = commentPost.senderName,
             postTime = commentPost.postTime,
-            body = commentPost.body,
+            htmlBody = commentPost.htmlBody,
             modifier = Modifier.constrainAs(postContent) {
                 width = Dimension.fillToConstraints
                 top.linkTo(senderIcon.top)

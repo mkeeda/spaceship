@@ -5,7 +5,7 @@ import kotlinx.datetime.Instant
 data class TimelinePostDetail(
     val senderName: String,
     val postTime: Instant,
-    val body: String,
+    val htmlBody: String,
     val location: PostingLocation,
 ) : Comparable<TimelinePostDetail> {
     override fun compareTo(other: TimelinePostDetail): Int {
@@ -17,7 +17,11 @@ data class TimelinePostDetail(
     }
 
     override fun hashCode(): Int {
-        return location.hashCode()
+        var result = senderName.hashCode()
+        result = 31 * result + postTime.hashCode()
+        result = 31 * result + htmlBody.hashCode()
+        result = 31 * result + location.hashCode()
+        return result
     }
 }
 

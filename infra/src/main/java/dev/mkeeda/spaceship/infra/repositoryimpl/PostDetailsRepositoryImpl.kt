@@ -27,7 +27,7 @@ private fun NtfGet.Response.toTimelinePostDetail(): TimelinePostDetail {
     return TimelinePostDetail(
         senderName = sender?.name ?: "",
         postTime = item.sentTime,
-        body = item.content.message.text,
+        htmlBody = item.content.message.text,
         location = item.postingLocation
     )
 }
