@@ -23,6 +23,7 @@ import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
+import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import dev.mkeeda.spaceship.data.TimelinePost
 import dev.mkeeda.spaceship.ui.common.util.PreviewBackground
@@ -50,9 +51,24 @@ private fun TimelineScreen(
     val swipeRefreshState = rememberSwipeRefreshState(
         isRefreshing = pagingTimelinePosts.loadState.refresh is LoadState.Loading
     )
+    RefreshableTimeline(
+        pagingTimelinePosts = pagingTimelinePosts,
+        swipeRefreshState = swipeRefreshState,
+        onTimelineRefresh = { pagingTimelinePosts.refresh() },
+        openPostDetails = openPostDetails
+    )
+}
+
+@Composable
+private fun RefreshableTimeline(
+    pagingTimelinePosts: LazyPagingItems<TimelinePost>,
+    swipeRefreshState: SwipeRefreshState,
+    onTimelineRefresh: () -> Unit,
+    openPostDetails: (TimelinePost) -> Unit
+) {
     SwipeRefresh(
         state = swipeRefreshState,
-        onRefresh = { pagingTimelinePosts.refresh() },
+        onRefresh = onTimelineRefresh,
         indicator = { state, trigger ->
             SwipeRefreshIndicator(
                 state = state,
