@@ -15,11 +15,22 @@ android {
         minSdk 26
         targetSdk 31
         versionCode 1
-        versionName "1.0"
+        versionName "0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
+        }
+    }
+
+    signingConfigs {
+        release {
+            def debugKeystore = "${System.properties['user.home']}/.android/debug.keystore" // for mac
+
+            storeFile file(propertyOrDefault('RELEASE_KEYSTORE_PATH', debugKeystore))
+            storePassword propertyOrDefault('RELEASE_KEYSTORE_PASSWORD', "android")
+            keyAlias propertyOrDefault('RELEASE_KEY_ALIAS', "androiddebugkey")
+            keyPassword propertyOrDefault('RELEASE_KEY_PASSWORD', "android")
         }
     }
 
@@ -78,4 +89,9 @@ dependencies {
     androidTestImplementation Libs.AndroidX.Compose.uiTestJunit4
 
     debugImplementation Libs.AndroidX.Compose.uiTooling
+}
+
+def propertyOrDefault(String propertyName, Object defaultValue) {
+    def propertyValue = project.properties[propertyName]
+    return propertyValue != null ? propertyValue : defaultValue
 }
