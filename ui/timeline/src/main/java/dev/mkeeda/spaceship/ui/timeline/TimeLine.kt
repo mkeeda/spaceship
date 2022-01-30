@@ -133,7 +133,7 @@ private fun TimelineRow(
         PostContent(
             senderName = post.senderName,
             postTime = post.postTime,
-            body = post.body
+            htmlBody = post.body
         )
     }
 }

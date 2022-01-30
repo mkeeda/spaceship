@@ -167,14 +167,14 @@ private fun FocusedPostContent(
                 modifier = Modifier.alpha(ContentAlpha.medium)
             )
         }
-        Text(
+        HtmlText(
+            html = focusedPost.htmlBody,
             modifier = Modifier.constrainAs(body) {
                 top.linkTo(postHeaderText.bottom, margin = 8.dp)
                 bottom.linkTo(parent.bottom)
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
             },
-            text = focusedPost.body
         )
     }
 }
@@ -226,7 +226,7 @@ private fun CommentPostRow(
         PostContent(
             senderName = commentPost.senderName,
             postTime = commentPost.postTime,
-            body = commentPost.body,
+            htmlBody = commentPost.htmlBody,
             modifier = Modifier.constrainAs(postContent) {
                 width = Dimension.fillToConstraints
                 top.linkTo(senderIcon.top)
