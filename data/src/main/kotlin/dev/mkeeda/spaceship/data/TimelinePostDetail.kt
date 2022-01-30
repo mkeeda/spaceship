@@ -17,7 +17,11 @@ data class TimelinePostDetail(
     }
 
     override fun hashCode(): Int {
-        return location.hashCode()
+        var result = senderName.hashCode()
+        result = 31 * result + postTime.hashCode()
+        result = 31 * result + htmlBody.hashCode()
+        result = 31 * result + location.hashCode()
+        return result
     }
 }
 
