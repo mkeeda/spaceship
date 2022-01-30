@@ -57,6 +57,7 @@ dependencies {
     implementation Libs.Accompanist.inset
     implementation Libs.Accompanist.insetUi
     implementation Libs.Accompanist.systemUiController
+    implementation Libs.Accompanist.swipeRefresh
 
     implementation Libs.Dagger.Hilt.base
     kapt Libs.Dagger.Hilt.compiler
