@@ -25,7 +25,7 @@ fun HtmlText(
     html: String,
     modifier: Modifier = Modifier
 ) {
-    val htmlAnnotatedString = remember {
+    val htmlAnnotatedString = remember(html) {
         HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_COMPACT).toAnnotatedString()
     }
     Text(text = htmlAnnotatedString, modifier = modifier)
