@@ -2,6 +2,7 @@ package dev.mkeeda.spaceship.ui.timeline.presentation
 
 import dev.mkeeda.spaceship.data.PostingLocation
 import dev.mkeeda.spaceship.data.TimelinePostDetail
+import kotlin.random.Random
 import kotlinx.datetime.Instant
 import kotlinx.datetime.toInstant
 
@@ -27,7 +28,11 @@ internal fun fakeTimelinePostDetail(
     senderName,
     postTime,
     body,
-    PostingLocation.Space(0, 0, 0)
+    PostingLocation.Space(
+        threadId = Random.nextLong(),
+        commentId = Random.nextLong(),
+        commentReplyId =Random.nextLong()
+    )
 )
 
 private val fakeComments = listOf(
