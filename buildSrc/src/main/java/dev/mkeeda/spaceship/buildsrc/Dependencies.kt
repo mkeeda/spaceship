@@ -39,13 +39,13 @@ object Libs {
         }
 
         object Compose {
-            const val compilerVersion = "1.1.0-rc02"
+            const val compilerVersion = "1.1.0-rc03"
             const val compiler = "androidx.compose.compiler:compiler:$compilerVersion"
-            const val ui = "androidx.compose.ui:ui:1.1.0-rc01"
-            const val material = "androidx.compose.material:material:1.1.0-rc01"
-            const val uiToolingPreview = "androidx.compose.ui:ui-tooling-preview:1.1.0-rc01"
-            const val uiTooling = "androidx.compose.ui:ui-tooling:1.1.0-rc01"
-            const val uiTestJunit4 = "androidx.compose.ui:ui-test-junit4:1.1.0-rc01"
+            const val ui = "androidx.compose.ui:ui:1.1.0-rc03"
+            const val material = "androidx.compose.material:material:1.1.0-rc03"
+            const val uiToolingPreview = "androidx.compose.ui:ui-tooling-preview:1.1.0-rc03"
+            const val uiTooling = "androidx.compose.ui:ui-tooling:1.1.0-rc03"
+            const val uiTestJunit4 = "androidx.compose.ui:ui-test-junit4:1.1.0-rc03"
         }
 
         object Paging {
@@ -62,10 +62,11 @@ object Libs {
     }
 
     object Accompanist {
-        private const val version = "0.17.0"
+        private const val version = "0.22.1-rc"
         const val inset = "com.google.accompanist:accompanist-insets:$version"
         const val insetUi = "com.google.accompanist:accompanist-insets-ui:$version"
         const val systemUiController = "com.google.accompanist:accompanist-systemuicontroller:$version"
+        const val swipeRefresh = "com.google.accompanist:accompanist-swiperefresh:$version"
     }
 
     object Dagger {

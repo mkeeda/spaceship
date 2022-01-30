@@ -14,12 +14,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
+import com.google.accompanist.swiperefresh.SwipeRefreshState
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import dev.mkeeda.spaceship.data.TimelinePost
 import dev.mkeeda.spaceship.ui.common.util.PreviewBackground
 import dev.mkeeda.spaceship.ui.timeline.presentation.TimelineViewModel
@@ -43,10 +48,39 @@ private fun TimelineScreen(
     openPostDetails: (TimelinePost) -> Unit
 ) {
     val pagingTimelinePosts = viewModel.pagingTimeline.collectAsLazyPagingItems()
-    Timeline(
+    val swipeRefreshState = rememberSwipeRefreshState(
+        isRefreshing = pagingTimelinePosts.loadState.refresh is LoadState.Loading
+    )
+    RefreshableTimeline(
         pagingTimelinePosts = pagingTimelinePosts,
+        swipeRefreshState = swipeRefreshState,
+        onTimelineRefresh = { pagingTimelinePosts.refresh() },
         openPostDetails = openPostDetails
     )
+}
+
+@Composable
+private fun RefreshableTimeline(
+    pagingTimelinePosts: LazyPagingItems<TimelinePost>,
+    swipeRefreshState: SwipeRefreshState,
+    onTimelineRefresh: () -> Unit,
+    openPostDetails: (TimelinePost) -> Unit
+) {
+    SwipeRefresh(
+        state = swipeRefreshState,
+        onRefresh = onTimelineRefresh,
+        indicator = { state, trigger ->
+            SwipeRefreshIndicator(
+                state = state,
+                refreshTriggerDistance = trigger,
+            )
+        }
+    ) {
+        Timeline(
+            pagingTimelinePosts = pagingTimelinePosts,
+            openPostDetails = openPostDetails
+        )
+    }
 }
 
 @Composable
