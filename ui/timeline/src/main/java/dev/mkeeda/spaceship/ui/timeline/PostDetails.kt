@@ -116,6 +116,7 @@ private fun FocusedPostContent(
 ) {
     ConstraintLayout(
         modifier = Modifier.padding(start = 16.dp, end = 16.dp)
+            .fillMaxWidth()
     ) {
         val (senderIcon, postLinker, postHeaderText, body) = createRefs()
         createHorizontalChain(
@@ -172,8 +173,7 @@ private fun FocusedPostContent(
             modifier = Modifier.constrainAs(body) {
                 top.linkTo(postHeaderText.bottom, margin = 8.dp)
                 bottom.linkTo(parent.bottom)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
+                linkTo(start = parent.start, end = parent.end, bias = 0f)
             },
         )
     }
