@@ -37,10 +37,10 @@ jobs:
           echo "${{ secrets.KEYSTORE }}" | base64 --decode --ignore-garbage > $GITHUB_WORKSPACE/spaceship-upload.jks
           ./gradlew clean bundleRelease
         env:
-          KEYSTORE: ${{ github.workspace }}/spaceship-upload.jks
-          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          ORG_GRADLE_PROJECT_RELEASE_KEYSTORE_PATH: ${{ github.workspace }}/spaceship-upload.jks
+          ORG_GRADLE_PROJECT_RELEASE_KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          ORG_GRADLE_PROJECT_RELEASE_KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          ORG_GRADLE_PROJECT_RELEASE_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
       - name: Save release archives
         uses: actions/upload-artifact@v2
