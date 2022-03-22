@@ -1,12 +1,16 @@
 name: Deploy
 on:
   push
-env:
-  VERSION_CODE_BASE_NUMBER: 1
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      VERSION_CODE_BASE_NUMBER: 1
+      ORG_GRADLE_PROJECT_RELEASE_KEYSTORE_PATH: ${{ github.workspace }}/spaceship-upload.jks
+      ORG_GRADLE_PROJECT_RELEASE_KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+      ORG_GRADLE_PROJECT_RELEASE_KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+      ORG_GRADLE_PROJECT_RELEASE_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
     steps:
       - name: Checkout codes
         uses: actions/checkout@v2
@@ -36,11 +40,6 @@ jobs:
         run: |
           echo "${{ secrets.KEYSTORE }}" | base64 --decode --ignore-garbage > $GITHUB_WORKSPACE/spaceship-upload.jks
           ./gradlew clean bundleRelease
-        env:
-          ORG_GRADLE_PROJECT_RELEASE_KEYSTORE_PATH: ${{ github.workspace }}/spaceship-upload.jks
-          ORG_GRADLE_PROJECT_RELEASE_KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-          ORG_GRADLE_PROJECT_RELEASE_KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-          ORG_GRADLE_PROJECT_RELEASE_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
       - name: Save release archives
         uses: actions/upload-artifact@v2
