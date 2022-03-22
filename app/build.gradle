@@ -14,8 +14,8 @@ android {
         applicationId "dev.mkeeda.spaceship"
         minSdk 26
         targetSdk 31
-        versionCode 1
-        versionName "0.0"
+        versionCode VERSION_CODE as int
+        versionName VERSION_NUMBER.toString() + "-" + BUILD_NUMBER.toString()
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
