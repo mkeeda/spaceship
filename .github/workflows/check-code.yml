@@ -1,8 +1,6 @@
 name: Check code
 on:
-  push:
-    branches-ignore:
-      - main
+  push
 
 jobs:
   check-code:
