@@ -95,3 +95,5 @@ lint/tmp/
 # mac file
 .DS_Store
 
+# keystore file
+keystore/

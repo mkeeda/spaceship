@@ -7,6 +7,8 @@ plugins {
     id 'dagger.hilt.android.plugin'
 }
 
+def useReleaseKeystore = USE_RELEASE_KEY_STORE.toBoolean()
+
 android {
     compileSdk 31
 
@@ -14,8 +16,8 @@ android {
         applicationId "dev.mkeeda.spaceship"
         minSdk 26
         targetSdk 31
-        versionCode 1
-        versionName "1.0"
+        versionCode VERSION_CODE as int
+        versionName VERSION_NUMBER.toString() + "-" + BUILD_NUMBER.toString()
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -23,10 +25,34 @@ android {
         }
     }
 
+    signingConfigs {
+        debug {
+            storeFile file("${System.properties['user.home']}/.android/debug.keystore")
+            storePassword "android"
+            keyAlias "androiddebugkey"
+            keyPassword "android"
+        }
+
+        release {
+            if (useReleaseKeystore) {
+                storeFile rootProject.file("./keystore/spaceship-upload-keystore.jks")
+                storePassword propertyOrDefault('RELEASE_KEYSTORE_PASSWORD', "")
+                keyAlias propertyOrDefault('RELEASE_KEY_ALIAS', "")
+                keyPassword propertyOrDefault('RELEASE_KEY_PASSWORD', "")
+            }
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            if (useReleaseKeystore) {
+                signingConfig signingConfigs.release
+            } else {
+                signingConfig signingConfigs.debug
+            }
         }
     }
     compileOptions {

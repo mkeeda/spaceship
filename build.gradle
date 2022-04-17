@@ -69,3 +69,9 @@ subprojects {
         }
     }
 }
+
+Object propertyOrDefault(String propertyName, Object defaultValue) {
+    def propertyValue = project.properties[propertyName]
+    println(propertyName + ": " + propertyValue)
+    return propertyValue != null ? propertyValue : defaultValue
+}
