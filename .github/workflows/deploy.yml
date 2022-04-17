@@ -8,7 +8,7 @@ jobs:
     env:
       VERSION_CODE_BASE_NUMBER: 1
       ORG_GRADLE_PROJECT_USE_RELEASE_KEY_STORE: true
-      ORG_GRADLE_PROJECT_RELEASE_KEYSTORE_PATH: ${{ github.workspace }}/keystore/spaceship-upload.jks
+      ORG_GRADLE_PROJECT_RELEASE_KEYSTORE_PATH: ${{ github.workspace }}/keystore/spaceship-upload-keystore.jks
       ORG_GRADLE_PROJECT_RELEASE_KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
       ORG_GRADLE_PROJECT_RELEASE_KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
       ORG_GRADLE_PROJECT_RELEASE_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
@@ -40,7 +40,7 @@ jobs:
       - name: Build release aab
         run: |
           mkdir keystore
-          echo "${{ secrets.KEYSTORE }}" | base64 --decode --ignore-garbage > $GITHUB_WORKSPACE/keystore/spaceship-upload.jks
+          echo "${{ secrets.KEYSTORE }}" | base64 --decode --ignore-garbage > $GITHUB_WORKSPACE/keystore/spaceship-upload-keystore.jks
           ./gradlew clean bundleRelease
 
       - name: Save release archives
