@@ -27,10 +27,10 @@ android {
         release {
             def debugKeystore = "${System.properties['user.home']}/.android/debug.keystore" // for mac
 
-            storeFile file(propertyOrDefault('RELEASE_KEYSTORE_PATH', debugKeystore))
-            storePassword propertyOrDefault('RELEASE_KEYSTORE_PASSWORD', "android")
-            keyAlias propertyOrDefault('RELEASE_KEY_ALIAS', "androiddebugkey")
-            keyPassword propertyOrDefault('RELEASE_KEY_PASSWORD', "android")
+            storeFile rootProject.file("./keystore/spaceship-upload-keystore.jks")
+            storePassword propertyOrDefault('RELEASE_KEYSTORE_PASSWORD', "")
+            keyAlias propertyOrDefault('RELEASE_KEY_ALIAS', "")
+            keyPassword propertyOrDefault('RELEASE_KEY_PASSWORD', "")
         }
     }
 
@@ -38,6 +38,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
