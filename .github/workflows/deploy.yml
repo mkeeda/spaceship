@@ -71,3 +71,4 @@ jobs:
           packageName: dev.mkeeda.spaceship
           releaseFiles: ./output/app-release.aab
           track: internal
+          status: completed
