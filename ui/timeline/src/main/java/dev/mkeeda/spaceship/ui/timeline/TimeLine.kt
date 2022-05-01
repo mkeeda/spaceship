@@ -3,8 +3,11 @@ package dev.mkeeda.spaceship.ui.timeline
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -19,8 +22,6 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
-import com.google.accompanist.insets.LocalWindowInsets
-import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.SwipeRefreshState
@@ -91,7 +92,7 @@ private fun Timeline(
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
-        contentPadding = rememberInsetsPaddingValues(insets = LocalWindowInsets.current.navigationBars)
+        contentPadding = WindowInsets.navigationBars.asPaddingValues()
     ) {
         items(pagingTimelinePosts) { post ->
             TimelineRow(

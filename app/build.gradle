@@ -90,7 +90,6 @@ dependencies {
     implementation Libs.AndroidX.navigationCompose
     implementation Libs.AndroidX.constraintLayoutCompose
 
-    implementation Libs.Accompanist.inset
     implementation Libs.Accompanist.insetUi
     implementation Libs.Accompanist.systemUiController
 

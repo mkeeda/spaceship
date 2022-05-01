@@ -10,7 +10,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.mkeeda.spaceship.ui.common.theme.SpaceshipTheme
@@ -34,18 +33,17 @@ class MainActivity : ComponentActivity() {
                 )
             }
             SpaceshipTheme {
-                ProvideWindowInsets {
-                    val navController = rememberNavController()
-                    val backStackEntry = navController.currentBackStackEntryAsState()
-                    val currentScreen = Screen.fromRoute(route = backStackEntry.value?.destination?.route)
+                val navController = rememberNavController()
+                val backStackEntry = navController.currentBackStackEntryAsState()
+                val currentScreen =
+                    Screen.fromRoute(route = backStackEntry.value?.destination?.route)
 
-                    Scaffold(
-                        topBar = {
-                            SpaceshipAppBar(currentScreen = currentScreen)
-                        }
-                    ) {
-                        AppNavigation(navHostController = navController)
+                Scaffold(
+                    topBar = {
+                        SpaceshipAppBar(currentScreen = currentScreen)
                     }
+                ) {
+                    AppNavigation(navHostController = navController)
                 }
             }
         }
