@@ -1,7 +1,7 @@
 package dev.mkeeda.spaceship.buildsrc
 
 object GradlePlugins {
-    const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
+    const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.20"
     const val serialization = "org.jetbrains.kotlin:kotlin-serialization:1.6.10"
     const val android = "com.android.tools.build:gradle:7.2.0-beta01"
     const val hilt = "com.google.dagger:hilt-android-gradle-plugin:${Libs.Dagger.version}"
@@ -39,13 +39,17 @@ object Libs {
         }
 
         object Compose {
-            const val compilerVersion = "1.1.0-rc03"
+            const val compilerVersion = "1.2.0-alpha08"
             const val compiler = "androidx.compose.compiler:compiler:$compilerVersion"
-            const val ui = "androidx.compose.ui:ui:1.1.0-rc03"
-            const val material = "androidx.compose.material:material:1.1.0-rc03"
-            const val uiToolingPreview = "androidx.compose.ui:ui-tooling-preview:1.1.0-rc03"
-            const val uiTooling = "androidx.compose.ui:ui-tooling:1.1.0-rc03"
-            const val uiTestJunit4 = "androidx.compose.ui:ui-test-junit4:1.1.0-rc03"
+            const val material = "androidx.compose.material:material:1.2.0-alpha08"
+
+            object Ui {
+                private const val version = "1.2.0-alpha08"
+                const val ui = "androidx.compose.ui:ui:$version"
+                const val uiToolingPreview = "androidx.compose.ui:ui-tooling-preview:$version"
+                const val uiTooling = "androidx.compose.ui:ui-tooling:$version"
+                const val uiTestJunit4 = "androidx.compose.ui:ui-test-junit4:$version"
+            }
         }
 
         object Paging {
