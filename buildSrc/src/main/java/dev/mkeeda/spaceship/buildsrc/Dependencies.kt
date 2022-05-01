@@ -36,7 +36,7 @@ object Libs {
         const val viewModelCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha07"
 
         object Hilt {
-            const val navigationCompose = "androidx.hilt:hilt-navigation-compose:1.0.0-rc01"
+            const val navigationCompose = "androidx.hilt:hilt-navigation-compose:1.0.0"
         }
 
         object Compose {
@@ -75,7 +75,7 @@ object Libs {
     }
 
     object Dagger {
-        const val version = "2.38.1"
+        const val version = "2.41"
         const val base = "com.google.dagger:dagger:$version"
 
         object Hilt {
