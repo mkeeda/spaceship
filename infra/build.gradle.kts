@@ -59,7 +59,8 @@ dependencies {
     implementation(project(":domain"))
 
     api(Libs.Ktor.clientOkHttp)
-    implementation(Libs.Ktor.clientSerialization)
+    implementation(Libs.Ktor.contentNegotiation)
+    implementation(Libs.Ktor.kotlinxJson)
     implementation(Libs.Ktor.Logging.base)
     implementation(Libs.Ktor.Logging.slf4JImpl)
 
