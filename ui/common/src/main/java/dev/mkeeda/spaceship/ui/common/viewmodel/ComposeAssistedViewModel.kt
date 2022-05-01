@@ -10,7 +10,7 @@ inline fun <reified VM : ViewModel> assistedViewModel(
     crossinline body: () -> VM
 ): VM {
     val factory = object : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")
             return body() as T
         }
