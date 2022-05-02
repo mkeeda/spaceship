@@ -13,7 +13,7 @@ import javax.inject.Inject
 import kotlinx.serialization.Serializable
 
 internal class KintoneApiService @Inject constructor(
-    val httpClient: HttpClient,
+    private val httpClient: HttpClient,
     private val loginCredentialDataSource: LoginCredentialDataSource
 ) {
     private val loginCredential = loginCredentialDataSource.getLoginCredential()
