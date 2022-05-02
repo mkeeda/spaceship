@@ -1,0 +1,57 @@
+import dev.mkeeda.spaceship.buildsrc.Libs
+
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+}
+
+android {
+    namespace 'dev.mkeeda.spaceship.ui.login'
+    compileSdk 31
+
+    defaultConfig {
+        minSdk 26
+        targetSdk 31
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion Libs.AndroidX.Compose.compilerVersion
+    }
+}
+
+dependencies {
+    implementation Libs.AndroidX.coreKtx
+    implementation Libs.AndroidX.Compose.compiler
+    implementation Libs.AndroidX.Compose.Ui.ui
+    implementation Libs.AndroidX.Compose.Ui.uiToolingPreview
+    implementation Libs.AndroidX.Compose.material
+    implementation Libs.AndroidX.lifecycleRuntimeKtx
+    implementation Libs.AndroidX.navigationCompose
+    implementation Libs.AndroidX.viewModelCompose
+    implementation Libs.AndroidX.Hilt.navigationCompose
+
+    implementation Libs.Accompanist.insetUi
+
+    implementation Libs.Dagger.Hilt.base
+    kapt Libs.Dagger.Hilt.compiler
+
+    debugImplementation Libs.AndroidX.Compose.Ui.uiTooling
+}

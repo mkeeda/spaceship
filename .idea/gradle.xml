@@ -18,6 +18,7 @@
             <option value="$PROJECT_DIR$/infra" />
             <option value="$PROJECT_DIR$/ui" />
             <option value="$PROJECT_DIR$/ui/common" />
+            <option value="$PROJECT_DIR$/ui/login" />
             <option value="$PROJECT_DIR$/ui/timeline" />
           </set>
         </option>
