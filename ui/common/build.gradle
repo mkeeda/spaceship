@@ -44,4 +44,11 @@ dependencies {
     implementation Libs.AndroidX.viewModelCompose
 
     implementation Libs.Accompanist.systemUiController
+
+    /**
+     * Workaround for compose preview bug
+     * https://issuetracker.google.com/issues/227767363
+     */
+    debugApi "androidx.customview:customview:1.2.0-alpha01"
+    debugApi "androidx.customview:customview-poolingcontainer:1.0.0-alpha01"
 }
