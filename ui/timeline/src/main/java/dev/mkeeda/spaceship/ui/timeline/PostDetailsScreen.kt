@@ -2,14 +2,12 @@ package dev.mkeeda.spaceship.ui.timeline
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -18,6 +16,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -32,6 +31,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import dev.mkeeda.spaceship.data.PostingLocation
 import dev.mkeeda.spaceship.data.TimelinePostDetail
+import dev.mkeeda.spaceship.ui.common.component.SpaceshipAppBar
 import dev.mkeeda.spaceship.ui.common.util.PreviewBackground
 import dev.mkeeda.spaceship.ui.timeline.presentation.PostDetailsEvent
 import dev.mkeeda.spaceship.ui.timeline.presentation.PostDetailsViewModel
@@ -48,23 +48,31 @@ private fun PostDetailsScreen(
     viewModel: PostDetailsViewModel
 ) {
     val postDetailsViewState by viewModel.state.collectAsState()
-    PostDetails(
-        state = postDetailsViewState,
-        showContext = { location ->
-            viewModel.event(PostDetailsEvent.ShowContext(location))
+    Scaffold(
+        topBar = {
+            SpaceshipAppBar(title = "PostDetails")
         }
-    )
+    ) { contentPadding ->
+        PostDetails(
+            state = postDetailsViewState,
+            showContext = { location ->
+                viewModel.event(PostDetailsEvent.ShowContext(location))
+            },
+            contentPadding = contentPadding
+        )
+    }
 }
 
 @Composable
 private fun PostDetails(
     state: PostDetailsViewState,
-    showContext: (PostingLocation) -> Unit
+    showContext: (PostingLocation) -> Unit,
+    contentPadding: PaddingValues = PaddingValues(0.dp)
 ) {
     LazyColumn(
         state = rememberLazyListState(initialFirstVisibleItemIndex = state.focusedCommentsIndex),
         modifier = Modifier.fillMaxSize(),
-        contentPadding = WindowInsets.navigationBars.asPaddingValues()
+        contentPadding = contentPadding
     ) {
         itemsIndexed(
             items = state.comments,
