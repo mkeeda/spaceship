@@ -29,10 +29,12 @@ class ApiModule {
     fun provideHttpClient(): HttpClient {
         return HttpClient(OkHttp) {
             install(ContentNegotiation) {
-                json(Json {
-                    prettyPrint = true
-                    ignoreUnknownKeys = true
-                })
+                json(
+                    Json {
+                        prettyPrint = true
+                        ignoreUnknownKeys = true
+                    }
+                )
             }
             install(Logging) {
                 logger = Logger.DEFAULT
