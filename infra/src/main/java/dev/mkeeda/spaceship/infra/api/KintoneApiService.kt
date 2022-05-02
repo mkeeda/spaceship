@@ -3,8 +3,10 @@ package dev.mkeeda.spaceship.infra.api
 import android.util.Base64
 import dev.mkeeda.spaceship.infra.BuildConfig
 import io.ktor.client.HttpClient
+import io.ktor.client.call.body
 import io.ktor.client.request.header
 import io.ktor.client.request.post
+import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import javax.inject.Inject
@@ -30,9 +32,9 @@ internal class KintoneApiService @Inject constructor(
             header("X-Cybozu-Authorization", authentication)
             contentType(ContentType.Application.Json)
             param?.let {
-                body = it
+                setBody(it)
             }
-        }
+        }.body()
         return response.result
     }
 }

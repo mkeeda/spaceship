@@ -82,15 +82,14 @@ dependencies {
 
     implementation Libs.AndroidX.coreKtx
     implementation Libs.AndroidX.Compose.compiler
-    implementation Libs.AndroidX.Compose.ui
+    implementation Libs.AndroidX.Compose.Ui.ui
+    implementation Libs.AndroidX.Compose.Ui.uiToolingPreview
     implementation Libs.AndroidX.Compose.material
-    implementation Libs.AndroidX.Compose.uiToolingPreview
     implementation Libs.AndroidX.lifecycleRuntimeKtx
     implementation Libs.AndroidX.activityCompose
     implementation Libs.AndroidX.navigationCompose
     implementation Libs.AndroidX.constraintLayoutCompose
 
-    implementation Libs.Accompanist.inset
     implementation Libs.Accompanist.insetUi
     implementation Libs.Accompanist.systemUiController
 
@@ -101,7 +100,7 @@ dependencies {
 
     androidTestImplementation Libs.AndroidX.Test.extJunit
     androidTestImplementation Libs.AndroidX.Test.espressoCore
-    androidTestImplementation Libs.AndroidX.Compose.uiTestJunit4
+    androidTestImplementation Libs.AndroidX.Compose.Ui.uiTestJunit4
 
-    debugImplementation Libs.AndroidX.Compose.uiTooling
+    debugImplementation Libs.AndroidX.Compose.Ui.uiTooling
 }

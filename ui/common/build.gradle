@@ -38,9 +38,9 @@ dependencies {
     implementation Libs.KotlinX.coroutines
 
     implementation Libs.AndroidX.Compose.compiler
-    implementation Libs.AndroidX.Compose.ui
+    implementation Libs.AndroidX.Compose.Ui.ui
     implementation Libs.AndroidX.Compose.material
-    implementation Libs.AndroidX.Compose.uiToolingPreview
+    implementation Libs.AndroidX.Compose.Ui.uiToolingPreview
     implementation Libs.AndroidX.viewModelCompose
 
     implementation Libs.Accompanist.systemUiController

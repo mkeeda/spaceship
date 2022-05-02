@@ -1,5 +1,6 @@
 package dev.mkeeda.spaceship
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -10,7 +11,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.mkeeda.spaceship.ui.common.theme.SpaceshipTheme
@@ -20,6 +20,7 @@ import dev.mkeeda.spaceship.ui.foundation.SpaceshipAppBar
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -34,18 +35,17 @@ class MainActivity : ComponentActivity() {
                 )
             }
             SpaceshipTheme {
-                ProvideWindowInsets {
-                    val navController = rememberNavController()
-                    val backStackEntry = navController.currentBackStackEntryAsState()
-                    val currentScreen = Screen.fromRoute(route = backStackEntry.value?.destination?.route)
+                val navController = rememberNavController()
+                val backStackEntry = navController.currentBackStackEntryAsState()
+                val currentScreen =
+                    Screen.fromRoute(route = backStackEntry.value?.destination?.route)
 
-                    Scaffold(
-                        topBar = {
-                            SpaceshipAppBar(currentScreen = currentScreen)
-                        }
-                    ) {
-                        AppNavigation(navHostController = navController)
+                Scaffold(
+                    topBar = {
+                        SpaceshipAppBar(currentScreen = currentScreen)
                     }
+                ) {
+                    AppNavigation(navHostController = navController)
                 }
             }
         }

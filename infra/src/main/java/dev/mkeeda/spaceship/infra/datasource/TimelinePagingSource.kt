@@ -6,7 +6,7 @@ import dev.mkeeda.spaceship.data.PostId
 import dev.mkeeda.spaceship.data.TimelinePost
 import dev.mkeeda.spaceship.infra.api.ntf.NtfList
 import dev.mkeeda.spaceship.infra.api.ntf.NtfListService
-import io.ktor.client.features.ResponseException
+import io.ktor.client.plugins.ResponseException
 
 internal class TimelinePagingSource(
     private val networkRequestSize: Int,

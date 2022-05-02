@@ -3,10 +3,13 @@ package dev.mkeeda.spaceship.ui.timeline
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -27,8 +30,6 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import com.google.accompanist.insets.LocalWindowInsets
-import com.google.accompanist.insets.rememberInsetsPaddingValues
 import dev.mkeeda.spaceship.data.PostingLocation
 import dev.mkeeda.spaceship.data.TimelinePostDetail
 import dev.mkeeda.spaceship.ui.common.util.PreviewBackground
@@ -63,7 +64,7 @@ private fun PostDetails(
     LazyColumn(
         state = rememberLazyListState(initialFirstVisibleItemIndex = state.focusedCommentsIndex),
         modifier = Modifier.fillMaxSize(),
-        contentPadding = rememberInsetsPaddingValues(insets = LocalWindowInsets.current.navigationBars)
+        contentPadding = WindowInsets.navigationBars.asPaddingValues()
     ) {
         itemsIndexed(
             items = state.comments,
@@ -115,7 +116,8 @@ private fun FocusedPostContent(
     linkToBefore: Boolean = false
 ) {
     ConstraintLayout(
-        modifier = Modifier.padding(start = 16.dp, end = 16.dp)
+        modifier = Modifier
+            .padding(start = 16.dp, end = 16.dp)
             .fillMaxWidth()
     ) {
         val (senderIcon, postLinker, postHeaderText, body) = createRefs()
