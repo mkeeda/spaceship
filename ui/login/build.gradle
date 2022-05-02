@@ -38,6 +38,9 @@ android {
 }
 
 dependencies {
+    implementation project(":domain")
+    implementation project(":ui:common")
+
     implementation Libs.AndroidX.coreKtx
     implementation Libs.AndroidX.Compose.compiler
     implementation Libs.AndroidX.Compose.Ui.ui
