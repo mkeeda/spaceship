@@ -67,7 +67,7 @@ object Libs {
     }
 
     object Accompanist {
-        private const val version = "0.22.1-rc"
+        private const val version = "0.24.7-alpha"
         const val insetUi = "com.google.accompanist:accompanist-insets-ui:$version"
         const val systemUiController = "com.google.accompanist:accompanist-systemuicontroller:$version"
         const val swipeRefresh = "com.google.accompanist:accompanist-swiperefresh:$version"
