@@ -1,16 +1,15 @@
 package dev.mkeeda.spaceship.ui.timeline
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,6 +26,7 @@ import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import dev.mkeeda.spaceship.data.TimelinePost
+import dev.mkeeda.spaceship.ui.common.component.SpaceshipAppBar
 import dev.mkeeda.spaceship.ui.common.util.PreviewBackground
 import dev.mkeeda.spaceship.ui.timeline.presentation.TimelineViewModel
 import dev.mkeeda.spaceship.ui.timeline.presentation.TimelineViewState
@@ -52,12 +52,20 @@ private fun TimelineScreen(
     val swipeRefreshState = rememberSwipeRefreshState(
         isRefreshing = pagingTimelinePosts.loadState.refresh is LoadState.Loading
     )
-    RefreshableTimeline(
-        pagingTimelinePosts = pagingTimelinePosts,
-        swipeRefreshState = swipeRefreshState,
-        onTimelineRefresh = { pagingTimelinePosts.refresh() },
-        openPostDetails = openPostDetails
-    )
+
+    Scaffold(
+        topBar = {
+            SpaceshipAppBar(title = "Timeline")
+        }
+    ) { contentPadding ->
+        RefreshableTimeline(
+            pagingTimelinePosts = pagingTimelinePosts,
+            swipeRefreshState = swipeRefreshState,
+            onTimelineRefresh = { pagingTimelinePosts.refresh() },
+            openPostDetails = openPostDetails,
+            contentPadding = contentPadding
+        )
+    }
 }
 
 @Composable
@@ -65,7 +73,8 @@ private fun RefreshableTimeline(
     pagingTimelinePosts: LazyPagingItems<TimelinePost>,
     swipeRefreshState: SwipeRefreshState,
     onTimelineRefresh: () -> Unit,
-    openPostDetails: (TimelinePost) -> Unit
+    openPostDetails: (TimelinePost) -> Unit,
+    contentPadding: PaddingValues = PaddingValues(0.dp)
 ) {
     SwipeRefresh(
         state = swipeRefreshState,
@@ -79,7 +88,8 @@ private fun RefreshableTimeline(
     ) {
         Timeline(
             pagingTimelinePosts = pagingTimelinePosts,
-            openPostDetails = openPostDetails
+            openPostDetails = openPostDetails,
+            contentPadding = contentPadding
         )
     }
 }
@@ -88,11 +98,12 @@ private fun RefreshableTimeline(
 private fun Timeline(
     viewState: TimelineViewState? = null,
     pagingTimelinePosts: LazyPagingItems<TimelinePost>,
-    openPostDetails: (TimelinePost) -> Unit
+    openPostDetails: (TimelinePost) -> Unit,
+    contentPadding: PaddingValues = PaddingValues(0.dp)
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
-        contentPadding = WindowInsets.navigationBars.asPaddingValues()
+        contentPadding = contentPadding
     ) {
         items(pagingTimelinePosts) { post ->
             TimelineRow(
