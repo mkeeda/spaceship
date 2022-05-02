@@ -29,7 +29,6 @@ import dev.mkeeda.spaceship.data.TimelinePost
 import dev.mkeeda.spaceship.ui.common.component.SpaceshipAppBar
 import dev.mkeeda.spaceship.ui.common.util.PreviewBackground
 import dev.mkeeda.spaceship.ui.timeline.presentation.TimelineViewModel
-import dev.mkeeda.spaceship.ui.timeline.presentation.TimelineViewState
 import dev.mkeeda.spaceship.ui.timeline.presentation.fakeTimeline
 import dev.mkeeda.spaceship.ui.timeline.presentation.fakeTimelinePostItems
 import kotlinx.coroutines.flow.flowOf
@@ -96,7 +95,6 @@ private fun RefreshableTimeline(
 
 @Composable
 private fun Timeline(
-    viewState: TimelineViewState? = null,
     pagingTimelinePosts: LazyPagingItems<TimelinePost>,
     openPostDetails: (TimelinePost) -> Unit,
     contentPadding: PaddingValues = PaddingValues(0.dp)
