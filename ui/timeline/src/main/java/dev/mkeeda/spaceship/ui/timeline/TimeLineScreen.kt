@@ -27,6 +27,7 @@ import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import dev.mkeeda.spaceship.data.TimelinePost
+import dev.mkeeda.spaceship.data.credential.NoLoginCredentialException
 import dev.mkeeda.spaceship.ui.common.component.SpaceshipAppBar
 import dev.mkeeda.spaceship.ui.common.util.PreviewBackground
 import dev.mkeeda.spaceship.ui.common.util.UiCommonString
@@ -37,23 +38,34 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.datetime.toInstant
 
 @Composable
-fun TimelineScreen(openPostDetails: (TimelinePost) -> Unit) {
+fun TimelineScreen(
+    openPostDetails: (TimelinePost) -> Unit,
+    openLoginFlow: () -> Unit,
+) {
+    val viewModel: TimelineViewModel = hiltViewModel()
+    val pagingTimelinePosts = viewModel.pagingTimeline.collectAsLazyPagingItems()
+    val pagingState = pagingTimelinePosts.loadState.refresh
+    val swipeRefreshState = rememberSwipeRefreshState(
+        isRefreshing = pagingState is LoadState.Loading
+    )
+
+    if (pagingState is LoadState.Error && pagingState.error is NoLoginCredentialException) {
+        openLoginFlow()
+    }
+
     TimelineScreen(
-        viewModel = hiltViewModel(),
-        openPostDetails = openPostDetails
+        pagingTimelinePosts = pagingTimelinePosts,
+        swipeRefreshState = swipeRefreshState,
+        openPostDetails = openPostDetails,
     )
 }
 
 @Composable
 private fun TimelineScreen(
-    viewModel: TimelineViewModel,
-    openPostDetails: (TimelinePost) -> Unit
+    pagingTimelinePosts: LazyPagingItems<TimelinePost>,
+    swipeRefreshState: SwipeRefreshState,
+    openPostDetails: (TimelinePost) -> Unit,
 ) {
-    val pagingTimelinePosts = viewModel.pagingTimeline.collectAsLazyPagingItems()
-    val swipeRefreshState = rememberSwipeRefreshState(
-        isRefreshing = pagingTimelinePosts.loadState.refresh is LoadState.Loading
-    )
-
     Scaffold(
         topBar = {
             SpaceshipAppBar(title = stringResource(id = UiCommonString.Timeline_AppBar_Title))

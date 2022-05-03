@@ -7,6 +7,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import dev.mkeeda.spaceship.data.PostId
+import dev.mkeeda.spaceship.ui.login.LoginScreen
+import dev.mkeeda.spaceship.ui.login.loginGraph
 import dev.mkeeda.spaceship.ui.timeline.PostDetailsScreen
 import dev.mkeeda.spaceship.ui.timeline.TimelineScreen
 
@@ -34,9 +36,14 @@ fun AppNavigation(navHostController: NavHostController) {
         startDestination = Screen.Timeline.route
     ) {
         composable(route = Screen.Timeline.route) {
-            TimelineScreen(openPostDetails = { post ->
-                navHostController.navigate(Screen.PostDetails.createRoute(postId = post.id))
-            })
+            TimelineScreen(
+                openPostDetails = { post ->
+                    navHostController.navigate(Screen.PostDetails.createRoute(postId = post.id))
+                },
+                openLoginFlow = {
+                    navHostController.navigate(LoginScreen.Root)
+                }
+            )
         }
 
         composable(
@@ -52,5 +59,11 @@ fun AppNavigation(navHostController: NavHostController) {
             }
             PostDetailsScreen(postId = postId)
         }
+
+        loginGraph(
+            openMainScreen = {
+                navHostController.navigate(Screen.Timeline.route)
+            }
+        )
     }
 }

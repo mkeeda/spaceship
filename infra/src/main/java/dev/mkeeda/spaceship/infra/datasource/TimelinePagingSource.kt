@@ -4,6 +4,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import dev.mkeeda.spaceship.data.PostId
 import dev.mkeeda.spaceship.data.TimelinePost
+import dev.mkeeda.spaceship.data.credential.NoLoginCredentialException
 import dev.mkeeda.spaceship.infra.api.ntf.NtfList
 import dev.mkeeda.spaceship.infra.api.ntf.NtfListService
 import io.ktor.client.plugins.ResponseException
@@ -35,6 +36,8 @@ internal class TimelinePagingSource(
                 nextKey = nextKey
             )
         } catch (cause: ResponseException) {
+            LoadResult.Error(cause)
+        } catch (cause: NoLoginCredentialException) {
             LoadResult.Error(cause)
         }
     }
