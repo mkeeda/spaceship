@@ -1,4 +1,4 @@
-package dev.mkeeda.spaceship.ui.login
+package dev.mkeeda.spaceship.ui.login.password
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -30,9 +30,9 @@ import dev.mkeeda.spaceship.ui.common.component.SpaceshipAppBar
 import dev.mkeeda.spaceship.ui.common.util.PreviewBackground
 import dev.mkeeda.spaceship.ui.common.util.UiCommonString
 import dev.mkeeda.spaceship.ui.common.util.collectInLaunchedEffect
-import dev.mkeeda.spaceship.ui.login.presentation.PasswordLoginEffect
-import dev.mkeeda.spaceship.ui.login.presentation.PasswordLoginEvent
-import dev.mkeeda.spaceship.ui.login.presentation.PasswordLoginViewModel
+import dev.mkeeda.spaceship.ui.login.password.presentation.PasswordLoginEffect
+import dev.mkeeda.spaceship.ui.login.password.presentation.PasswordLoginEvent
+import dev.mkeeda.spaceship.ui.login.password.presentation.PasswordLoginViewModel
 
 @Composable
 internal fun PasswordLoginScreen(openMainScreen: () -> Unit) {

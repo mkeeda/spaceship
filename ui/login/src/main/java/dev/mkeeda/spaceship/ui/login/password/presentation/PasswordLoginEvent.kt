@@ -1,4 +1,4 @@
-package dev.mkeeda.spaceship.ui.login.presentation
+package dev.mkeeda.spaceship.ui.login.password.presentation
 
 import dev.mkeeda.spaceship.data.credential.LoginCredential
 
