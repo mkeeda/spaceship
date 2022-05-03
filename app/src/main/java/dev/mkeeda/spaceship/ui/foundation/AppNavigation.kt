@@ -41,7 +41,11 @@ fun AppNavigation(navHostController: NavHostController) {
                     navHostController.navigate(Screen.PostDetails.createRoute(postId = post.id))
                 },
                 openLoginFlow = {
-                    navHostController.navigate(LoginScreen.Root)
+                    navHostController.navigate(LoginScreen.Root) {
+                        popUpTo(Screen.Timeline.route) {
+                            inclusive = true
+                        }
+                    }
                 }
             )
         }
@@ -62,7 +66,11 @@ fun AppNavigation(navHostController: NavHostController) {
 
         loginGraph(
             openMainScreen = {
-                navHostController.navigate(Screen.Timeline.route)
+                navHostController.navigate(Screen.Timeline.route) {
+                    popUpTo(LoginScreen.Root) {
+                        inclusive = true
+                    }
+                }
             }
         )
     }
