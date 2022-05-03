@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -49,8 +50,10 @@ fun TimelineScreen(
         isRefreshing = pagingState is LoadState.Loading
     )
 
-    if (pagingState is LoadState.Error && pagingState.error is NoLoginCredentialException) {
-        openLoginFlow()
+    LaunchedEffect(pagingState) {
+        if (pagingState is LoadState.Error && pagingState.error is NoLoginCredentialException) {
+            openLoginFlow()
+        }
     }
 
     TimelineScreen(
