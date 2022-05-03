@@ -13,6 +13,7 @@ class LoginWithPassword @Inject constructor(
     override fun useCaseFlow(param: LoginCredential): Flow<Unit> {
         return flow {
             loginCredentialRepository.save(newCredential = param)
+            emit(Unit)
         }
     }
 }
