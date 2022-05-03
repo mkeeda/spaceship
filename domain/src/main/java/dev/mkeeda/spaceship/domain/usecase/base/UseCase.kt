@@ -13,10 +13,10 @@ abstract class UseCase<P, O> {
         onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
 
-    val output: Flow<DomainLoadState<O>> = paramEvent
+    val output: Flow<O> = paramEvent
         .flatMapLatest {
             useCaseFlow(param = it)
-        }.toLoadState()
+        }
 
     protected abstract fun useCaseFlow(param: P): Flow<O>
 
@@ -24,6 +24,9 @@ abstract class UseCase<P, O> {
         paramEvent.tryEmit(param)
     }
 }
+
+val <P, O> UseCase<P, O>.loadState: Flow<DomainLoadState<O>>
+    get() = output.toLoadState()
 
 abstract class NoParamUseCase<O> : UseCase<Unit, O>() {
     final override fun useCaseFlow(param: Unit): Flow<O> = useCaseFlow()
