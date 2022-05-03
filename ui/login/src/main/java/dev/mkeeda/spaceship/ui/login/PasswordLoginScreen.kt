@@ -20,18 +20,20 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.mkeeda.spaceship.data.credential.LoginCredential
 import dev.mkeeda.spaceship.ui.common.component.SpaceshipAppBar
 import dev.mkeeda.spaceship.ui.common.util.PreviewBackground
+import dev.mkeeda.spaceship.ui.common.util.UiCommonString
 
 @Composable
 internal fun PasswordLoginScreen() {
     Scaffold(
         topBar = {
-            SpaceshipAppBar(title = "Password login")
+            SpaceshipAppBar(title = stringResource(id = UiCommonString.PasswordLogin_AppBar_Title))
         }
     ) { contentPadding ->
         LoginCredentialInputForm(
@@ -68,17 +70,17 @@ private fun LoginCredentialInputForm(
             onValueChange = { subdomain = it },
             modifier = Modifier.fillMaxWidth(),
             label = {
-                Text(text = "subdomain")
+                Text(text = stringResource(id = UiCommonString.PasswordLogin_SubdomainTextField_Label))
             },
             leadingIcon = {
                 Text(
-                    text = "https://",
+                    text = stringResource(id = UiCommonString.PasswordLogin_Url_Scheme),
                     modifier = Modifier.padding(start = 16.dp)
                 )
             },
             trailingIcon = {
                 Text(
-                    text = "cybozu.com",
+                    text = stringResource(id = UiCommonString.PasswordLogin_Url_CybozuHost),
                     modifier = Modifier.padding(end = 16.dp)
                 )
             }
@@ -88,7 +90,7 @@ private fun LoginCredentialInputForm(
             onValueChange = { username = it },
             modifier = Modifier.fillMaxWidth(),
             label = {
-                Text(text = "username")
+                Text(text = stringResource(id = UiCommonString.PasswordLogin_UsernameTextField_Label))
             },
         )
         OutlinedTextField(
@@ -96,7 +98,7 @@ private fun LoginCredentialInputForm(
             onValueChange = { password = it },
             modifier = Modifier.fillMaxWidth(),
             label = {
-                Text(text = "password")
+                Text(text = stringResource(id = UiCommonString.PasswordLogin_PasswordTextField_Label))
             },
             visualTransformation = PasswordVisualTransformation()
         )
@@ -114,7 +116,7 @@ private fun LoginCredentialInputForm(
                 )
             }
         ) {
-            Text(text = "LOGIN")
+            Text(text = stringResource(id = UiCommonString.PasswordLogin_LoginButton_Label))
         }
     }
 }

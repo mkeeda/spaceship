@@ -13,6 +13,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -28,6 +29,7 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import dev.mkeeda.spaceship.data.TimelinePost
 import dev.mkeeda.spaceship.ui.common.component.SpaceshipAppBar
 import dev.mkeeda.spaceship.ui.common.util.PreviewBackground
+import dev.mkeeda.spaceship.ui.common.util.UiCommonString
 import dev.mkeeda.spaceship.ui.timeline.presentation.TimelineViewModel
 import dev.mkeeda.spaceship.ui.timeline.presentation.fakeTimeline
 import dev.mkeeda.spaceship.ui.timeline.presentation.fakeTimelinePostItems
@@ -54,7 +56,7 @@ private fun TimelineScreen(
 
     Scaffold(
         topBar = {
-            SpaceshipAppBar(title = "Timeline")
+            SpaceshipAppBar(title = stringResource(id = UiCommonString.Timeline_AppBar_Title))
         }
     ) { contentPadding ->
         RefreshableTimeline(
