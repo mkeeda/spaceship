@@ -4,8 +4,9 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import dev.mkeeda.spaceship.data.TimelinePost
 import dev.mkeeda.spaceship.domain.repository.TimelineRepository
-import kotlinx.coroutines.flow.Flow
+import dev.mkeeda.spaceship.domain.usecase.base.NoParamPagingUseCase
 import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
 
 class ObserveTimeline @Inject constructor(
     private val repository: TimelineRepository
