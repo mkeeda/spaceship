@@ -5,7 +5,13 @@ import dev.mkeeda.spaceship.infra.BuildConfig
 import javax.inject.Inject
 
 internal class LoginCredentialDataSource @Inject constructor() {
-    fun getLoginCredential(): LoginCredential {
+    private var memoryCache: LoginCredential? = null
+
+    fun writeLoginCredential(newCredential: LoginCredential) {
+        memoryCache = newCredential
+    }
+
+    fun readLoginCredential(): LoginCredential {
         return LoginCredential(
             domain = BuildConfig.kintoneDomain,
             username = BuildConfig.kintoneUsername,

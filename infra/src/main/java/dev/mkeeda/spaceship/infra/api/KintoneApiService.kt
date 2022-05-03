@@ -16,7 +16,7 @@ internal class KintoneApiService @Inject constructor(
     private val httpClient: HttpClient,
     private val loginCredentialDataSource: LoginCredentialDataSource
 ) {
-    private val loginCredential = loginCredentialDataSource.getLoginCredential()
+    private val loginCredential = loginCredentialDataSource.readLoginCredential()
 
     private val authentication: String = loginCredential.let {
         Base64.encodeToString(

@@ -24,20 +24,52 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import dev.mkeeda.spaceship.data.credential.LoginCredential
 import dev.mkeeda.spaceship.ui.common.component.SpaceshipAppBar
 import dev.mkeeda.spaceship.ui.common.util.PreviewBackground
 import dev.mkeeda.spaceship.ui.common.util.UiCommonString
+import dev.mkeeda.spaceship.ui.common.util.collectInLaunchedEffect
+import dev.mkeeda.spaceship.ui.login.presentation.PasswordLoginEffect
+import dev.mkeeda.spaceship.ui.login.presentation.PasswordLoginEvent
+import dev.mkeeda.spaceship.ui.login.presentation.PasswordLoginViewModel
 
 @Composable
-internal fun PasswordLoginScreen() {
+internal fun PasswordLoginScreen(openMainScreen: () -> Unit) {
+    PasswordLoginScreen(
+        viewModel = hiltViewModel(),
+        onLoginSuccess = openMainScreen
+    )
+}
+
+@Composable
+private fun PasswordLoginScreen(
+    viewModel: PasswordLoginViewModel,
+    onLoginSuccess: () -> Unit
+) {
+    viewModel.effect.collectInLaunchedEffect { effect ->
+        when (effect) {
+            PasswordLoginEffect.NavigateToMain -> onLoginSuccess()
+        }
+    }
+    PasswordLoginScreen(
+        onSubmit = { newCredential ->
+            viewModel.event(PasswordLoginEvent.Submit(newCredential))
+        }
+    )
+}
+
+@Composable
+private fun PasswordLoginScreen(
+    onSubmit: (LoginCredential) -> Unit = {}
+) {
     Scaffold(
         topBar = {
             SpaceshipAppBar(title = stringResource(id = UiCommonString.PasswordLogin_AppBar_Title))
         }
     ) { contentPadding ->
         LoginCredentialInputForm(
-            onSubmit = {},
+            onSubmit = onSubmit,
             contentPadding = contentPadding
         )
     }
