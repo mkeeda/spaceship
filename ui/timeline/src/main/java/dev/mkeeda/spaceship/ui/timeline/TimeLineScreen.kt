@@ -10,9 +10,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Scaffold
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -27,7 +31,10 @@ import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import dev.mkeeda.spaceship.data.TimelinePost
 import dev.mkeeda.spaceship.ui.common.component.SpaceshipAppBar
+import dev.mkeeda.spaceship.ui.common.component.loginErrorOrNull
+import dev.mkeeda.spaceship.ui.common.component.showLoginErrorSnackBar
 import dev.mkeeda.spaceship.ui.common.util.PreviewBackground
+import dev.mkeeda.spaceship.ui.common.util.UiCommonString
 import dev.mkeeda.spaceship.ui.timeline.presentation.TimelineViewModel
 import dev.mkeeda.spaceship.ui.timeline.presentation.fakeTimeline
 import dev.mkeeda.spaceship.ui.timeline.presentation.fakeTimelinePostItems
@@ -35,27 +42,46 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.datetime.toInstant
 
 @Composable
-fun TimelineScreen(openPostDetails: (TimelinePost) -> Unit) {
+fun TimelineScreen(
+    openPostDetails: (TimelinePost) -> Unit,
+    openLoginFlow: () -> Unit,
+) {
+    val viewModel: TimelineViewModel = hiltViewModel()
+    val pagingTimelinePosts = viewModel.pagingTimeline.collectAsLazyPagingItems()
+
     TimelineScreen(
-        viewModel = hiltViewModel(),
-        openPostDetails = openPostDetails
+        pagingTimelinePosts = pagingTimelinePosts,
+        openPostDetails = openPostDetails,
+        openLoginFlow = openLoginFlow
     )
 }
 
 @Composable
 private fun TimelineScreen(
-    viewModel: TimelineViewModel,
-    openPostDetails: (TimelinePost) -> Unit
+    pagingTimelinePosts: LazyPagingItems<TimelinePost>,
+    openPostDetails: (TimelinePost) -> Unit,
+    openLoginFlow: () -> Unit
 ) {
-    val pagingTimelinePosts = viewModel.pagingTimeline.collectAsLazyPagingItems()
+    val pagingState = pagingTimelinePosts.loadState.refresh
     val swipeRefreshState = rememberSwipeRefreshState(
-        isRefreshing = pagingTimelinePosts.loadState.refresh is LoadState.Loading
+        isRefreshing = pagingState is LoadState.Loading
     )
+    val scaffoldState = rememberScaffoldState()
+    val context = LocalContext.current
+    pagingState.loginErrorOrNull()?.let {
+        LaunchedEffect(pagingState) {
+            scaffoldState.snackbarHostState.showLoginErrorSnackBar(
+                context = context,
+                onLoginButtonClicked = openLoginFlow
+            )
+        }
+    }
 
     Scaffold(
         topBar = {
-            SpaceshipAppBar(title = "Timeline")
-        }
+            SpaceshipAppBar(title = stringResource(id = UiCommonString.Timeline_AppBar_Title))
+        },
+        scaffoldState = scaffoldState
     ) { contentPadding ->
         RefreshableTimeline(
             pagingTimelinePosts = pagingTimelinePosts,

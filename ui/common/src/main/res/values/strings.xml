@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="PasswordLogin_AppBar_Title">Password login</string>
+    <string name="PasswordLogin_Url_Scheme">https://</string>
+    <string name="PasswordLogin_Url_CybozuHost">cybozu.com</string>
+    <string name="PasswordLogin_SubdomainTextField_Label">Subdomain</string>
+    <string name="PasswordLogin_UsernameTextField_Label">Username</string>
+    <string name="PasswordLogin_PasswordTextField_Label">Password</string>
+    <string name="PasswordLogin_LoginButton_Label">LOGIN</string>
+
+    <string name="Timeline_AppBar_Title">Timeline</string>
+
+    <string name="PostDetails_AppBar_Title">Post details</string>
+
+    <string name="LoginError_Snackbar_Message">No login credential. Please login.</string>
+    <string name="LoginError_Snackbar_Action">Login</string>
+</resources>

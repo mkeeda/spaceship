@@ -11,12 +11,12 @@ import dev.mkeeda.spaceship.domain.usecase.Loading
 import dev.mkeeda.spaceship.domain.usecase.ShowSelectedPostDetail
 import dev.mkeeda.spaceship.domain.usecase.ShowSpacePostContext
 import dev.mkeeda.spaceship.domain.usecase.Success
+import dev.mkeeda.spaceship.domain.usecase.base.loadState
 import dev.mkeeda.spaceship.ui.common.dataflow.Presentation
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -33,8 +33,8 @@ class PostDetailsViewModel @AssistedInject constructor(
 ) : ViewModel(), Presentation<PostDetailsViewState, PostDetailsEvent, Nothing> {
 
     override val state: StateFlow<PostDetailsViewState> = combine(
-        showSelectedPostDetail.output,
-        showSpacePostContext.output
+        showSelectedPostDetail.loadState,
+        showSpacePostContext.loadState
     ) { selectedPostDetail, spacePostContext ->
         when {
             selectedPostDetail is Success && spacePostContext is Loading -> {

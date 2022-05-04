@@ -24,6 +24,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ChainStyle
@@ -33,6 +34,7 @@ import dev.mkeeda.spaceship.data.PostingLocation
 import dev.mkeeda.spaceship.data.TimelinePostDetail
 import dev.mkeeda.spaceship.ui.common.component.SpaceshipAppBar
 import dev.mkeeda.spaceship.ui.common.util.PreviewBackground
+import dev.mkeeda.spaceship.ui.common.util.UiCommonString
 import dev.mkeeda.spaceship.ui.timeline.presentation.PostDetailsEvent
 import dev.mkeeda.spaceship.ui.timeline.presentation.PostDetailsViewModel
 import dev.mkeeda.spaceship.ui.timeline.presentation.PostDetailsViewState
@@ -50,7 +52,7 @@ private fun PostDetailsScreen(
     val postDetailsViewState by viewModel.state.collectAsState()
     Scaffold(
         topBar = {
-            SpaceshipAppBar(title = "PostDetails")
+            SpaceshipAppBar(title = stringResource(id = UiCommonString.PostDetails_AppBar_Title))
         }
     ) { contentPadding ->
         PostDetails(

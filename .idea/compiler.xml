@@ -11,6 +11,7 @@
       <module name="spaceship.data.test" target="11" />
       <module name="spaceship.infra" target="11" />
       <module name="spaceship.ui.common" target="11" />
+      <module name="spaceship.ui.login" target="11" />
       <module name="spaceship.ui.timeline" target="11" />
     </bytecodeTargetLevel>
   </component>

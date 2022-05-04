@@ -60,6 +60,12 @@ object Libs {
             const val compose = "androidx.paging:paging-compose:1.0.0-alpha14"
         }
 
+        object DataStore {
+            private const val version = "1.0.0"
+            const val preferences = "androidx.datastore:datastore-preferences:$version"
+            const val dataStoreCore = "androidx.datastore:datastore-core:$version"
+        }
+
         object Test {
             const val extJunit = "androidx.test.ext:junit:1.1.3"
             const val espressoCore = "androidx.test.espresso:espresso-core:3.4.0"
@@ -81,6 +87,10 @@ object Libs {
             const val base = "com.google.dagger:hilt-android:$version"
             const val compiler = "com.google.dagger:hilt-android-compiler:$version"
         }
+    }
+
+    object Tink {
+        const val android = "com.google.crypto.tink:tink-android:1.6.1"
     }
 
     object Test {
