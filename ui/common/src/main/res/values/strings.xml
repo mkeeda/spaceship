@@ -11,4 +11,7 @@
     <string name="Timeline_AppBar_Title">Timeline</string>
 
     <string name="PostDetails_AppBar_Title">Post details</string>
+
+    <string name="LoginError_Snackbar_Message">No login credential. Please login.</string>
+    <string name="LoginError_Snackbar_Action">Login</string>
 </resources>

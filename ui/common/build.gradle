@@ -35,6 +35,8 @@ android {
 }
 
 dependencies {
+    implementation project(":data")
+
     implementation Libs.KotlinX.coroutines
 
     implementation Libs.AndroidX.Compose.compiler
@@ -42,6 +44,7 @@ dependencies {
     implementation Libs.AndroidX.Compose.material
     implementation Libs.AndroidX.Compose.Ui.uiToolingPreview
     implementation Libs.AndroidX.viewModelCompose
+    implementation Libs.AndroidX.Paging.common
 
     implementation Libs.Accompanist.insetUi
 

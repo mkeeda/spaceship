@@ -1,6 +1,7 @@
 package dev.mkeeda.spaceship.infra.datasource
 
 import dev.mkeeda.spaceship.data.credential.LoginCredential
+import dev.mkeeda.spaceship.data.credential.NoLoginCredentialException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -12,7 +13,7 @@ internal class LoginCredentialDataSource @Inject constructor() {
         memoryCache = newCredential
     }
 
-    fun readLoginCredential(): LoginCredential? {
-        return memoryCache
+    fun readLoginCredential(): LoginCredential {
+        return memoryCache ?: throw NoLoginCredentialException()
     }
 }

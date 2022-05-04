@@ -2,7 +2,6 @@ package dev.mkeeda.spaceship.infra.api
 
 import android.util.Base64
 import dev.mkeeda.spaceship.data.credential.LoginCredential
-import dev.mkeeda.spaceship.data.credential.NoLoginCredentialException
 import dev.mkeeda.spaceship.infra.datasource.LoginCredentialDataSource
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -29,7 +28,6 @@ internal class KintoneApiService @Inject constructor(
         param: KintoneApiEndpoint.RequestParam? = null
     ): T {
         val loginCredential = loginCredentialDataSource.readLoginCredential()
-            ?: throw NoLoginCredentialException()
 
         val response: SuccessResponse<T> = httpClient.post(loginCredential.domain + endpoint.path) {
             header("X-Cybozu-Authorization", loginCredential.authentication)
