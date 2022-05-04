@@ -70,4 +70,5 @@ dependencies {
     implementation(Libs.AndroidX.Paging.runtime)
     implementation(Libs.AndroidX.DataStore.preferences)
     implementation(Libs.AndroidX.DataStore.dataStoreCore)
+    implementation(Libs.Tink.android)
 }

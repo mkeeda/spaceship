@@ -89,6 +89,10 @@ object Libs {
         }
     }
 
+    object Tink {
+        const val android = "com.google.crypto.tink:tink-android:1.6.1"
+    }
+
     object Test {
         const val junit = "junit:junit:4.13.2"
     }
