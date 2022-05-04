@@ -68,4 +68,6 @@ dependencies {
     kapt(Libs.Dagger.Hilt.compiler)
 
     implementation(Libs.AndroidX.Paging.runtime)
+    implementation(Libs.AndroidX.DataStore.preferences)
+    implementation(Libs.AndroidX.DataStore.dataStoreCore)
 }
