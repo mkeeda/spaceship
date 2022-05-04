@@ -19,7 +19,7 @@ internal class KintoneApiService @Inject constructor(
 ) {
     private val LoginCredential.authentication: String
         get() = Base64.encodeToString(
-            "${username}:${password}".toByteArray(),
+            "$username:$password".toByteArray(),
             Base64.URL_SAFE or Base64.NO_WRAP
         )
 

@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class LoginCredentialRepositoryImpl @Inject internal constructor(
     private val loginCredentialDataSource: LoginCredentialDataSource
-): LoginCredentialRepository {
+) : LoginCredentialRepository {
     override suspend fun save(newCredential: LoginCredential) {
         loginCredentialDataSource.writeLoginCredential(newCredential)
     }

@@ -26,5 +26,5 @@ abstract class RepositoryModule {
     abstract fun bindThreadRepository(impl: ThreadRepositoryImpl): ThreadRepository
 
     @Binds
-    abstract fun bindLoginCredentialRepository(impl: LoginCredentialRepositoryImpl):LoginCredentialRepository
+    abstract fun bindLoginCredentialRepository(impl: LoginCredentialRepositoryImpl): LoginCredentialRepository
 }

@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.flow
 
 class LoginWithPassword @Inject constructor(
     private val loginCredentialRepository: LoginCredentialRepository
-): UseCase<LoginCredential, Unit>() {
+) : UseCase<LoginCredential, Unit>() {
     override fun useCaseFlow(param: LoginCredential): Flow<Unit> {
         return flow {
             loginCredentialRepository.save(newCredential = param)
