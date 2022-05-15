@@ -17,7 +17,7 @@ object Libs {
 
     object Ktor {
         private const val version = "2.0.0"
-        const val clientOkHttp = "io.ktor:ktor-client-okhttp:$version"
+        const val clientCio = "io.ktor:ktor-client-cio:$version"
         const val contentNegotiation = "io.ktor:ktor-client-content-negotiation:$version"
         const val kotlinxJson = "io.ktor:ktor-serialization-kotlinx-json:$version"
 

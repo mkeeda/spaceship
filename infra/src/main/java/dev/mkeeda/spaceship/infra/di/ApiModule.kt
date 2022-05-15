@@ -13,7 +13,7 @@ import dev.mkeeda.spaceship.infra.api.ntf.NtfListServiceImpl
 import dev.mkeeda.spaceship.infra.api.thread.ThreadPostListService
 import dev.mkeeda.spaceship.infra.api.thread.ThreadPostListServiceImpl
 import io.ktor.client.HttpClient
-import io.ktor.client.engine.okhttp.OkHttp
+import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.DEFAULT
 import io.ktor.client.plugins.logging.LogLevel
@@ -27,7 +27,7 @@ import kotlinx.serialization.json.Json
 class ApiModule {
     @Provides
     fun provideHttpClient(): HttpClient {
-        return HttpClient(OkHttp) {
+        return HttpClient(CIO) {
             install(ContentNegotiation) {
                 json(
                     Json {

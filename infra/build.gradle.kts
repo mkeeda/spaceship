@@ -37,7 +37,7 @@ android {
 dependencies {
     implementation(project(":domain"))
 
-    api(Libs.Ktor.clientOkHttp)
+    api(Libs.Ktor.clientCio)
     implementation(Libs.Ktor.contentNegotiation)
     implementation(Libs.Ktor.kotlinxJson)
     implementation(Libs.Ktor.Logging.base)
