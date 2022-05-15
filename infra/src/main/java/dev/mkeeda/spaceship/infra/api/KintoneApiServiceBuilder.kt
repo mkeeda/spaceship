@@ -62,10 +62,10 @@ internal class KintoneApiServiceBuilderImpl @Inject constructor(
 }
 
 private fun SecureAccessConfig.toKeyStore(): KeyStore {
-    val keyStoreFile = Base64.decode(clientCertBase64, Base64.DEFAULT).inputStream()
+    val clientCert = Base64.decode(clientCertBase64, Base64.DEFAULT).inputStream()
     val keyStorePassword = clientCertPassword.toCharArray()
     val keyStore = KeyStore.getInstance("PKCS12").also {
-        it.load(keyStoreFile, keyStorePassword)
+        it.load(clientCert, keyStorePassword)
     }
     return keyStore
 }
