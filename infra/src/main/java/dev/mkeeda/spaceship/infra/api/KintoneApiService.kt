@@ -25,7 +25,7 @@ internal class KintoneApiService(
         endpoint: KintoneApiEndpoint,
         param: KintoneApiEndpoint.RequestParam? = null
     ): T {
-        val response: SuccessResponse<T> = httpClient.post(loginCredential.domain + endpoint.path) {
+        val response: SuccessResponse<T> = httpClient.post(loginCredential.environmentConfig.loginOrigin + endpoint.path) {
             header("X-Cybozu-Authorization", loginCredential.authentication)
             contentType(ContentType.Application.Json)
             param?.let {

@@ -175,7 +175,7 @@ private fun LoginCredentialInputForm(
             onClick = {
                 onSubmit(
                     LoginCredential(
-                        domain = "https://$subdomain.cybozu.com",
+                        loginOrigin = "https://$subdomain.cybozu.com",
                         username = username,
                         password = password
                     )
