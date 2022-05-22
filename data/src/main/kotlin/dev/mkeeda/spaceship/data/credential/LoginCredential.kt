@@ -32,10 +32,8 @@ data class EnvironmentConfig(
     val loginOrigin: String,
     val secureAccessConfig: SecureAccessConfig? = null
 ) {
-    fun isSecureAccess(): Boolean {
-        val secureAccessOriginPattern = Regex("""https://[\w]+.s.cybozu.com""")
-        return secureAccessOriginPattern.matches(loginOrigin)
-    }
+    val isSecureAccess: Boolean = Regex("""https://[\w]+.s.cybozu.com""")
+        .matches(loginOrigin)
 }
 
 @Serializable
@@ -45,7 +43,7 @@ data class SecureAccessConfig(
 )
 
 inline fun EnvironmentConfig.ifSecureAccess(block: (SecureAccessConfig) -> Unit) {
-    if (isSecureAccess()) {
+    if (isSecureAccess) {
         checkNotNull(secureAccessConfig) {
             "secureAccessConfig must be not null when origin url includes '.s' path."
         }
