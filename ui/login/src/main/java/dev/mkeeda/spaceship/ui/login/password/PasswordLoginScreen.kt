@@ -1,19 +1,24 @@
 package dev.mkeeda.spaceship.ui.login.password
 
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
+import androidx.compose.material.OutlinedButton
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Switch
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -169,9 +174,31 @@ private fun LoginCredentialInputForm(
             singleLine = true
         )
 
-        Spacer(modifier = Modifier.width(8.dp))
+        var useSecureAccess by remember {
+            mutableStateOf(false)
+        }
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(text = stringResource(UiCommonString.PasswordLogin_UseSecureAccessSwitch_Label))
+            Switch(
+                checked = useSecureAccess,
+                onCheckedChange = { useSecureAccess = useSecureAccess.not() }
+            )
+        }
+        var clientCertPassword by remember {
+            mutableStateOf("")
+        }
+        AnimatedVisibility(visible = useSecureAccess) {
+            SecureAccessForm(
+                clientCertPassword = clientCertPassword,
+                onClientCertPasswordChange = { clientCertPassword = it },
+            )
+        }
         Button(
-            modifier = Modifier.align(Alignment.End),
+            modifier = Modifier.fillMaxWidth(),
             onClick = {
                 onSubmit(
                     LoginCredential(
@@ -184,6 +211,57 @@ private fun LoginCredentialInputForm(
         ) {
             Text(text = stringResource(id = UiCommonString.PasswordLogin_LoginButton_Label))
         }
+    }
+}
+
+@Composable
+private fun SecureAccessForm(
+    clientCertPassword: String,
+    onClientCertPasswordChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(modifier = modifier) {
+        ImportClientCertButton(onSelectedFile = { uri -> println(uri) })
+
+        val focusManager = LocalFocusManager.current
+        OutlinedTextField(
+            value = clientCertPassword,
+            onValueChange = onClientCertPasswordChange,
+            modifier = Modifier.fillMaxWidth(),
+            label = {
+                Text(text = stringResource(id = UiCommonString.PasswordLogin_ClientCertPasswordTextField_Label))
+            },
+            visualTransformation = PasswordVisualTransformation(),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Password,
+                imeAction = ImeAction.Done
+            ),
+            keyboardActions = KeyboardActions(
+                onDone = {
+                    focusManager.clearFocus()
+                }
+            ),
+            singleLine = true
+        )
+    }
+}
+
+@Composable
+private fun ImportClientCertButton(
+    onSelectedFile: (Uri) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val getClientCertLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent(),
+        onResult = onSelectedFile
+    )
+    OutlinedButton(
+        modifier = modifier,
+        onClick = {
+            getClientCertLauncher.launch("application/octet-stream")
+        }
+    ) {
+        Text(stringResource(UiCommonString.PasswordLogin_ImportClientCertButton_Label))
     }
 }
 
