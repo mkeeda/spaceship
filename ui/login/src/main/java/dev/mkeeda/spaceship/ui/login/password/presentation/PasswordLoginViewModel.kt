@@ -3,6 +3,7 @@ package dev.mkeeda.spaceship.ui.login.password.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.mkeeda.spaceship.data.credential.LoginCredential
 import dev.mkeeda.spaceship.domain.usecase.LoginWithPassword
 import javax.inject.Inject
 import kotlinx.coroutines.channels.Channel
@@ -25,7 +26,15 @@ class PasswordLoginViewModel @Inject constructor(
     init {
         eventFlow.onEach { event ->
             when (event) {
-                is PasswordLoginEvent.Submit -> loginWithPassword.execute(param = event.loginCredential)
+                is PasswordLoginEvent.Submit -> {
+                    // TODO: Load client cert
+                    val loginCredential = LoginCredential(
+                        loginOrigin = event.formState.loginOrigin,
+                        username = event.formState.username,
+                        password = event.formState.password
+                    )
+                    loginWithPassword.execute(param = loginCredential)
+                }
             }
         }.launchIn(viewModelScope)
 

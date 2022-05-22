@@ -36,14 +36,15 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import dev.mkeeda.spaceship.data.credential.LoginCredential
 import dev.mkeeda.spaceship.ui.common.component.SpaceshipAppBar
 import dev.mkeeda.spaceship.ui.common.util.PreviewBackground
 import dev.mkeeda.spaceship.ui.common.util.UiCommonString
 import dev.mkeeda.spaceship.ui.common.util.collectInLaunchedEffect
+import dev.mkeeda.spaceship.ui.login.password.presentation.LoginFormState
 import dev.mkeeda.spaceship.ui.login.password.presentation.PasswordLoginEffect
 import dev.mkeeda.spaceship.ui.login.password.presentation.PasswordLoginEvent
 import dev.mkeeda.spaceship.ui.login.password.presentation.PasswordLoginViewModel
+import dev.mkeeda.spaceship.ui.login.password.presentation.SecureAccessFormState
 
 @Composable
 internal fun PasswordLoginScreen(openMainScreen: () -> Unit) {
@@ -64,15 +65,15 @@ private fun PasswordLoginScreen(
         }
     }
     PasswordLoginScreen(
-        onSubmit = { newCredential ->
-            viewModel.event(PasswordLoginEvent.Submit(newCredential))
+        onSubmit = { loginFormState ->
+            viewModel.event(PasswordLoginEvent.Submit(loginFormState))
         }
     )
 }
 
 @Composable
 private fun PasswordLoginScreen(
-    onSubmit: (LoginCredential) -> Unit = {}
+    onSubmit: (LoginFormState) -> Unit = {}
 ) {
     Scaffold(
         topBar = {
@@ -88,7 +89,7 @@ private fun PasswordLoginScreen(
 
 @Composable
 private fun LoginCredentialInputForm(
-    onSubmit: (LoginCredential) -> Unit,
+    onSubmit: (LoginFormState) -> Unit,
     contentPadding: PaddingValues = PaddingValues(0.dp)
 ) {
     Column(
@@ -191,20 +192,29 @@ private fun LoginCredentialInputForm(
         var clientCertPassword by remember {
             mutableStateOf("")
         }
+        var clientCertFileUri by remember {
+            mutableStateOf<Uri?>(null)
+        }
         AnimatedVisibility(visible = useSecureAccess) {
             SecureAccessForm(
                 clientCertPassword = clientCertPassword,
                 onClientCertPasswordChange = { clientCertPassword = it },
+                onSelectedClientCertFile = { clientCertFileUri = it }
             )
         }
         Button(
             modifier = Modifier.fillMaxWidth(),
             onClick = {
+                val secureAccessFormState = if (useSecureAccess) SecureAccessFormState(
+                    clientCertFileUri = clientCertFileUri ?: Uri.EMPTY,
+                    clientCertPassword = clientCertPassword
+                ) else null
                 onSubmit(
-                    LoginCredential(
+                    LoginFormState(
                         loginOrigin = "https://$subdomain.cybozu.com",
                         username = username,
-                        password = password
+                        password = password,
+                        secureAccessFormState = secureAccessFormState
                     )
                 )
             }
@@ -218,10 +228,11 @@ private fun LoginCredentialInputForm(
 private fun SecureAccessForm(
     clientCertPassword: String,
     onClientCertPasswordChange: (String) -> Unit,
+    onSelectedClientCertFile: (Uri) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
-        ImportClientCertButton(onSelectedFile = { uri -> println(uri) })
+        ImportClientCertButton(onSelectedFile = onSelectedClientCertFile)
 
         val focusManager = LocalFocusManager.current
         OutlinedTextField(
