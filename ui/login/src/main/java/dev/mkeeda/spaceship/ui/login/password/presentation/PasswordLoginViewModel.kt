@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.mkeeda.spaceship.data.credential.LoginCredential
+import dev.mkeeda.spaceship.domain.usecase.LoadSecureAccessFile
 import dev.mkeeda.spaceship.domain.usecase.LoginWithPassword
 import javax.inject.Inject
 import kotlinx.coroutines.channels.Channel
@@ -20,7 +21,8 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class PasswordLoginViewModel @Inject constructor(
-    private val loginWithPassword: LoginWithPassword
+    private val loginWithPassword: LoginWithPassword,
+    private val loadSecureAccessFile: LoadSecureAccessFile
 ) : ViewModel() {
     private val eventFlow = MutableSharedFlow<PasswordLoginEvent>()
 
