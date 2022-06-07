@@ -8,6 +8,10 @@
     <string name="PasswordLogin_PasswordTextField_Label">Password</string>
     <string name="PasswordLogin_LoginButton_Label">LOGIN</string>
 
+    <string name="PasswordLogin_ClientCertPasswordTextField_Label">Client cert password</string>
+    <string name="PasswordLogin_UseSecureAccessSwitch_Label">Use secure access</string>
+    <string name="PasswordLogin_ImportClientCertButton_Label">Select client cert file</string>
+
     <string name="Timeline_AppBar_Title">Timeline</string>
 
     <string name="PostDetails_AppBar_Title">Post details</string>

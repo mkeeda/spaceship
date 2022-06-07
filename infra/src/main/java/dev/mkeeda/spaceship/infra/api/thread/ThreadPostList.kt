@@ -2,7 +2,7 @@ package dev.mkeeda.spaceship.infra.api.thread
 
 import dev.mkeeda.spaceship.data.kintone.KintoneThreadPost
 import dev.mkeeda.spaceship.infra.api.KintoneApiEndpoint
-import dev.mkeeda.spaceship.infra.api.KintoneApiService
+import dev.mkeeda.spaceship.infra.api.KintoneApiServiceBuilder
 import javax.inject.Inject
 import kotlinx.serialization.Serializable
 
@@ -27,9 +27,10 @@ interface ThreadPostListService {
 }
 
 internal class ThreadPostListServiceImpl @Inject constructor(
-    private val kintoneApiService: KintoneApiService
+    private val kintoneApiServiceBuilder: KintoneApiServiceBuilder
 ) : ThreadPostListService {
     override suspend fun getThreadPostList(param: ThreadPostList.RequestParams): ThreadPostList.Response {
+        val kintoneApiService = kintoneApiServiceBuilder.build()
         return kintoneApiService.post(endpoint = ThreadPostList, param = param)
     }
 }

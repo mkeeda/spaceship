@@ -3,7 +3,7 @@ package dev.mkeeda.spaceship.infra.api.ntf
 import dev.mkeeda.spaceship.data.kintone.KintoneNotification
 import dev.mkeeda.spaceship.data.kintone.KintoneUser
 import dev.mkeeda.spaceship.infra.api.KintoneApiEndpoint
-import dev.mkeeda.spaceship.infra.api.KintoneApiService
+import dev.mkeeda.spaceship.infra.api.KintoneApiServiceBuilder
 import javax.inject.Inject
 import kotlinx.serialization.Serializable
 
@@ -27,9 +27,10 @@ interface NtfGetService {
 }
 
 internal class NtfGetServiceImpl @Inject constructor(
-    private val kintoneApiService: KintoneApiService
+    private val kintoneApiServiceBuilder: KintoneApiServiceBuilder
 ) : NtfGetService {
     override suspend fun getNtfGet(param: NtfGet.RequestParam): NtfGet.Response {
+        val kintoneApiService = kintoneApiServiceBuilder.build()
         return kintoneApiService.post(endpoint = NtfGet, param = param)
     }
 }

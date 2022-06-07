@@ -1,21 +1,28 @@
 package dev.mkeeda.spaceship.ui.login.password
 
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
+import androidx.compose.material.OutlinedButton
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Switch
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,14 +38,16 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import dev.mkeeda.spaceship.data.credential.LoginCredential
 import dev.mkeeda.spaceship.ui.common.component.SpaceshipAppBar
 import dev.mkeeda.spaceship.ui.common.util.PreviewBackground
 import dev.mkeeda.spaceship.ui.common.util.UiCommonString
 import dev.mkeeda.spaceship.ui.common.util.collectInLaunchedEffect
+import dev.mkeeda.spaceship.ui.login.password.presentation.LoginFormState
 import dev.mkeeda.spaceship.ui.login.password.presentation.PasswordLoginEffect
 import dev.mkeeda.spaceship.ui.login.password.presentation.PasswordLoginEvent
 import dev.mkeeda.spaceship.ui.login.password.presentation.PasswordLoginViewModel
+import dev.mkeeda.spaceship.ui.login.password.presentation.PasswordLoginViewState
+import dev.mkeeda.spaceship.ui.login.password.presentation.SecureAccessFormState
 
 @Composable
 internal fun PasswordLoginScreen(openMainScreen: () -> Unit) {
@@ -58,16 +67,21 @@ private fun PasswordLoginScreen(
             PasswordLoginEffect.NavigateToMain -> onLoginSuccess()
         }
     }
+
+    // TODO use flowWithLifecycle
+    val viewState by viewModel.viewState.collectAsState()
     PasswordLoginScreen(
-        onSubmit = { newCredential ->
-            viewModel.event(PasswordLoginEvent.Submit(newCredential))
+        passwordLoginViewState = viewState,
+        onSubmit = { loginFormState ->
+            viewModel.event(PasswordLoginEvent.Submit(loginFormState))
         }
     )
 }
 
 @Composable
 private fun PasswordLoginScreen(
-    onSubmit: (LoginCredential) -> Unit = {}
+    passwordLoginViewState: PasswordLoginViewState,
+    onSubmit: (LoginFormState) -> Unit = {}
 ) {
     Scaffold(
         topBar = {
@@ -75,6 +89,7 @@ private fun PasswordLoginScreen(
         }
     ) { contentPadding ->
         LoginCredentialInputForm(
+            passwordLoginViewState = passwordLoginViewState,
             onSubmit = onSubmit,
             contentPadding = contentPadding
         )
@@ -83,7 +98,8 @@ private fun PasswordLoginScreen(
 
 @Composable
 private fun LoginCredentialInputForm(
-    onSubmit: (LoginCredential) -> Unit,
+    passwordLoginViewState: PasswordLoginViewState,
+    onSubmit: (LoginFormState) -> Unit,
     contentPadding: PaddingValues = PaddingValues(0.dp)
 ) {
     Column(
@@ -169,15 +185,47 @@ private fun LoginCredentialInputForm(
             singleLine = true
         )
 
-        Spacer(modifier = Modifier.width(8.dp))
+        var useSecureAccess by remember {
+            mutableStateOf(false)
+        }
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(text = stringResource(UiCommonString.PasswordLogin_UseSecureAccessSwitch_Label))
+            Switch(
+                checked = useSecureAccess,
+                onCheckedChange = { useSecureAccess = useSecureAccess.not() }
+            )
+        }
+        var clientCertPassword by remember {
+            mutableStateOf("")
+        }
+        var clientCertFileUri by remember {
+            mutableStateOf<Uri?>(null)
+        }
+        AnimatedVisibility(visible = useSecureAccess) {
+            SecureAccessForm(
+                clientCertFileName = passwordLoginViewState.clientCertFileName,
+                clientCertPassword = clientCertPassword,
+                onClientCertPasswordChange = { clientCertPassword = it },
+                onSelectedClientCertFile = { clientCertFileUri = it }
+            )
+        }
         Button(
-            modifier = Modifier.align(Alignment.End),
+            modifier = Modifier.fillMaxWidth(),
             onClick = {
+                val secureAccessFormState = if (useSecureAccess) SecureAccessFormState(
+                    clientCertFileUri = clientCertFileUri ?: Uri.EMPTY,
+                    clientCertPassword = clientCertPassword
+                ) else null
                 onSubmit(
-                    LoginCredential(
-                        domain = "https://$subdomain.cybozu.com",
+                    LoginFormState(
+                        loginOrigin = "https://$subdomain.cybozu.com",
                         username = username,
-                        password = password
+                        password = password,
+                        secureAccessFormState = secureAccessFormState
                     )
                 )
             }
@@ -187,10 +235,70 @@ private fun LoginCredentialInputForm(
     }
 }
 
+@Composable
+private fun SecureAccessForm(
+    clientCertFileName: String?,
+    clientCertPassword: String,
+    onClientCertPasswordChange: (String) -> Unit,
+    onSelectedClientCertFile: (Uri) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(modifier = modifier) {
+        ImportClientCertButton(onSelectedFile = onSelectedClientCertFile) {
+            val buttonLabel = clientCertFileName ?: stringResource(UiCommonString.PasswordLogin_ImportClientCertButton_Label)
+            Text(text = buttonLabel)
+        }
+
+        val focusManager = LocalFocusManager.current
+        OutlinedTextField(
+            value = clientCertPassword,
+            onValueChange = onClientCertPasswordChange,
+            modifier = Modifier.fillMaxWidth(),
+            label = {
+                Text(text = stringResource(id = UiCommonString.PasswordLogin_ClientCertPasswordTextField_Label))
+            },
+            visualTransformation = PasswordVisualTransformation(),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Password,
+                imeAction = ImeAction.Done
+            ),
+            keyboardActions = KeyboardActions(
+                onDone = {
+                    focusManager.clearFocus()
+                }
+            ),
+            singleLine = true
+        )
+    }
+}
+
+@Composable
+private fun ImportClientCertButton(
+    onSelectedFile: (Uri) -> Unit,
+    modifier: Modifier = Modifier,
+    content: @Composable RowScope.() -> Unit
+) {
+    val getClientCertLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent(),
+        onResult = onSelectedFile
+    )
+    OutlinedButton(
+        modifier = modifier,
+        onClick = {
+            getClientCertLauncher.launch("application/octet-stream")
+        },
+        content = content
+    )
+}
+
 @Preview
 @Composable
 private fun PasswordLoginScreenPreview() {
     PreviewBackground {
-        PasswordLoginScreen()
+        PasswordLoginScreen(
+            passwordLoginViewState = PasswordLoginViewState(
+                clientCertFileName = "test_user.cybozusetting"
+            )
+        )
     }
 }
