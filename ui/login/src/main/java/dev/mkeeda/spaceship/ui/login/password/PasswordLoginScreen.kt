@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -21,6 +22,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Switch
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -44,6 +46,7 @@ import dev.mkeeda.spaceship.ui.login.password.presentation.LoginFormState
 import dev.mkeeda.spaceship.ui.login.password.presentation.PasswordLoginEffect
 import dev.mkeeda.spaceship.ui.login.password.presentation.PasswordLoginEvent
 import dev.mkeeda.spaceship.ui.login.password.presentation.PasswordLoginViewModel
+import dev.mkeeda.spaceship.ui.login.password.presentation.PasswordLoginViewState
 import dev.mkeeda.spaceship.ui.login.password.presentation.SecureAccessFormState
 
 @Composable
@@ -64,7 +67,11 @@ private fun PasswordLoginScreen(
             PasswordLoginEffect.NavigateToMain -> onLoginSuccess()
         }
     }
+
+    // TODO use flowWithLifecycle
+    val viewState by viewModel.viewState.collectAsState()
     PasswordLoginScreen(
+        passwordLoginViewState = viewState,
         onSubmit = { loginFormState ->
             viewModel.event(PasswordLoginEvent.Submit(loginFormState))
         }
@@ -73,6 +80,7 @@ private fun PasswordLoginScreen(
 
 @Composable
 private fun PasswordLoginScreen(
+    passwordLoginViewState: PasswordLoginViewState,
     onSubmit: (LoginFormState) -> Unit = {}
 ) {
     Scaffold(
@@ -81,6 +89,7 @@ private fun PasswordLoginScreen(
         }
     ) { contentPadding ->
         LoginCredentialInputForm(
+            passwordLoginViewState = passwordLoginViewState,
             onSubmit = onSubmit,
             contentPadding = contentPadding
         )
@@ -89,6 +98,7 @@ private fun PasswordLoginScreen(
 
 @Composable
 private fun LoginCredentialInputForm(
+    passwordLoginViewState: PasswordLoginViewState,
     onSubmit: (LoginFormState) -> Unit,
     contentPadding: PaddingValues = PaddingValues(0.dp)
 ) {
@@ -197,6 +207,7 @@ private fun LoginCredentialInputForm(
         }
         AnimatedVisibility(visible = useSecureAccess) {
             SecureAccessForm(
+                clientCertFileName = passwordLoginViewState.clientCertFileName,
                 clientCertPassword = clientCertPassword,
                 onClientCertPasswordChange = { clientCertPassword = it },
                 onSelectedClientCertFile = { clientCertFileUri = it }
@@ -226,13 +237,17 @@ private fun LoginCredentialInputForm(
 
 @Composable
 private fun SecureAccessForm(
+    clientCertFileName: String?,
     clientCertPassword: String,
     onClientCertPasswordChange: (String) -> Unit,
     onSelectedClientCertFile: (Uri) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
-        ImportClientCertButton(onSelectedFile = onSelectedClientCertFile)
+        ImportClientCertButton(onSelectedFile = onSelectedClientCertFile) {
+            val buttonLabel = clientCertFileName ?: stringResource(UiCommonString.PasswordLogin_ImportClientCertButton_Label)
+            Text(text = buttonLabel)
+        }
 
         val focusManager = LocalFocusManager.current
         OutlinedTextField(
@@ -260,7 +275,8 @@ private fun SecureAccessForm(
 @Composable
 private fun ImportClientCertButton(
     onSelectedFile: (Uri) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    content: @Composable RowScope.() -> Unit
 ) {
     val getClientCertLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent(),
@@ -270,16 +286,19 @@ private fun ImportClientCertButton(
         modifier = modifier,
         onClick = {
             getClientCertLauncher.launch("application/octet-stream")
-        }
-    ) {
-        Text(stringResource(UiCommonString.PasswordLogin_ImportClientCertButton_Label))
-    }
+        },
+        content = content
+    )
 }
 
 @Preview
 @Composable
 private fun PasswordLoginScreenPreview() {
     PreviewBackground {
-        PasswordLoginScreen()
+        PasswordLoginScreen(
+            passwordLoginViewState = PasswordLoginViewState(
+                clientCertFileName = "test_user.cybozusetting"
+            )
+        )
     }
 }

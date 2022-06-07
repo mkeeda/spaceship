@@ -9,9 +9,13 @@ import javax.inject.Inject
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @HiltViewModel
@@ -23,11 +27,17 @@ class PasswordLoginViewModel @Inject constructor(
     private val effectChannel = Channel<PasswordLoginEffect>()
     val effect: Flow<PasswordLoginEffect> = effectChannel.receiveAsFlow()
 
+    private val _viewState = MutableStateFlow(PasswordLoginViewState.Empty)
+    val viewState: StateFlow<PasswordLoginViewState> = _viewState.asStateFlow()
+
     init {
         eventFlow.onEach { event ->
             when (event) {
                 is PasswordLoginEvent.Submit -> {
                     // TODO: Load client cert
+                    _viewState.update { prev ->
+                        prev.copy(clientCertFileName = "test_user.cybozusetting")
+                    }
                     val loginCredential = LoginCredential(
                         loginOrigin = event.formState.loginOrigin,
                         username = event.formState.username,
